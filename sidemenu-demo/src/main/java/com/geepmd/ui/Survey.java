@@ -2,6 +2,7 @@ package com.geepmd.ui;
 
 import com.vaadin.data.HasValue;
 import com.vaadin.navigator.View;
+import com.vaadin.shared.ui.MarginInfo;
 import com.vaadin.ui.*;
 import com.vaadin.ui.themes.ValoTheme;
 import org.vaadin.addons.ComboBoxMultiselect;
@@ -10,6 +11,7 @@ import java.util.*;
 
 public class Survey extends VerticalLayout implements View {
 
+    List<String> yesNoList = Arrays.asList("Yes","No");
     public Survey(){
         createLayout();
     }
@@ -23,10 +25,11 @@ public class Survey extends VerticalLayout implements View {
         ComboBox motherNameComboBox = new ComboBox("Select Mother Name");
         List<String> names = new ArrayList<>();
         names.add("Test1");
-        names.add("Akila");
+        names.add("ටෙස්ටින්ග් වන්ටෙස්ටින්ග් වන්");
         names.add("Sithum");
         motherNameComboBox.setItems(names);
         addComponent(motherNameComboBox);
+
 
         TabSheet tabsheet = new TabSheet();
         addComponent(tabsheet);
@@ -59,6 +62,8 @@ public class Survey extends VerticalLayout implements View {
         setTab2Data(tab2);
         setTab3Data(tab3);
         setTab4Data(tab4);
+        setTab5Data(tab5);
+        setTab6Data(tab6);
     }
 
     private void setTab1Data(VerticalLayout tab1){
@@ -468,6 +473,379 @@ public class Survey extends VerticalLayout implements View {
         dependentLayoutAdd(tab,folicAcidNowCombo,folicWeekCombo,"4.11 for how many weeks have you been taking folic acid during this pregnancy?");
 
     }
+
+    private void setTab5Data(VerticalLayout tab){
+        Label firstQLabel = new Label("5.1 Have you experienced any of these symptoms");
+        firstQLabel.setSizeFull();
+        tab.addComponent(firstQLabel);
+
+        HorizontalLayout headerLayout = new HorizontalLayout();
+        headerLayout.setSizeFull();
+        Label emptyLabel = new Label(" ");
+        emptyLabel.setSizeFull();
+        Label priorConception = new Label("3 months prior to conception");
+        priorConception.setSizeFull();
+        Label afterConception = new Label("After conception");
+        afterConception.setSizeFull();
+        headerLayout.addComponents(emptyLabel,priorConception,afterConception);
+        tab.addComponent(headerLayout);
+
+        Label emptyLabel1 = new Label(" ");
+        emptyLabel1.setSizeFull();
+
+        HorizontalLayout priorConceptionLayout = new HorizontalLayout();
+        priorConceptionLayout.setSizeFull();
+        Label yesNoLabel = new Label("Yes/No");
+        yesNoLabel.setSizeFull();
+        Label frequencyLabel = new Label("frequency");
+        frequencyLabel.setSizeFull();
+        Label worsenLabel = new Label("Does it worsen with exertion? ");
+        worsenLabel.setSizeFull();
+        Label adviceLabel = new Label("Did you seek medical advice from a doctor?");
+        adviceLabel.setSizeFull();
+        priorConceptionLayout.addComponents(yesNoLabel,frequencyLabel,worsenLabel,adviceLabel);
+
+        HorizontalLayout afterConceptionLayout = new HorizontalLayout();
+        afterConceptionLayout.setSizeFull();
+        Label yesNoLabelAfter = new Label("Yes/No");
+        yesNoLabelAfter.setSizeFull();
+        Label frequencyLabelAfter = new Label("frequency");
+        frequencyLabelAfter.setSizeFull();
+        Label worsenLabelAfter = new Label("Does it worsen with exertion? ");
+        worsenLabelAfter.setSizeFull();
+        Label adviceLabelAfter = new Label("Did you seek medical advice from a doctor?");
+        adviceLabelAfter.setSizeFull();
+        afterConceptionLayout.addComponents(yesNoLabelAfter,frequencyLabelAfter,worsenLabelAfter,adviceLabelAfter);
+
+        HorizontalLayout headerTextLayout = new HorizontalLayout();
+        headerTextLayout.setSizeFull();
+        headerTextLayout.addComponents(emptyLabel1,priorConceptionLayout,afterConceptionLayout);
+        headerTextLayout.setExpandRatio(emptyLabel1,1);
+        headerTextLayout.setExpandRatio(priorConceptionLayout,1);
+        headerTextLayout.setExpandRatio(afterConceptionLayout,1);
+        tab.addComponent(headerTextLayout);
+        addQ5Questions("a. Nausea and vomiting",tab);
+        addQ5Questions("b. tChest pain that may spread to arm, neck, jaw or back and association with sweating, SOB or heart burn",tab);
+        addQ5Questions("c. Chest pain without above symptoms",tab);
+        addQ5Questions("d. Breathlessness",tab);
+        addQ5Questions("e. Wheezing",tab);
+        addQ5Questions("f. Palpitations",tab);
+        addQ5Questions("g. Faintishness ",tab);
+        addQ5Questions("h. Tiredness at rest",tab);
+        addQ5Questions("i. Ankle edema",tab);
+        addQ5Questions("j. Difficulty in breathing in lying down position",tab);
+        addQ5Questions("k. Difficulty of breathing while sleeping which makes you awake from sleep",tab);
+
+        CheckBoxGroup<String> q52CheckBox = new CheckBoxGroup<>();
+        q52CheckBox.setItems(Arrays.asList("a. No limitation. Normal physical exercise does not cause fatigue, dyspnea or palpitations.",
+                "b. Mild limitation. Comfortable at rest but normal physical activity produce fatigue, dyspnea or palpitations.",
+                "c.Marked limitation. Comfortable at rest but even small physical activity produce fatigue, dyspnea or palpitations.",
+                "d. Fatigue, dyspnoea or palpitation occurs at the rest and exacerbate by any physical activity."));
+        tab.addComponent(addQ52and3Questions(q52CheckBox,"5.2 Which of the following statement clearly describe your current status of physical activity?"));
+
+        CheckBoxGroup<String> q53CheckBox = new CheckBoxGroup<>();
+        q53CheckBox.setItems(Arrays.asList("a. Ordinary physical activity does not cause angina, such as walking and climbing stairs. Angina with" +
+                " strenuous or rapid or prolonged exertion at work or recreation. ," +
+                "b. Slight limitation of ordinary activity due to angina. Walking or climbing stairs rapidly, walking uphill, " +
+                "walking or stair climbing after meals, or in cold, or in wind, or under emotional stress, or only during the few hours after awakening.",
+                "c.\tMarked limitation of ordinary physical activity due to angina. Walking one or two blocks on the level and climbing one " +
+                        "flight of stairs in normal conditions and at normal pace.",
+                "d. Inability to carry on any physical activity without discomfort, anginal syndrome may be present at rest. "));
+        tab.addComponent(addQ52and3Questions(q53CheckBox,"5.3  If you have chest pain as indicated in 5.1b, which of the following " +
+                "statements correctly mention your current status?"));
+    }
+
+    private void setTab6Data(VerticalLayout tab){
+        Label firstQ = new Label("6.1 Have you ever been tested positive for following conditions?");
+        firstQ.setSizeFull();
+        tab.addComponent(firstQ);
+        VerticalLayout firstQAnswerLayout = new VerticalLayout();
+        firstQAnswerLayout.setSizeFull();
+        firstQAnswerLayout.setMargin(new MarginInfo(false,true));
+        firstQAnswerLayout.addComponents(getQ61Questions("a. Raised blood pressure"),getQ61Questions("b. Raised blood cholesterol"),
+                getQ61Questions("c Raised blood sugar"),getQ61Questions("d. Reduced thyroxin level"));
+        tab.addComponent(firstQAnswerLayout);
+
+        Label secondQ = new Label("6.2 Please provide the details about your past disease conditions");
+        tab.addComponent(secondQ);
+
+        setQ62Header(tab);
+        VerticalLayout secondQAnswerLayout = new VerticalLayout();
+        secondQAnswerLayout.setSizeFull();
+        secondQAnswerLayout.setMargin(new MarginInfo(false,true));
+        tab.addComponent(secondQAnswerLayout);
+        secondQAnswerLayout.addComponent(setQ62("a.\tDiabetes mellitus"));
+        secondQAnswerLayout.addComponent(setQ62("b.\tHypertension"));
+        secondQAnswerLayout.addComponent(setQ62("c.\tDyslipidemia"));
+        secondQAnswerLayout.addComponent(setQ62("d.\tThyroid gland related diseases"));
+        secondQAnswerLayout.addComponent(setQ62("e.\tLiver diseases"));
+        secondQAnswerLayout.addComponent( setQ62("f.\tKidney disease"));
+        secondQAnswerLayout.addComponent(setQ62("g.\tAsthma/ wheezing"));
+        secondQAnswerLayout.addComponent(setQ62("h.\tAutoimmune diseases"));
+        secondQAnswerLayout.addComponent(setQ62("i.\tMetabolic syndrome"));
+        secondQAnswerLayout.addComponent(setQ62("j.\tRheumatic fever"));
+        secondQAnswerLayout.addComponent(setQ62("k.\tRheumatic heart disease"));
+        secondQAnswerLayout.addComponent(setQ62("l.\tG6PD deficiency"));
+        secondQAnswerLayout.addComponent(setQ62("m.\tHeart attack/ IHD"));
+        secondQAnswerLayout.addComponent(setQ62("n.\tStroke"));
+        secondQAnswerLayout.addComponent(setQ62("o.\tCongenital heart diseases"));
+        secondQAnswerLayout.addComponent(setQ62("p.\tArrhythmias "));
+        secondQAnswerLayout.addComponent(setQ62("q.\tOther heart diseases"));
+        secondQAnswerLayout.addComponent(setQ62("r.\tDepression"));
+        secondQAnswerLayout.addComponent(setQ62("s.\tOther mental health disorders"));
+
+        HorizontalLayout q63Layout = new HorizontalLayout();
+        q63Layout.setSizeFull();
+        Label q63Label = new Label("6.3 Have you been diagnosed as having anemia earlier?");
+        q63Label.setSizeFull();
+        ComboBox q63Combo = new ComboBox();
+        q63Combo.setSizeFull();
+        q63Combo.setItems("No","Yes, during a previous pregnancy","Yes, after giving birth during a previous pregnancy/ miscarriage",
+                "Yes, but not during pregnancy or postpartum period of a previous pregnancy");
+        q63Layout.addComponents(q63Label,q63Combo);
+        q63Layout.setExpandRatio(q63Label,3);
+        q63Layout.setExpandRatio(q63Combo,1);
+        tab.addComponent(q63Layout);
+
+        VerticalLayout dependentLayout = new VerticalLayout();
+        dependentLayout.setSizeFull();
+        tab.addComponent(dependentLayout);
+        dependentLayout.setMargin(false);
+        ComboBoxMultiselect<String> anemiaCombo =new ComboBoxMultiselect();
+        anemiaCombo.setItems(Arrays.asList("Dietary modifications to include iron rich foods","Iron tablets/ syrup supplements",
+                "Other vitamin supplements","Intravenous iron treatments","Blood transfusion"));
+        setTabData(dependentLayout,"6.4 If you ever had anemia previously, what were the treatments/ remedies you had? ",anemiaCombo);
+        dependentLayout.setVisible(false);
+        q63Combo.addValueChangeListener(valueChangeEvent -> {
+            if(valueChangeEvent.getValue() == null || String.valueOf(valueChangeEvent.getValue()).isEmpty() || valueChangeEvent.getValue().equals("No") ){
+                dependentLayout.setVisible(false);
+            }
+            else{
+                dependentLayout.setVisible(true);
+            }
+        });
+
+        ComboBox monthsCombo = new ComboBox();
+        monthsCombo.setSizeFull();
+        monthsCombo.setItems(getStringList(0,24));
+        setTabData(dependentLayout,"6.5 If you were given iron treatments for how long did you take it? ",monthsCombo);
+
+        HorizontalLayout layout = new HorizontalLayout();
+        layout.setSizeFull();
+        ComboBox yearCombo = new ComboBox("Years");
+        yearCombo.setSizeFull();
+        yearCombo.setItems(getStringList(0,20));
+        ComboBox monthCombo = new ComboBox("Months");
+        monthCombo.setItems(getStringList(0,12));
+        monthCombo.setSizeFull();
+        layout.addComponents(yearCombo,monthCombo);
+        setTabData(dependentLayout,"6.6 If you received any blood transfusions, how many months/years ago did you receive the last transfusion?",layout);
+
+        ComboBox investigationCombo = new ComboBox();
+        investigationCombo.setSizeFull();
+        investigationCombo.setItems(yesNoList);
+        setTabData(dependentLayout,"6.7 Did you have any investigations to confirm anemia was cured?",investigationCombo);
+
+        HorizontalLayout thalassemiaLayout = new HorizontalLayout();
+        thalassemiaLayout.setSizeFull();
+        Label thalLabel = new Label("6.8 Have you been screened for thalassemia?");
+        thalLabel.setSizeFull();
+        ComboBox thalassemiaCombo = new ComboBox();
+        thalassemiaCombo.setSizeFull();
+        thalassemiaCombo.setItems(yesNoList);
+        thalassemiaLayout.addComponents(thalLabel,thalassemiaCombo);
+        thalassemiaLayout.setExpandRatio(thalLabel,3);
+        thalassemiaLayout.setExpandRatio(thalassemiaCombo,1);
+        tab.addComponent(thalassemiaLayout);
+
+        VerticalLayout thalDependLayout = new VerticalLayout();
+        thalDependLayout.setSizeFull();
+        tab.addComponent(thalDependLayout);
+        thalDependLayout.setMargin(false);
+        thalDependLayout.setVisible(false);
+        thalassemiaCombo.addValueChangeListener(valueChangeEvent -> {
+            if(valueChangeEvent.getValue() == null  || valueChangeEvent.getValue().equals("No") || String.valueOf(valueChangeEvent.getValue()).isEmpty()){
+                thalDependLayout.setVisible(false);
+            }
+            else {
+                thalDependLayout.setVisible(true);
+            }
+        });
+
+        ComboBox thalassemiaYesCombo = new ComboBox();
+        thalassemiaYesCombo.setSizeFull();
+        thalassemiaYesCombo.setItems(Arrays.asList("No","Yes, I got a green color card (no thalassemia)","Yes, I got a pink color card ( thalassemia trait)",
+                "Yes, I have thalassemia intermedia","Yes, I have thalassemia major"));
+        setTabData(thalDependLayout,"6.9 If so what is the result?",thalassemiaYesCombo);
+
+        ComboBox bleedingCombo = new ComboBox();
+        bleedingCombo.setSizeFull();
+        bleedingCombo.setItems(yesNoList);
+        setTabData(tab,"6.10 Within last six months did notice bleeding while passing stools?",bleedingCombo);
+
+        ComboBox blackCombo = new ComboBox();
+        blackCombo.setSizeFull();
+        blackCombo.setItems(yesNoList);
+        setTabData(tab,"6.11 Within the last six months did you pass black colored tar like stools?",blackCombo);
+
+        ComboBox wormCombo = new ComboBox();
+        wormCombo.setSizeFull();
+        wormCombo.setItems(yesNoList);
+        setTabData(tab,"6.12 Have you taken worm treatment in last six months? ",wormCombo);
+    }
+
+    private void setQ62Header(VerticalLayout tab){
+        HorizontalLayout layout = new HorizontalLayout();
+        layout.setSizeFull();
+
+        Label label = new Label("Are you diagnosed with this disease");
+        label.setSizeFull();
+        Label label1 = new Label("Do you have any documentary evidence of diagnosis?");
+        label1.setSizeFull();
+        Label label2 = new Label("When was the disease diagnosed? (Year)");
+        label2.setSizeFull();
+        Label label3 = new Label("Do you take medications for this disease? ");
+        label3.setSizeFull();
+        Label label4 = new Label("Where are you being followed up?");
+        label4.setSizeFull();
+        Label label5 = new Label(" ");
+        label5.setSizeFull();
+        layout.addComponents(label5,label,label1,label2,label3,label4);
+        layout.setExpandRatio(label5,2);
+        layout.setExpandRatio(label,1);
+        layout.setExpandRatio(label1,1);
+        layout.setExpandRatio(label2,1);
+        layout.setExpandRatio(label3,1);
+        layout.setExpandRatio(label4,1);
+        tab.addComponent(layout);
+    }
+
+    private HorizontalLayout setQ62(String question){
+
+        HorizontalLayout layout = new HorizontalLayout();
+        layout.setSizeFull();
+        Label label = new Label(question);
+        label.setSizeFull();
+
+        List<String> yesNoList = Arrays.asList("Yes","No");
+        ComboBox diagnosedCombo = new ComboBox();
+        diagnosedCombo.setItems(yesNoList);
+        diagnosedCombo.setSizeFull();
+
+        ComboBox documentaryCombo = new ComboBox();
+        documentaryCombo.setItems(yesNoList);
+        documentaryCombo.setSizeFull();
+
+        ComboBox yearCombo = new ComboBox();
+        yearCombo.setItems(getStringList(2000,2019));
+        yearCombo.setSizeFull();
+
+        ComboBox medicationsCombo = new ComboBox();
+        medicationsCombo.setItems(yesNoList);
+        medicationsCombo.setSizeFull();
+
+        ComboBox placeCombo = new ComboBox();
+        placeCombo.setItems(Arrays.asList("Government sector","Private sector","Self-medicate","Ayurveda/ Indigenous","No follow up"));
+        placeCombo.setSizeFull();
+
+        HorizontalLayout dependentLayout = new HorizontalLayout();
+        dependentLayout.setSizeFull();
+        dependentLayout.addComponents(documentaryCombo,yearCombo,medicationsCombo,placeCombo);
+        dependentLayout.setEnabled(false);
+        diagnosedCombo.addValueChangeListener(valueChangeEvent -> {
+            if(valueChangeEvent.getValue() == null || !valueChangeEvent.getValue().equals("Yes")){
+                dependentLayout.setEnabled(false);
+            }
+            else{
+                dependentLayout.setEnabled(true);
+            }
+        });
+
+        layout.addComponents(label,diagnosedCombo,dependentLayout);
+        layout.setExpandRatio(label,2);
+        layout.setExpandRatio(diagnosedCombo,1);
+        layout.setExpandRatio(dependentLayout,4);
+        return  layout;
+    }
+
+    private HorizontalLayout getQ61Questions(String question){
+
+        HorizontalLayout layout = new HorizontalLayout();
+        layout.setSizeFull();
+        Label label = new Label(question);
+        label.setSizeFull();
+        ComboBox yesNoCombo = new ComboBox();
+        yesNoCombo.setSizeFull();
+        yesNoCombo.setItems(Arrays.asList("Yes","No"));
+        layout.addComponents(label,yesNoCombo);
+        layout.setExpandRatio(label,2);
+        layout.setExpandRatio(yesNoCombo,1);
+        return layout;
+    }
+
+    private HorizontalLayout addQ52and3Questions(CheckBoxGroup<String> multi,String questionStr){
+        HorizontalLayout q52Layout = new HorizontalLayout();
+        q52Layout.setSizeFull();
+
+        Label question = new Label(questionStr);
+        question.setSizeFull();
+
+        multi.setSizeFull();
+        q52Layout.addComponents(question,multi);
+        q52Layout.setExpandRatio(question,1);
+        q52Layout.setExpandRatio(multi,2);
+        return q52Layout;
+    }
+
+    private void addQ5Questions(String question,VerticalLayout tab){
+
+        HorizontalLayout layout = new HorizontalLayout();
+        layout.setSizeFull();
+        Label questionLabel = new Label(question);
+        questionLabel.setSizeFull();
+        layout.addComponents(questionLabel,getSymptomsLayouts(),getSymptomsLayouts());
+        tab.addComponent(layout);
+    }
+
+    private HorizontalLayout getSymptomsLayouts(){
+        ComboBox yesNoCombo = new ComboBox();
+        yesNoCombo.setSizeFull();
+        yesNoCombo.setItems(Arrays.asList("Yes","No"));
+
+        ComboBox frequencyCombo = new ComboBox();
+        frequencyCombo.setSizeFull();
+        frequencyCombo.setItems(Arrays.asList("Once a month","2-4 times per month","Several times per month","Almost daily"));
+
+        ComboBox worsenYesNoCombo = new ComboBox();
+        worsenYesNoCombo.setSizeFull();
+        worsenYesNoCombo.setItems(Arrays.asList("Yes","No"));
+
+        ComboBox adviceCombo = new ComboBox();
+        adviceCombo.setSizeFull();
+        adviceCombo.setItems(Arrays.asList("Yes","No"));
+
+        HorizontalLayout dependentLayout = new HorizontalLayout();
+        dependentLayout.setSizeFull();
+        dependentLayout.addComponents(frequencyCombo,worsenYesNoCombo,adviceCombo);
+        dependentLayout.setEnabled(false);
+
+        yesNoCombo.addValueChangeListener(valueChangeEvent -> {
+           if(valueChangeEvent.getValue() == null || !valueChangeEvent.getValue().equals("Yes")){
+               dependentLayout.setEnabled(false);
+           }
+           else{
+               dependentLayout.setEnabled(true);
+           }
+        });
+
+        HorizontalLayout beforeConceptionLayout = new HorizontalLayout();
+        beforeConceptionLayout.setSizeFull();
+        beforeConceptionLayout.addComponents(yesNoCombo,dependentLayout);
+        beforeConceptionLayout.setExpandRatio(yesNoCombo,1);
+        beforeConceptionLayout.setExpandRatio(dependentLayout,3);
+        return beforeConceptionLayout;
+    }
+
 
     private void dependentLayoutAdd(VerticalLayout tab,ComboBox mainComb,ComboBox dependentCombo,String labelVal){
         HorizontalLayout screenLayout = new HorizontalLayout();
