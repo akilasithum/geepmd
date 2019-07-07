@@ -185,6 +185,10 @@ public class SideMenu extends HorizontalLayout {
         setExpandRatio(contentArea, 1);
     }
 
+    public void showHideMenu(boolean isVisible){
+        menuArea.setVisible(isVisible);
+    }
+
     /**
 	 * Adds a menu entry. The given handler is called when the user clicks the
 	 * entry.

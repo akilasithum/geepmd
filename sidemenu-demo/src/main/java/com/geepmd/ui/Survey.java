@@ -2,6 +2,7 @@ package com.geepmd.ui;
 
 import com.vaadin.data.HasValue;
 import com.vaadin.navigator.View;
+import com.vaadin.navigator.ViewChangeListener;
 import com.vaadin.shared.ui.MarginInfo;
 import com.vaadin.ui.*;
 import com.vaadin.ui.themes.ValoTheme;
@@ -12,8 +13,16 @@ import java.util.*;
 public class Survey extends VerticalLayout implements View {
 
     List<String> yesNoList = Arrays.asList("Yes","No");
+    MarginInfo leftMargin = new MarginInfo(false,true,false,true);
     public Survey(){
         createLayout();
+    }
+
+    public void enter(ViewChangeListener.ViewChangeEvent viewChangeEvent) {
+        Object userName = UI.getCurrent().getSession().getAttribute("userName");
+        if (userName == null || userName.toString().isEmpty()) {
+            getUI().getNavigator().navigateTo("Login");
+        }
     }
 
     private void createLayout(){
@@ -49,6 +58,8 @@ public class Survey extends VerticalLayout implements View {
         tab6.setSizeFull();
         VerticalLayout tab7 = new VerticalLayout();
         tab7.setSizeFull();
+        VerticalLayout tab8 = new VerticalLayout();
+        tab8.setSizeFull();
 
         tabsheet.addTab(tab1,"1.SOCIO – DEMOGRAPHIC DATA");
         tabsheet.addTab(tab2,"2. GYNECOLOGICAL HISTORY");
@@ -56,7 +67,8 @@ public class Survey extends VerticalLayout implements View {
         tabsheet.addTab(tab4,"4. CURRENT PREGNANCY");
         tabsheet.addTab(tab5,"5. SYMPTOMS");
         tabsheet.addTab(tab6,"6. PAST MEDICAL HISTORY");
-        tabsheet.addTab(tab7,"7. FAMILY HISTORY ");
+        tabsheet.addTab(tab7,"7. FAMILY HISTORY");
+        tabsheet.addTab(tab8,"8. ANNEX");
 
         setTab1Data(tab1);
         setTab2Data(tab2);
@@ -64,6 +76,8 @@ public class Survey extends VerticalLayout implements View {
         setTab4Data(tab4);
         setTab5Data(tab5);
         setTab6Data(tab6);
+        setTab7Data(tab7);
+        setTab8Data(tab8);
     }
 
     private void setTab1Data(VerticalLayout tab1){
@@ -391,13 +405,13 @@ public class Survey extends VerticalLayout implements View {
                 q37Layout.setVisible(false);
 
                 supplementsAfterCombo.addValueChangeListener(valueChangeEvent1 -> {
-                   if(valueChangeEvent1.getValue() == null || valueChangeEvent1.getValue().
-                           equals("No, I did not take supplements after giving birth")) {
-                       q37Layout.setVisible(false);
-                   }
-                   else{
-                       q37Layout.setVisible(true);
-                   }
+                    if(valueChangeEvent1.getValue() == null || valueChangeEvent1.getValue().
+                            equals("No, I did not take supplements after giving birth")) {
+                        q37Layout.setVisible(false);
+                    }
+                    else{
+                        q37Layout.setVisible(true);
+                    }
                 });
 
 
@@ -545,9 +559,9 @@ public class Survey extends VerticalLayout implements View {
 
         CheckBoxGroup<String> q53CheckBox = new CheckBoxGroup<>();
         q53CheckBox.setItems(Arrays.asList("a. Ordinary physical activity does not cause angina, such as walking and climbing stairs. Angina with" +
-                " strenuous or rapid or prolonged exertion at work or recreation. ," +
-                "b. Slight limitation of ordinary activity due to angina. Walking or climbing stairs rapidly, walking uphill, " +
-                "walking or stair climbing after meals, or in cold, or in wind, or under emotional stress, or only during the few hours after awakening.",
+                        " strenuous or rapid or prolonged exertion at work or recreation. ," +
+                        "b. Slight limitation of ordinary activity due to angina. Walking or climbing stairs rapidly, walking uphill, " +
+                        "walking or stair climbing after meals, or in cold, or in wind, or under emotional stress, or only during the few hours after awakening.",
                 "c.\tMarked limitation of ordinary physical activity due to angina. Walking one or two blocks on the level and climbing one " +
                         "flight of stairs in normal conditions and at normal pace.",
                 "d. Inability to carry on any physical activity without discomfort, anginal syndrome may be present at rest. "));
@@ -694,6 +708,129 @@ public class Survey extends VerticalLayout implements View {
         setTabData(tab,"6.12 Have you taken worm treatment in last six months? ",wormCombo);
     }
 
+    private void setTab7Data(VerticalLayout tab){
+
+        Label q1Header = new Label("7.1 Is your mother, father or a sibling diagnosed to have following conditions?");
+        q1Header.setSizeFull();
+        tab.addComponent(q1Header);
+
+        VerticalLayout questionLayout = new VerticalLayout();
+        questionLayout.setSizeFull();
+        questionLayout.setMargin(true);
+        tab.addComponent(questionLayout);
+        questionLayout.setWidth("60%");
+        setYesNoQuestions(questionLayout,"a.\tDiabetes mellitus");
+        setYesNoQuestions(questionLayout,"b.\tStroke");
+        setYesNoQuestions(questionLayout,"c.\tHypertension");
+        setYesNoQuestions(questionLayout,"d.\tLiver diseases");
+        setYesNoQuestions(questionLayout,"e.\tDyslipidemia");
+        setYesNoQuestions(questionLayout,"f.\tOther Cardiac disease conditions");
+        setYesNoQuestions(questionLayout,"g.\tHeart attack/ IHD");
+        setYesNoQuestions(questionLayout,"h.\tMental disorders ");
+        setYesNoQuestions(questionLayout,"i.\tCKD/ Renal Impairment");
+    }
+
+    private void setTab8Data(VerticalLayout tab){
+
+        Label q1Label = new Label("1. Drug History checklist");
+        q1Label.setSizeFull();
+        Label q1Label1 = new Label("1.1 Are you on/have you used any of the following medications?");
+        q1Label1.setSizeFull();
+        tab.addComponents(q1Label,q1Label1);
+
+        HorizontalLayout qHeaderLayout = new HorizontalLayout();
+        qHeaderLayout.setSizeFull();
+        Label tabletLabel = new Label("Tablet/Capsule");
+        tabletLabel.setSizeFull();
+        Label yesNoLabel = new Label("Yes/No");
+        yesNoLabel.setSizeFull();
+        Label startLabel = new Label("When did you start using it?");
+        startLabel.setSizeFull();
+        Label stopLabel = new Label("If stopped, when?");
+        stopLabel.setSizeFull();
+        Label documentLabel = new Label("Documents available or not?");
+        documentLabel.setSizeFull();
+        qHeaderLayout.addComponents(tabletLabel,yesNoLabel,startLabel,stopLabel,documentLabel);
+        VerticalLayout questionLayout = new VerticalLayout();
+        questionLayout.setSizeFull();
+        questionLayout.setMargin(leftMargin);
+        tab.addComponent(questionLayout);
+        questionLayout.addComponent(qHeaderLayout);
+        createTab8Questions(questionLayout,"Aspirin");
+        createTab8Questions(questionLayout,"Statin");
+        createTab8Questions(questionLayout,"Warfarin");
+        createTab8Questions(questionLayout,"Enoxaparin");
+        createTab8Questions(questionLayout,"Hormonal therapy");
+        createTab8Questions(questionLayout,"Steroids");
+        createTab8Questions(questionLayout,"Sodium valproate");
+        createTab8Questions(questionLayout,"Amiodarone");
+        createTab8Questions(questionLayout,"Tamoxifen");
+        createTab8Questions(questionLayout,"Antipsychotics");
+        createTab8Questions(questionLayout,"ACE Inhibitors");
+        createTab8Questions(questionLayout,"Angiotensin receptor blockers");
+        createTab8Questions(questionLayout,"Clomiphene Citrate");
+    }
+
+    private void createTab8Questions(VerticalLayout tab,String question){
+
+        HorizontalLayout layout = new HorizontalLayout();
+        layout.setSizeFull();
+        Label questionLabel = new Label(question);
+        questionLabel.setSizeFull();
+        ComboBox yesNoCombo =new ComboBox();
+        yesNoCombo.setSizeFull();
+        yesNoCombo.setItems(yesNoList);
+        yesNoCombo.setWidth("70%");
+        HorizontalLayout dependentQLayout = new HorizontalLayout();
+        dependentQLayout.setSizeFull();
+        ComboBox documentCombo = new ComboBox();
+        documentCombo.setSizeFull();
+        documentCombo.setItems(yesNoList);
+        documentCombo.setWidth("70%");
+        dependentQLayout.addComponents(getYearMonthComboLayout(),getYearMonthComboLayout(),documentCombo);
+        dependentQLayout.setEnabled(false);
+        yesNoCombo.addValueChangeListener(valueChangeEvent -> {
+            if(valueChangeEvent.getValue() == null || valueChangeEvent.getValue().toString().isEmpty() ||
+                    valueChangeEvent.getValue().equals("No")){
+                dependentQLayout.setEnabled(false);
+            }
+            else{
+                dependentQLayout.setEnabled(true);
+            }
+        });
+        layout.addComponents(questionLabel,yesNoCombo,dependentQLayout);
+        layout.setExpandRatio(questionLabel,1);
+        layout.setExpandRatio(yesNoCombo,1);
+        layout.setExpandRatio(dependentQLayout,3);
+        tab.addComponent(layout);
+    }
+
+    private HorizontalLayout getYearMonthComboLayout(){
+        HorizontalLayout yearMonthLayout = new HorizontalLayout();
+        yearMonthLayout.setSizeFull();
+        ComboBox yearCombo = new ComboBox();
+        yearCombo.setSizeFull();
+        yearCombo.setItems(getStringList(1990,2019));
+        ComboBox monthCombo = new ComboBox();
+        monthCombo.setSizeFull();
+        monthCombo.setItems(getStringList(1,12));
+        yearMonthLayout.addComponents(yearCombo,monthCombo);
+        return yearMonthLayout;
+    }
+
+    private void setYesNoQuestions(VerticalLayout layout,String question){
+
+        HorizontalLayout horizontalLayout = new HorizontalLayout();
+        horizontalLayout.setSizeFull();
+        layout.addComponent(horizontalLayout);
+        Label questionLabel = new Label(question);
+        questionLabel.setSizeFull();
+        ComboBox yesNoCombo = new ComboBox();
+        yesNoCombo.setSizeFull();
+        yesNoCombo.setItems(yesNoList);
+        horizontalLayout.addComponents(questionLabel,yesNoCombo);
+    }
+
     private void setQ62Header(VerticalLayout tab){
         HorizontalLayout layout = new HorizontalLayout();
         layout.setSizeFull();
@@ -830,12 +967,12 @@ public class Survey extends VerticalLayout implements View {
         dependentLayout.setEnabled(false);
 
         yesNoCombo.addValueChangeListener(valueChangeEvent -> {
-           if(valueChangeEvent.getValue() == null || !valueChangeEvent.getValue().equals("Yes")){
-               dependentLayout.setEnabled(false);
-           }
-           else{
-               dependentLayout.setEnabled(true);
-           }
+            if(valueChangeEvent.getValue() == null || !valueChangeEvent.getValue().equals("Yes")){
+                dependentLayout.setEnabled(false);
+            }
+            else{
+                dependentLayout.setEnabled(true);
+            }
         });
 
         HorizontalLayout beforeConceptionLayout = new HorizontalLayout();
