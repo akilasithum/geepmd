@@ -38,7 +38,7 @@ public class LoginPage extends VerticalLayout implements View {
         setMargin(noMargin);
 
         Image logo = new Image();
-        logo.setSource(new ThemeResource("images/logo.png"));
+        logo.setSource(new ThemeResource("images/logo.jpg"));
 
         VerticalLayout content = new VerticalLayout();
         logo.setStyleName("profilepic");

@@ -80,13 +80,35 @@ public class Tab1 extends VerticalLayout {
         setTabData(languangeMap.get("1.2"),ethnicityComboBoxMother,ethnicityComboBoxFather);
 
         understandingLevelComboMother = new ComboBox();
+        understandingLevelComboMother.setEnabled(false);
         understandingLevelComboFather = new ComboBox();
+        understandingLevelComboFather.setEnabled(false);
         understandingLevelComboMother.setItems(getQ2Answer("1.3"));
         understandingLevelComboFather.setItems(getQ2Answer("1.3"));
         understandingLevelComboMother.setDescription(getAnswerDesc("1.3"));
         understandingLevelComboFather.setDescription(getAnswerDesc("1.3"));
         setTabData(languangeMap.get("1.3"),
                 understandingLevelComboMother,understandingLevelComboFather);
+
+        ethnicityComboBoxMother.addValueChangeListener(event -> {
+            Answer answer = (Answer)event.getValue();
+            if(answer == null || answer.getId() == 1){
+                understandingLevelComboMother.setEnabled(false);
+            }
+            else{
+                understandingLevelComboMother.setEnabled(true);
+            }
+        });
+
+        ethnicityComboBoxFather.addValueChangeListener(event -> {
+            Answer answer = (Answer)event.getValue();
+            if(answer == null || answer.getId() == 1){
+                understandingLevelComboFather.setEnabled(false);
+            }
+            else{
+                understandingLevelComboFather.setEnabled(true);
+            }
+        });
 
         religionMotherCombo = new ComboBox();
         religionFatherCombo = new ComboBox();
@@ -138,12 +160,14 @@ public class Tab1 extends VerticalLayout {
         maritualStatusCombo.addValueChangeListener((HasValue.ValueChangeListener) valueChangeEvent -> {
             Answer answer = (Answer)valueChangeEvent.getValue();
             if(answer != null && answer.getId() == 1){
-                addComponent(marriedAgeLayout);
+                marriedAgeLayout.setVisible(true);
             }
             else{
-                removeComponent(marriedAgeLayout);
+                marriedAgeLayout.setVisible(false);
             }
         });
+        addComponent(marriedAgeLayout);
+        marriedAgeLayout.setVisible(false);
 
         Button nextBtn = new Button("Next");
         nextBtn.setIcon(VaadinIcons.ARROW_FORWARD);
@@ -176,7 +200,7 @@ public class Tab1 extends VerticalLayout {
         return desc;
     }
 
-    private void setTabData(String question, Component comp1,Component comp2){
+    private HorizontalLayout setTabData(String question, Component comp1,Component comp2){
         HorizontalLayout headerLayout = new HorizontalLayout();
         headerLayout.setSizeFull();
         Label emptyLable = new Label(question);
@@ -196,6 +220,7 @@ public class Tab1 extends VerticalLayout {
             headerLayout.setExpandRatio(comp1,2);
         }
         addComponent(headerLayout);
+        return headerLayout;
     }
 
     public BaselineQ1 getAnswers(int motherId){

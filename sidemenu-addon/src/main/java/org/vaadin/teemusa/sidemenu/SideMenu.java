@@ -387,6 +387,9 @@ public class SideMenu extends HorizontalLayout {
             logoWrapper.removeComponent(menuImage);
         }
         menuImage = new Image(caption, logo);
+        menuImage.setWidth("200px");
+        menuImage.setHeight("200px");
+        menuImage.setStyleName("mainlogo");
         logoWrapper.addComponent(menuImage);
     }
 

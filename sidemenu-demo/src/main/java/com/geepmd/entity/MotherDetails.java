@@ -16,7 +16,6 @@ public class MotherDetails {
     private String phmDivision;
     private String gnDivision;
     private String antenatalClinic;
-    private String dsDivision;
 
     public int getMotherRegNo() {
         return motherRegNo;
@@ -114,11 +113,4 @@ public class MotherDetails {
         this.antenatalClinic = antenatalClinic;
     }
 
-    public String getDsDivision() {
-        return dsDivision;
-    }
-
-    public void setDsDivision(String dsDivision) {
-        this.dsDivision = dsDivision;
-    }
 }

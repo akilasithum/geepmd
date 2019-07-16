@@ -4,10 +4,7 @@ import com.geepmd.utils.Answer;
 import com.geepmd.utils.EnglishMap;
 import com.geepmd.utils.SinhalaMap;
 import com.vaadin.shared.ui.MarginInfo;
-import com.vaadin.ui.ComboBox;
-import com.vaadin.ui.HorizontalLayout;
-import com.vaadin.ui.Label;
-import com.vaadin.ui.VerticalLayout;
+import com.vaadin.ui.*;
 
 import java.util.List;
 import java.util.Map;
@@ -20,6 +17,7 @@ public class Tab9 extends VerticalLayout {
     Map<String,String> q9Map;
     Map<String,String> fields;
     String language;
+    VerticalLayout questionLayout;
 
     public Tab9(String language){
         this.language = language;
@@ -42,6 +40,12 @@ public class Tab9 extends VerticalLayout {
         Label q1Label = new Label(q9Map.get("9.1"));
         q1Label.setSizeFull();
         addComponents(q1Label);
+        CheckBox noToAll = new CheckBox(fields.get("9.1"));
+        addComponent(noToAll);
+        noToAll.setStyleName("checkBoxMargin");
+        noToAll.addValueChangeListener(event -> {
+            setNoToAllCombo(event.getValue());
+        });
 
         HorizontalLayout qHeaderLayout = new HorizontalLayout();
         qHeaderLayout.setSizeFull();
@@ -56,7 +60,7 @@ public class Tab9 extends VerticalLayout {
         Label documentLabel = new Label(fields.get("e"));
         documentLabel.setSizeFull();
         qHeaderLayout.addComponents(tabletLabel,yesNoLabel,startLabel,stopLabel,documentLabel);
-        VerticalLayout questionLayout = new VerticalLayout();
+        questionLayout = new VerticalLayout();
         questionLayout.setSizeFull();
         questionLayout.setMargin(new MarginInfo(false,false,false,true));
         addComponent(questionLayout);
@@ -123,5 +127,22 @@ public class Tab9 extends VerticalLayout {
         yearMonthLayout.addComponents(yearCombo,monthCombo);
         yearMonthLayout.setMargin(new MarginInfo(false,false,false,true));
         return yearMonthLayout;
+    }
+
+    private void setNoToAllCombo(boolean isNo){
+
+        for(int i = 1;i<questionLayout.getComponentCount();i++){
+            HorizontalLayout layout = (HorizontalLayout)questionLayout.getComponent(i);
+            ComboBox comboBox = (ComboBox) layout.getComponent(1);
+            Answer no = new Answer();
+            no.setId(2);
+            no.setDescription("2.නැත");
+            if(isNo) {
+                comboBox.setValue(no);
+            }
+            else {
+                comboBox.clear();
+            }
+        }
     }
 }

@@ -101,7 +101,7 @@ public class Tab3 extends VerticalLayout {
                     q32MainLayout.addComponent(layout);
                     layout.addComponent(new Label("G"+i));
                     ComboBox ageCombo = new ComboBox();
-                    ageCombo.setItems(getStringList(15,45));
+                    ageCombo.setItems(getStringList(13,45));
                     ageCombo.setSizeFull();
                     layout.addComponent(ageCombo);
 
@@ -119,7 +119,7 @@ public class Tab3 extends VerticalLayout {
 
                     ComboBox poaCombo = new ComboBox();
                     poaCombo.setSizeFull();
-                    poaCombo.setItems(getStringList(0,20));
+                    poaCombo.setItems(getReverseStrList(41,0));
                     layout.addComponent(poaCombo);
 
                     ComboBox deliveryCombo = new ComboBox();
@@ -131,6 +131,12 @@ public class Tab3 extends VerticalLayout {
                     TextField weightFld = new TextField();
                     weightFld.setSizeFull();
                     layout.addComponent(weightFld);
+                    weightFld.addValueChangeListener(event -> {
+                        if(event.getValue() != null && !weightLimit(event.getValue())){
+                            weightFld.clear();
+                            Notification.show("Weight should be in between 1.5Kg and 6kg", Notification.Type.WARNING_MESSAGE);
+                        }
+                    });
 
                     ComboBoxMultiselect<Answer> neonatalCombo =new ComboBoxMultiselect();
                     neonatalCombo.setSizeFull();
@@ -219,6 +225,23 @@ public class Tab3 extends VerticalLayout {
             survey.SelectTab(3);
         });
         addComponent(nextBtn);
+    }
+
+    private boolean weightLimit(String value){
+        try{
+            float val = Float.parseFloat(value);
+            if(value.length() == 1){
+                return val >= 1 || val <= 6;
+            }
+            else if(value.length() == 2 && value.contains(".")){
+                return true;
+            }
+            else
+            return val >= 1.5 && val < 6.0;
+        }
+        catch (Exception e){
+                return false;
+        }
     }
 
     public List<BaselineQ32> getQ32Answers(int motherId){

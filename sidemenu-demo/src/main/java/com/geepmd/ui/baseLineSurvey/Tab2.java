@@ -269,11 +269,27 @@ public class Tab2 extends VerticalLayout {
             TextField label = new TextField();
             label.setSizeFull();
             fieldLayout.addComponent(label);
+            label.addValueChangeListener(event -> {
+                if(!isInteger(event.getValue())){
+                    label.setValue("");
+                    Notification.show("Enter numeric value between 1 and 9", Notification.Type.WARNING_MESSAGE);
+                }
+            });
         }
         layout.addComponent(fieldLayout);
         layout.setExpandRatio(logo,1);
         layout.setExpandRatio(fieldLayout,9);
         return layout;
+    }
+
+    private boolean isInteger(String value){
+        try{
+            int val = Integer.parseInt(value);
+            return val >= 0 && val <=9;
+        }
+        catch (Exception e){
+            return false;
+        }
     }
 
     private HorizontalLayout addActivitiesTable(String labelVal){

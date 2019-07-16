@@ -37,7 +37,7 @@ public class DemoUI extends UI {
 
 	private SideMenu sideMenu = new SideMenu();
 	private boolean logoVisible = true;
-	private ThemeResource logo = new ThemeResource("images/logo.png");
+	private ThemeResource logo = new ThemeResource("images/logo.jpg");
 	private String menuCaption = "";
 	Navigator navigator;
 

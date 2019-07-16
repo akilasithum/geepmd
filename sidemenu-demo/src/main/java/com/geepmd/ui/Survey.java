@@ -47,7 +47,7 @@ public class Survey extends VerticalLayout implements View {
         connection = DBConnection.getInstance();
         tabsheet = new TabSheet();
         Label header = new Label("Baseline Survey");
-        header.setStyleName(ValoTheme.LABEL_H1);
+        header.setStyleName("surveyHeader");
         addComponent(header);
         language = "SN";
 

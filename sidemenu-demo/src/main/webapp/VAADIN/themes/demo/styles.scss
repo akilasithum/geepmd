@@ -4,11 +4,56 @@ $gray: #d1d1cf;
 $green: #40b527;
 $darkgreen: darken($green, 30%);
 
+
+
 // Prefix all selectors in your theme with .demo
 .demo {
 
 	// Include valo theme styles in your theme
 	@include valo;
+
+	.valo-menu-responsive[width-range~="0-800px"] .valo-menu-title {
+		display: none;
+	}
+
+	.valo-menu-responsive[width-range~="0-850px"] .hideWhenSmall{
+    display: none;
+  	}
+
+	.valo-menu-responsive[width-range~="0-850px"] .mobileSmallHeader{
+		display: inline;
+	}
+
+	.valo-menu-responsive[width-range~="0-850px"] .unilogo{
+		width: 40px;
+	}
+
+	.valo-menu-responsive[width-range~="0-900px"] .padHeader{
+		font-size: 14px;
+	}
+
+	.valo-menu-responsive[width-range~="0-1100px"] .mainlogo{
+		width: 50px !important;
+		height: 50px !important;
+	}
+
+	.valo-menu-responsive[width-range~="0-760px"] .btnAlignment{
+		margin-top: 80px;
+	}
+
+	.mobileSmallHeader{
+		display: none;
+	}
+
+	.surveyHeader{
+		font-size: 22px;
+		font-weight: bold;
+	}
+
+	.checkBoxMargin{
+		margin-left: 30px;
+	}
+
 
 	// You can style your demo app right here
 	.demoContentLayout {
@@ -38,6 +83,10 @@ $darkgreen: darken($green, 30%);
 	.logoImage[width-range~="100px-0px"]{
 		visibility: hidden;
 	}
+
+	/*@media (max-width: 1200px) {
+		.logoImage { display: none; }
+	}*/
 
 	.padHeader{
 		text-align: center;

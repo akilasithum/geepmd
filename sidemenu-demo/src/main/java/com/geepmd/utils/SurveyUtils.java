@@ -16,6 +16,14 @@ public class SurveyUtils {
         return intList;
     }
 
+    public static List<String> getReverseStrList(int start,int end){
+        List<String> intList = new ArrayList<>();
+        for(int i = start;i >= end;i--){
+            intList.add(i+"");
+        }
+        return intList;
+    }
+
     public static HorizontalLayout setTabData(String question, Component comp1){
         HorizontalLayout headerLayout = new HorizontalLayout();
         headerLayout.setSizeFull();
