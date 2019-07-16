@@ -1,0 +1,39 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+        "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping>
+    <class name="com.geepmd.entity.MotherDetails" table="mother_details" catalog="">
+        <id name="motherRegNo" type="java.lang.Integer">
+            <column name="motherRegNo" />
+            <generator class="identity" />
+        </id>
+        <property name="motherName" type="java.lang.String">
+            <column name="motherName"  />
+        </property>
+        <property name="age" type="java.lang.Integer">
+            <column name="age"  />
+        </property>
+        <property name="date" type="java.util.Date">
+            <column name="date"  />
+        </property>
+        <property name="examinerRegNo" type="java.lang.String">
+            <column name="examinerRegNo" length="50"/>
+        </property>
+        <property name="nicNo" type="java.lang.String">
+            <column name="nicNo"  length="50"/>
+        </property>
+        <property name="motherDocumentRegNo" type="java.lang.String">
+            <column name="motherDocumentRegNo" length="50" />
+        </property>
+        <property name="startTime" type="java.lang.String">
+            <column name="startTime"  length="50"/>
+        </property>
+        <property name="mohDivision" type="java.lang.String">
+            <column name="mohDivision" length="50" />
+        </property>
+        <property name="phmDivision" type="java.lang.String">
+            <column name="phmDivision"  length="50"/>
+        </property>
+    </class>
+</hibernate-mapping>

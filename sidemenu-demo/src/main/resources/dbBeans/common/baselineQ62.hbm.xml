@@ -1,0 +1,33 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+        "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping>
+    <class name="com.geepmd.entity.BaselineQ62" table="baseline_q62" catalog="">
+        <id name="baselineQ62Id" type="java.lang.Integer">
+            <column name="baselineQ62Id" />
+            <generator class="identity" />
+        </id>
+        <property name="question" type="java.lang.String">
+            <column name="question" length="10"/>
+        </property>
+        <property name="motherId" type="java.lang.Integer">
+            <column name="motherId" />
+        </property>
+        <property name="m1" type="java.lang.Integer">
+            <column name="m1" />
+        </property>
+        <property name="m2" type="java.lang.Integer">
+            <column name="m2" />
+        </property>
+        <property name="m3" type="java.lang.Integer">
+            <column name="m3" />
+        </property>
+        <property name="m4" type="java.lang.Integer">
+            <column name="m4" />
+        </property>
+        <property name="m5" type="java.lang.Integer">
+            <column name="m5" />
+        </property>
+    </class>
+</hibernate-mapping>

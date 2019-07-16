@@ -1,0 +1,42 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+        "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping>
+    <class name="com.geepmd.entity.BaselineQ26" table="baseline_q26" catalog="">
+        <id name="baselineQ26Id" type="java.lang.Integer">
+            <column name="baselineQ26Id" />
+            <generator class="identity" />
+        </id>
+        <property name="surveyId" type="java.lang.Integer">
+            <column name="surveyId" />
+        </property>
+        <property name="d1" type="java.lang.Integer">
+            <column name="d1" />
+        </property>
+        <property name="d2" type="java.lang.Integer">
+            <column name="d2" />
+        </property>
+        <property name="d3" type="java.lang.Integer">
+            <column name="d3" />
+        </property>
+        <property name="d4" type="java.lang.Integer">
+            <column name="d4" />
+        </property>
+        <property name="d5" type="java.lang.Integer">
+            <column name="d5" />
+        </property>
+        <property name="d6" type="java.lang.Integer">
+            <column name="d6" />
+        </property>
+        <property name="d7" type="java.lang.Integer">
+            <column name="d7" />
+        </property>
+        <property name="d8" type="java.lang.Integer">
+            <column name="d8" />
+        </property>
+        <property name="d9" type="java.lang.Integer">
+            <column name="d9" />
+        </property>
+    </class>
+</hibernate-mapping>

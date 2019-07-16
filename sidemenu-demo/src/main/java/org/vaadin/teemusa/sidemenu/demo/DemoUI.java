@@ -2,10 +2,7 @@ package org.vaadin.teemusa.sidemenu.demo;
 
 import javax.servlet.annotation.WebServlet;
 
-import com.geepmd.ui.Dashboard;
-import com.geepmd.ui.LoginPage;
-import com.geepmd.ui.MotherRegistration;
-import com.geepmd.ui.Survey;
+import com.geepmd.ui.*;
 import com.vaadin.server.*;
 import org.vaadin.dialogs.ConfirmDialog;
 import org.vaadin.teemusa.sidemenu.SideMenu;
@@ -41,7 +38,7 @@ public class DemoUI extends UI {
 	private SideMenu sideMenu = new SideMenu();
 	private boolean logoVisible = true;
 	private ThemeResource logo = new ThemeResource("images/logo.png");
-	private String menuCaption = "BASELINE SURVEY";
+	private String menuCaption = "";
 	Navigator navigator;
 
 	@Override
@@ -49,30 +46,33 @@ public class DemoUI extends UI {
 		setContent(sideMenu);
 		navigator = new Navigator(this, sideMenu);
 		setNavigator(navigator);
-
-		// NOTE: Navigation and custom code menus should not be mixed.
-		// See issue #8
-
 		navigator.addView("Home", Dashboard.class);
 		navigator.addView("MotherRegistration", MotherRegistration.class);
-		navigator.addView("Survey", Survey.class);
+		navigator.addView("BaselineSurvey", Survey.class);
 		navigator.addView("Login", LoginPage.class);
+		navigator.addView("DownloadExcel", DownloadExcel.class);
 
 		navigator.navigateTo("Login");
 		sideMenu.showHideMenu(false);
 		sideMenu.setMenuCaption(menuCaption, logo);
 
-		// Navigation examples
-		sideMenu.addNavigation("Home", "Home");
+		sideMenu.addMenuItem("Home", VaadinIcons.HOME, () -> {
+			navigator.navigateTo("Home");
+		});
 
 		sideMenu.addMenuItem("Mother Registration", VaadinIcons.ACCORDION_MENU, () -> {
 			navigator.navigateTo("MotherRegistration");
 		});
 
 		// Arbitrary method execution
-		sideMenu.addMenuItem("Add New Survey", VaadinIcons.FILE_TREE_SUB, () -> {
-			navigator.navigateTo("Survey");
+		sideMenu.addMenuItem("Baseline Questionnaire", VaadinIcons.FILE_TREE_SUB, () -> {
+			navigator.navigateTo("BaselineSurvey");
 		});
+
+		sideMenu.addMenuItem("Download Excel", VaadinIcons.DOWNLOAD, () -> {
+			navigator.navigateTo("DownloadExcel");
+		});
+
 		sideMenu.addMenuItem("Edit Profile", VaadinIcons.USER_CARD, () -> {
 			VerticalLayout content = new VerticalLayout();
 			content.addComponent(new Label("Another layout"));

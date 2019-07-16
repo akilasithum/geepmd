@@ -18,6 +18,91 @@ $darkgreen: darken($green, 30%);
 		background-position: center center;
 		background-repeat: no-repeat;
 	}
+
+	.logoImage[width-range~="5999px-1000px"]{
+		visibility: visible;
+		line-height: 1.2;
+		background-color: #197de1;
+		background-image: -webkit-linear-gradient(top, #1b87e3 2%, #166ed5 98%);
+		background-image: linear-gradient(to bottom,#1b87e3 2%, #166ed5 98%);
+		color: white;
+		text-shadow: 0 -1px 0 rgba(0, 0, 0, 0.05);
+		padding: 12px 19px;
+		font-size: 14px;
+		border-bottom: 1px solid #1362b1;
+		-webkit-box-shadow: 0 2px 3px rgba(0, 0, 0, 0.05);
+		box-shadow: 0 2px 3px rgba(0, 0, 0, 0.05);
+		text-align: center;
+	}
+
+	.logoImage[width-range~="100px-0px"]{
+		visibility: hidden;
+	}
+
+	.padHeader{
+		text-align: center;
+		font-weight: bold;
+	}
+
+	.padSection{
+		margin-top: 100px;
+		font-weight: bold;
+	}
+
+	.btnAlignment{
+		float: right;
+	}
+
+	.textAlignWithBold{
+		float: right;
+		font-weight: bold;
+	}
+
+	.bottomBackBtn{
+		float: right;
+		margin-top: 60px;
+		margin-bottom: 80px;
+	}
+
+	.myButton {
+		-moz-box-shadow: 3px 4px 0px 0px #899599;
+		-webkit-box-shadow: 3px 4px 0px 0px #899599;
+		box-shadow: 3px 4px 0px 0px #899599;
+		background:-webkit-gradient(linear, left top, left bottom, color-stop(0.05, #ededed), color-stop(1, #bab1ba));
+		background:-moz-linear-gradient(top, #ededed 5%, #bab1ba 100%);
+		background:-webkit-linear-gradient(top, #ededed 5%, #bab1ba 100%);
+		background:-o-linear-gradient(top, #ededed 5%, #bab1ba 100%);
+		background:-ms-linear-gradient(top, #ededed 5%, #bab1ba 100%);
+		background:linear-gradient(to bottom, #ededed 5%, #bab1ba 100%);
+		filter:progid:DXImageTransform.Microsoft.gradient(startColorstr='#ededed', endColorstr='#bab1ba',GradientType=0);
+		background-color:#ededed;
+		-moz-border-radius:15px;
+		-webkit-border-radius:15px;
+		border-radius:15px;
+		border:1px solid #d6bcd6;
+		display:inline-block;
+		cursor:pointer;
+		color:black;
+		font-family:Arial;
+		font-size:17px;
+		padding:7px 25px;
+		text-decoration:none;
+		text-shadow:0px 1px 0px #e1e2ed;
+	}
+	.myButton:hover {
+		background:-webkit-gradient(linear, left top, left bottom, color-stop(0.05, #bab1ba), color-stop(1, #ededed));
+		background:-moz-linear-gradient(top, #bab1ba 5%, #ededed 100%);
+		background:-webkit-linear-gradient(top, #bab1ba 5%, #ededed 100%);
+		background:-o-linear-gradient(top, #bab1ba 5%, #ededed 100%);
+		background:-ms-linear-gradient(top, #bab1ba 5%, #ededed 100%);
+		background:linear-gradient(to bottom, #bab1ba 5%, #ededed 100%);
+		filter:progid:DXImageTransform.Microsoft.gradient(startColorstr='#bab1ba', endColorstr='#ededed',GradientType=0);
+		background-color:#bab1ba;
+	}
+	.myButton:active {
+		position:relative;
+		top:1px;
+	}
 	
 	// You can also customize your component for the demo
 	// app, but remember that these styles are not part of
@@ -32,6 +117,89 @@ $darkgreen: darken($green, 30%);
              0px 24px 2px rgba(0,0,0,0.1),
              0px 34px 30px rgba(0,0,0,0.1);
         text-align: center;
+	}
+
+	.bgimg{
+		width: 100%;
+		height: 100vh;
+		background-image: linear-gradient(27deg, #004E95 50%, #013A6B 50%);
+		background: -webkit-gradient(linear, left top, right top, color-stop(0%, transparent), color-stop(50%,#fff), color-stop(100%,transparent)); /* Chrome, Safari4+ */
+		background: -webkit-linear-gradient(27deg, #004E95 50%, #013A6B 50%); /* Chrome10+, Safari5.1+ */
+		background: -moz-linear-gradient(27deg, #004E95 50%, #013A6B 50%);    /* FF3.6+ */
+		background: linear-gradient(to 27deg, #004E95 50%, #013A6B 50%);
+	}
+
+	.centerdiv{
+		width: 350px;
+		height: 400px;
+		position: absolute;
+		top: 50%;
+		left: 50%;
+		transform: translate(-50%, -50%);
+		background: red linear-gradient(27deg, #013A6B 50%, #004E95 50%);
+		background: -webkit-linear-gradient(27deg, #013A6B 50%, #004E95 50%); /* Chrome10+, Safari5.1+ */
+		background: -moz-linear-gradient(27deg, #013A6B 50%, #004E95 50%);    /* FF3.6+ */
+		background: linear-gradient(to 27deg, #013A6B 50%, #004E95 50%);
+		box-shadow: 0 1px 6px rgba(0, 0, 0, 0.12), 0 1px 4px rgba(0, 0, 0, 0.24);
+	}
+
+	.profilepic{
+		width: 120px;
+		height: 120px;
+		border-radius: 50%;
+		position: relative;
+		top: -60px;
+		left:100px;
+	}
+
+	h2{
+		text-align: center;
+		color: white;
+		text-transform: uppercase;
+		font-size: 2em;
+		word-spacing: 10px;
+		margin-top: -50px;
+		margin-bottom: 50px;
+		text-shadow: -2px 2px 1px #0A84C6;
+	}
+
+	.inputbox{
+		width: calc(100% - 40px);
+		height: 30px;
+		display: block;
+		margin: auto;
+		padding: 0 10px;
+		box-sizing: border-box;
+	}
+
+	::placeholder{
+		letter-spacing: 2px;
+		color: black;
+	}
+
+	.button1{
+		width: calc(100% - 40px);
+		height: 30px;
+		display: block;
+		margin: auto;
+		color: white;
+		background-color: #0A84C6;
+		border: none;
+	}
+
+	.FORGOT-SECTION{
+		width: calc(100% - 40px);
+		line-height: 30px;
+		display: block;
+		margin: auto;
+		color: white;
+		background-color: dodgerblue;
+		text-transform: uppercase;
+		font-size: 0.8em;
+		text-align: right;
+		padding-right: 20px;
+		box-sizing: border-box;
+
 	}
 
 }

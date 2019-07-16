@@ -1,0 +1,21 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+        "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping>
+    <class name="com.geepmd.entity.BaselineQ5" table="baseline_q5" catalog="">
+        <id name="baselineQ5Id" type="java.lang.Integer">
+            <column name="baselineQ5Id" />
+            <generator class="identity" />
+        </id>
+        <property name="motherId" type="java.lang.Integer">
+            <column name="motherId" />
+        </property>
+        <property name="m2" type="java.lang.Integer">
+            <column name="m2" />
+        </property>
+        <property name="m3" type="java.lang.Integer">
+            <column name="m3" />
+        </property>
+    </class>
+</hibernate-mapping>

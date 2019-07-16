@@ -1,0 +1,42 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+        "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping>
+    <class name="com.geepmd.entity.BaselineQ8" table="baseline_q8" catalog="">
+        <id name="baselineQ8Id" type="java.lang.Integer">
+            <column name="baselineQ8Id" />
+            <generator class="identity" />
+        </id>
+        <property name="motherId" type="java.lang.Integer">
+            <column name="motherId" />
+        </property>
+        <property name="m81a" type="java.lang.Integer">
+            <column name="m81a" />
+        </property>
+        <property name="m81b" type="java.lang.Integer">
+            <column name="m81b" />
+        </property>
+        <property name="m81c" type="java.lang.Integer">
+            <column name="m81c" />
+        </property>
+        <property name="m81d" type="java.lang.Integer">
+            <column name="m81d" />
+        </property>
+        <property name="m81e" type="java.lang.Integer">
+            <column name="m81e" />
+        </property>
+        <property name="m81f" type="java.lang.Integer">
+            <column name="m81f" />
+        </property>
+        <property name="m81g" type="java.lang.Integer">
+            <column name="m81g" />
+        </property>
+        <property name="m81h" type="java.lang.Integer">
+            <column name="m81h" />
+        </property>
+        <property name="m81i" type="java.lang.Integer">
+            <column name="m81i" />
+        </property>
+    </class>
+</hibernate-mapping>

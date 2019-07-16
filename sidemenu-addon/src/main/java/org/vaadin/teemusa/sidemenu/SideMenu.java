@@ -137,6 +137,7 @@ public class SideMenu extends HorizontalLayout {
         logoWrapper = new HorizontalLayout();
         logoWrapper.addStyleName("valo-menu-title");
         menuArea.addComponent(logoWrapper);
+        logoWrapper.setWidth("100%");
 
         userMenu.addStyleName("user-menu");
         userItem = userMenu.addItem("", null);
@@ -386,7 +387,6 @@ public class SideMenu extends HorizontalLayout {
             logoWrapper.removeComponent(menuImage);
         }
         menuImage = new Image(caption, logo);
-        menuImage.setWidth("100%");
         logoWrapper.addComponent(menuImage);
     }
 

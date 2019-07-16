@@ -1,0 +1,42 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+        "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping>
+    <class name="com.geepmd.entity.BaselineQ51" table="baseline_q51" catalog="">
+        <id name="baselineQ51Id" type="java.lang.Integer">
+            <column name="baselineQ51Id" />
+            <generator class="identity" />
+        </id>
+        <property name="question" type="java.lang.String">
+            <column name="question" length="10"/>
+        </property>
+        <property name="motherId" type="java.lang.Integer">
+            <column name="motherId" />
+        </property>
+        <property name="b1" type="java.lang.Integer">
+            <column name="b1" />
+        </property>
+        <property name="b2" type="java.lang.Integer">
+            <column name="b2" />
+        </property>
+        <property name="b3" type="java.lang.Integer">
+            <column name="b3" />
+        </property>
+        <property name="b4" type="java.lang.Integer">
+            <column name="b4" />
+        </property>
+        <property name="a1" type="java.lang.Integer">
+            <column name="a1" />
+        </property>
+        <property name="a2" type="java.lang.Integer">
+            <column name="a2" />
+        </property>
+        <property name="a3" type="java.lang.Integer">
+            <column name="a3" />
+        </property>
+        <property name="a4" type="java.lang.Integer">
+            <column name="a4" />
+        </property>
+    </class>
+</hibernate-mapping>
