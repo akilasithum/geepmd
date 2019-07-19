@@ -7,9 +7,7 @@ import com.geepmd.utils.EnglishMap;
 import com.geepmd.utils.SinhalaMap;
 import com.vaadin.navigator.View;
 import com.vaadin.navigator.ViewChangeListener;
-import com.vaadin.server.ThemeResource;
 import com.vaadin.ui.*;
-import com.vaadin.ui.themes.ValoTheme;
 import org.vaadin.dialogs.ConfirmDialog;
 
 import java.util.*;
@@ -28,6 +26,7 @@ public class Survey extends VerticalLayout implements View {
     Tab7 tab7;
     Tab8 tab8;
     Tab9 tab9;
+    Tab10 tab10;
     ComboBox motherSerialIdComboBox;
     Button saveBtn;
 
@@ -124,7 +123,10 @@ public class Survey extends VerticalLayout implements View {
         tab6 = new Tab6(language,this);
         tab7 = new Tab7(language,this);
         tab8 = new Tab8(language,this);
-        tab9 = new Tab9(language);
+        tab9 = new Tab9(language,this);
+       // tab10 = new Tab11(language,this);
+
+        tab10 = new Tab10(language);
 
         Map<String,String> headerMap;
         if(language.equals("EN")){
@@ -141,8 +143,10 @@ public class Survey extends VerticalLayout implements View {
         tabsheet.addTab(tab5,headerMap.get("5"));
         tabsheet.addTab(tab6,headerMap.get("6"));
         tabsheet.addTab(tab7,headerMap.get("7"));
+        tabsheet.addTab(tab7,headerMap.get("7"));
         tabsheet.addTab(tab8,headerMap.get("8"));
         tabsheet.addTab(tab9,headerMap.get("9"));
+        tabsheet.addTab(tab10,headerMap.get("10"));
 
     }
 
@@ -177,8 +181,8 @@ public class Survey extends VerticalLayout implements View {
         connection.insertObjectHBM(tab6.getAnswers(surveyId));
         List<BaselineQ62> answer62 = tab6.getAnswer62(surveyId);
         answer62.stream().forEach(obj -> connection.insertObjectHBM(obj));
+      //  connection.insertObjectHBM(tab10.getAnswers(surveyId));
         connection.insertObjectHBM(tab7.getAnswers(surveyId));
-        connection.insertObjectHBM(tab8.getAnswers(surveyId));
         saveBtn.setEnabled(true);
         saveBtn.setCaption("Save Survey");
         getUI().getNavigator().navigateTo("BaselineSurvey");

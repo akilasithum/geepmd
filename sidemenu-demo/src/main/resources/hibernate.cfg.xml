@@ -8,7 +8,6 @@
         <property name="hibernate.connection.driver_class">com.mysql.jdbc.Driver</property>
         <!--<property name="hibernate.connection.password">M7d4a63</property>-->
         <property name="hibernate.connection.password"></property>
-        <!--<property name="hibernate.connection.password"></property>-->
         <property name="hibernate.connection.url">jdbc:mysql://localhost:3306/geepmd</property>
         <property name="hibernate.connection.username">root</property>
         <property name="hibernate.dialect">org.hibernate.dialect.MySQLDialect</property>
@@ -36,7 +35,7 @@ connection.provider_class">org.hibernate.connection.C3P0ConnectionProvider</prop
         <mapping resource="dbBeans/common/baselineQ51.hbm.xml"></mapping>
         <mapping resource="dbBeans/common/baselineQ6.hbm.xml"></mapping>
         <mapping resource="dbBeans/common/baselineQ62.hbm.xml"></mapping>
+        <mapping resource="dbBeans/common/baselineQ11.hbm.xml"></mapping>
         <mapping resource="dbBeans/common/baselineQ7.hbm.xml"></mapping>
-        <mapping resource="dbBeans/common/baselineQ8.hbm.xml"></mapping>
     </session-factory>
 </hibernate-configuration>

@@ -28,6 +28,8 @@ public class Tab5 extends VerticalLayout {
     ComboBox q52ComboBox;
     ComboBox q53ComboBox;
     Survey survey;
+    HorizontalLayout q52Layout;
+    HorizontalLayout q53Layout;
 
     public Tab5(String language,Survey survey){
         this.language = language;
@@ -103,27 +105,31 @@ public class Tab5 extends VerticalLayout {
         q1Layout = new VerticalLayout();
         q1Layout.setSizeFull();
         addComponent(q1Layout);
-        q1Layout.addComponent(addQ5Questions(fields.get("a")));
-        q1Layout.addComponent(addQ5Questions(fields.get("b")));
-        q1Layout.addComponent(addQ5Questions(fields.get("c")));
-        q1Layout.addComponent(addQ5Questions(fields.get("d")));
-        q1Layout.addComponent(addQ5Questions(fields.get("e")));
-        q1Layout.addComponent(addQ5Questions(fields.get("f")));
-        q1Layout.addComponent(addQ5Questions(fields.get("g")));
-        q1Layout.addComponent(addQ5Questions(fields.get("h")));
-        q1Layout.addComponent(addQ5Questions(fields.get("i")));
-        q1Layout.addComponent(addQ5Questions(fields.get("j")));
-        q1Layout.addComponent(addQ5Questions(fields.get("k")));
+        q1Layout.addComponent(addQ5Questions(fields.get("a"),"a"));
+        q1Layout.addComponent(addQ5Questions(fields.get("b"),"b"));
+        q1Layout.addComponent(addQ5Questions(fields.get("c"),"c"));
+        q1Layout.addComponent(addQ5Questions(fields.get("d"),"d"));
+        q1Layout.addComponent(addQ5Questions(fields.get("e"),"e"));
+        q1Layout.addComponent(addQ5Questions(fields.get("f"),"f"));
+        q1Layout.addComponent(addQ5Questions(fields.get("g"),"g"));
+        q1Layout.addComponent(addQ5Questions(fields.get("h"),"h"));
+        q1Layout.addComponent(addQ5Questions(fields.get("i"),"i"));
+        q1Layout.addComponent(addQ5Questions(fields.get("j"),"j"));
+        q1Layout.addComponent(addQ5Questions(fields.get("k"),"k"));
 
         q52ComboBox = new ComboBox<>();
         q52ComboBox.setItems(getAnwerObj(answerMap.get("5.2")));
         q52ComboBox.setDescription(getAnswerDesc(answerMap.get("5.2")));
-        addComponent(addQ52and3Questions(q52ComboBox,q5Map.get("5.2")));
+        q52Layout = addQ52and3Questions(q52ComboBox,q5Map.get("5.2"));
+        addComponent(q52Layout);
+        q52Layout.setVisible(false);
 
         q53ComboBox = new ComboBox<>();
         q53ComboBox.setItems(getAnwerObj(answerMap.get("5.3")));
         q53ComboBox.setDescription(getAnswerDesc(answerMap.get("5.3")));
-        addComponent(addQ52and3Questions(q53ComboBox,q5Map.get("5.3")));
+        q53Layout = addQ52and3Questions(q53ComboBox,q5Map.get("5.3"));
+        addComponent(q53Layout);
+        q53Layout.setVisible(false);
 
         Button nextBtn = new Button("Next");
         nextBtn.setIcon(VaadinIcons.ARROW_FORWARD);
@@ -149,17 +155,17 @@ public class Tab5 extends VerticalLayout {
         return q52Layout;
     }
 
-    private HorizontalLayout addQ5Questions(String question){
+    private HorizontalLayout addQ5Questions(String question,String qNumber){
 
         HorizontalLayout layout = new HorizontalLayout();
         layout.setSizeFull();
         Label questionLabel = new Label(question);
         questionLabel.setSizeFull();
-        layout.addComponents(questionLabel,getSymptomsLayouts(true),getSymptomsLayouts(false));
+        layout.addComponents(questionLabel,getSymptomsLayouts(true,qNumber),getSymptomsLayouts(false,qNumber));
         return layout;
     }
 
-    private HorizontalLayout getSymptomsLayouts(boolean marginRequired){
+    private HorizontalLayout getSymptomsLayouts(boolean marginRequired,String qNumber){
         ComboBox yesNoCombo = new ComboBox();
         yesNoCombo.setSizeFull();
         yesNoCombo.setItems(getYesNoAnswer(language));
@@ -186,9 +192,16 @@ public class Tab5 extends VerticalLayout {
             Answer answer = (Answer) valueChangeEvent.getValue();
             if(answer == null || answer.getId() != 1){
                 dependentLayout.setEnabled(false);
+
             }
             else{
                 dependentLayout.setEnabled(true);
+                if(qNumber.equalsIgnoreCase("c")){
+                    q52Layout.setVisible(true);
+                }
+                if(qNumber.equalsIgnoreCase("d")){
+                    q53Layout.setVisible(true);
+                }
             }
         });
 

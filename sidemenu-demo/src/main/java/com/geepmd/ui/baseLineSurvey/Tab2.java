@@ -139,7 +139,7 @@ public class Tab2 extends VerticalLayout {
         q210Layout.setExpandRatio(q210Label,3);
         q210Layout.setExpandRatio(yesNoCombo210,1);
 
-        HorizontalLayout q211Layout = new HorizontalLayout();
+        /*HorizontalLayout q211Layout = new HorizontalLayout();
         q211Layout.setSizeFull();
         Label q211Label = new Label(q2Map.get("2.11"));
         q210Label.setSizeFull();
@@ -148,27 +148,27 @@ public class Tab2 extends VerticalLayout {
         yesNoCombo211.setSizeFull();
         q211Layout.addComponents(q211Label,yesNoCombo211);
         q211Layout.setExpandRatio(q211Label,3);
-        q211Layout.setExpandRatio(yesNoCombo211,1);
+        q211Layout.setExpandRatio(yesNoCombo211,1);*/
 
         diagnosedCombo.addValueChangeListener((HasValue.ValueChangeListener) valueChangeEvent -> {
             Answer answer = (Answer) valueChangeEvent.getValue();
             if(answer != null && answer.getId() == 1){
                 int index = getComponentIndex(q29Layout);
                 addComponent(q210Layout,index+1);
-                addComponent(q211Layout,index+2);
+                //addComponent(q211Layout,index+2);
             }
             else{
                 removeComponent(q210Layout);
-                removeComponent(q211Layout);
+                //removeComponent(q211Layout);
             }
         });
 
-        q212Combo = new ComboBox();
+       /* q212Combo = new ComboBox();
         q212Combo.setSizeFull();
         q212Combo.setItems(getYesNoAnswer(language));
-        addComponent(setTabData(q2Map.get("2.12"),q212Combo));
+        addComponent(setTabData(q2Map.get("2.12"),q212Combo));*/
 
-        HorizontalLayout q213Layout = new HorizontalLayout();
+        /*HorizontalLayout q213Layout = new HorizontalLayout();
         q213Layout.setSizeFull();
         Label q213Label = new Label(q2Map.get("2.13"));
         q213Label.setSizeFull();
@@ -179,9 +179,9 @@ public class Tab2 extends VerticalLayout {
         q213Layout.setExpandRatio(q213Label,3);
         q213Layout.setExpandRatio(yesNoCombo213,1);
         addComponent(q213Layout);
-        q213Layout.setVisible(false);
+        q213Layout.setVisible(false);*/
 
-        q212Combo.addValueChangeListener((HasValue.ValueChangeListener) valueChangeEvent -> {
+        /*q212Combo.addValueChangeListener((HasValue.ValueChangeListener) valueChangeEvent -> {
             Answer answer = (Answer) valueChangeEvent.getValue();
             if(answer != null && answer.getId() == 1){
                 q213Layout.setVisible(true);
@@ -189,7 +189,7 @@ public class Tab2 extends VerticalLayout {
             else{
                 q213Layout.setVisible(false);
             }
-        });
+        });*/
 
         Button nextBtn = new Button("Next");
         nextBtn.setIcon(VaadinIcons.ARROW_FORWARD);
@@ -438,9 +438,9 @@ public class Tab2 extends VerticalLayout {
         if(contraceptiveCombo.getValue() != null) answer.setM7(getId((Answer)contraceptiveCombo.getValue()));
         if(diagnosedCombo.getValue() != null) answer.setM9(getId((Answer)diagnosedCombo.getValue()));
         if(yesNoCombo210.getValue() != null) answer.setM10(Integer.parseInt(yesNoCombo210.getValue().toString()));
-        if(yesNoCombo211.getValue() != null) answer.setM11(getId((Answer)yesNoCombo211.getValue()));
+        /*if(yesNoCombo211.getValue() != null) answer.setM11(getId((Answer)yesNoCombo211.getValue()));
         if(q212Combo.getValue() != null) answer.setM12(getId((Answer)q212Combo.getValue()));
-        if(yesNoCombo213.getValue() != null) answer.setM13(getId((Answer)yesNoCombo213.getValue()));
+        if(yesNoCombo213.getValue() != null) answer.setM13(getId((Answer)yesNoCombo213.getValue()));*/
         return answer;
     }
 

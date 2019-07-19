@@ -4,27 +4,22 @@ public class BaselineQ7 {
 
     private int baselineQ7Id;
     private int motherId;
-    private int m1;
-    private String m2aQ;
-    private int m2a;
-    private String m2bQ;
-    private int m2b;
-    private String m2cQ;
-    private int m2c;
-    private String m2dQ;
-    private int m2d;
-    private String m2eQ;
-    private int m2e;
-    private int m3a;
-    private int m3b;
-    private int m3c;
+    private int m81a;
+    private int m81b;
+    private int m81c;
+    private int m81d;
+    private int m81e;
+    private int m81f;
+    private int m81g;
+    private int m81h;
+    private int m81i;
 
     public int getBaselineQ7Id() {
         return baselineQ7Id;
     }
 
-    public void setBaselineQ7Id(int baselineQ9Id) {
-        this.baselineQ7Id = baselineQ9Id;
+    public void setBaselineQ7Id(int baselineQ7Id) {
+        this.baselineQ7Id = baselineQ7Id;
     }
 
     public int getMotherId() {
@@ -35,115 +30,75 @@ public class BaselineQ7 {
         this.motherId = motherId;
     }
 
-    public int getM1() {
-        return m1;
+    public int getM81a() {
+        return m81a;
     }
 
-    public void setM1(int m1) {
-        this.m1 = m1;
+    public void setM81a(int m81a) {
+        this.m81a = m81a;
     }
 
-    public String getM2aQ() {
-        return m2aQ;
+    public int getM81b() {
+        return m81b;
     }
 
-    public void setM2aQ(String m2aQ) {
-        this.m2aQ = m2aQ;
+    public void setM81b(int m81b) {
+        this.m81b = m81b;
     }
 
-    public int getM2a() {
-        return m2a;
+    public int getM81c() {
+        return m81c;
     }
 
-    public void setM2a(int m2a) {
-        this.m2a = m2a;
+    public void setM81c(int m81c) {
+        this.m81c = m81c;
     }
 
-    public String getM2bQ() {
-        return m2bQ;
+    public int getM81d() {
+        return m81d;
     }
 
-    public void setM2bQ(String m2bQ) {
-        this.m2bQ = m2bQ;
+    public void setM81d(int m81d) {
+        this.m81d = m81d;
     }
 
-    public int getM2b() {
-        return m2b;
+    public int getM81e() {
+        return m81e;
     }
 
-    public void setM2b(int m2b) {
-        this.m2b = m2b;
+    public void setM81e(int m81e) {
+        this.m81e = m81e;
     }
 
-    public String getM2cQ() {
-        return m2cQ;
+    public int getM81f() {
+        return m81f;
     }
 
-    public void setM2cQ(String m2cQ) {
-        this.m2cQ = m2cQ;
+    public void setM81f(int m81f) {
+        this.m81f = m81f;
     }
 
-    public int getM2c() {
-        return m2c;
+    public int getM81g() {
+        return m81g;
     }
 
-    public void setM2c(int m2c) {
-        this.m2c = m2c;
+    public void setM81g(int m81g) {
+        this.m81g = m81g;
     }
 
-    public String getM2dQ() {
-        return m2dQ;
+    public int getM81h() {
+        return m81h;
     }
 
-    public void setM2dQ(String m2dQ) {
-        this.m2dQ = m2dQ;
+    public void setM81h(int m81h) {
+        this.m81h = m81h;
     }
 
-    public int getM2d() {
-        return m2d;
+    public int getM81i() {
+        return m81i;
     }
 
-    public void setM2d(int m2d) {
-        this.m2d = m2d;
-    }
-
-    public String getM2eQ() {
-        return m2eQ;
-    }
-
-    public void setM2eQ(String m2eQ) {
-        this.m2eQ = m2eQ;
-    }
-
-    public int getM2e() {
-        return m2e;
-    }
-
-    public void setM2e(int m2e) {
-        this.m2e = m2e;
-    }
-
-    public int getM3a() {
-        return m3a;
-    }
-
-    public void setM3a(int m3a) {
-        this.m3a = m3a;
-    }
-
-    public int getM3b() {
-        return m3b;
-    }
-
-    public void setM3b(int m3b) {
-        this.m3b = m3b;
-    }
-
-    public int getM3c() {
-        return m3c;
-    }
-
-    public void setM3c(int m3c) {
-        this.m3c = m3c;
+    public void setM81i(int m81i) {
+        this.m81i = m81i;
     }
 }

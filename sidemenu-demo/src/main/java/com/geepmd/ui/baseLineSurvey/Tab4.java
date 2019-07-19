@@ -50,13 +50,21 @@ public class Tab4 extends VerticalLayout {
     }
 
     private void createLayout(){
+
+        pregnancyPlannedCombo = new ComboBox();
+        pregnancyPlannedCombo.setItems(getYesNoAnswer(language));
+        addComponent(setTabData(q4Map.get("4.1"),pregnancyPlannedCombo));
+
         preConceptionCombo = new ComboBox();
-        preConceptionCombo.setItems(getAnwerObj(answerMap.get("4.1")));
-        addComponent(setTabData(q4Map.get("4.1"),preConceptionCombo));
+
+        preConceptionCombo.setItems(getAnwerObj(answerMap.get("4.2")));
+        HorizontalLayout preConceptionLayout = setTabData(q4Map.get("4.2"),preConceptionCombo);
+        addComponent(preConceptionLayout);
+        preConceptionLayout.setVisible(false);
 
         HorizontalLayout screenLayout = new HorizontalLayout();
         screenLayout.setSizeFull();
-        Label q42Label = new Label(q4Map.get("4.2"));
+        Label q42Label = new Label(q4Map.get("4.3"));
         q42Label.setSizeFull();
         screenCombo = new ComboBox();
         screenCombo.setItems(getYesNoAnswer(language));
@@ -69,7 +77,7 @@ public class Tab4 extends VerticalLayout {
 
         HorizontalLayout heartChecked = new HorizontalLayout();
         heartChecked.setSizeFull();
-        Label q43Label = new Label(q4Map.get("4.3"));
+        Label q43Label = new Label(q4Map.get("4.4"));
         q43Label.setSizeFull();
         heartCheckCombo = new ComboBox();
         heartCheckCombo.setItems(getYesNoAnswer(language));
@@ -91,18 +99,27 @@ public class Tab4 extends VerticalLayout {
             }
         });
 
-
-        pregnancyPlannedCombo = new ComboBox();
-        pregnancyPlannedCombo.setItems(getYesNoAnswer(language));
-        addComponent(setTabData(q4Map.get("4.4"),pregnancyPlannedCombo));
-
         lmpCombo = new ComboBox();
         lmpCombo.setItems(getYesNoAnswer(language));
-        addComponent(setTabData(q4Map.get("4.5"),lmpCombo));
+        HorizontalLayout lmpLayout = setTabData(q4Map.get("4.5"),lmpCombo);
+        addComponent(lmpLayout);
+        lmpLayout.setVisible(false);
 
         folicAcidMonthCombo = new ComboBox();
         folicAcidMonthCombo.setItems(getAnwerObj(answerMap.get("4.6")));
         dependentLayoutAdd(lmpCombo,folicAcidMonthCombo,q4Map.get("4.6"));
+
+        pregnancyPlannedCombo.addValueChangeListener(event -> {
+            Answer answer = (Answer) event.getValue();
+            if(answer != null && (answer.getId() == 1)){
+                preConceptionLayout.setVisible(true);
+                lmpLayout.setVisible(true);
+            }
+            else{
+                preConceptionLayout.setVisible(false);
+                lmpLayout.setVisible(false);
+            }
+        });
 
         mensesDate = new ComboBox();
         mensesDate.setItems(getStringList(1,31));

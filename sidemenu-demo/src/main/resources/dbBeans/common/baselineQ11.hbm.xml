@@ -1,0 +1,57 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+        "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping>
+    <class name="com.geepmd.entity.BaselineQ10" table="baseline_q7" catalog="">
+        <id name="baselineQ7Id" type="java.lang.Integer">
+            <column name="baselineQ7Id" />
+            <generator class="identity" />
+        </id>
+        <property name="motherId" type="java.lang.Integer">
+            <column name="motherId" />
+        </property>
+        <property name="m1" type="java.lang.Integer">
+            <column name="m1" />
+        </property>
+        <property name="m2a" type="java.lang.Integer">
+            <column name="m2a" />
+        </property>
+        <property name="m2b" type="java.lang.Integer">
+            <column name="m2b" />
+        </property>
+        <property name="m2c" type="java.lang.Integer">
+            <column name="m2c" />
+        </property>
+        <property name="m2d" type="java.lang.Integer">
+            <column name="m2d" />
+        </property>
+        <property name="m2e" type="java.lang.Integer">
+            <column name="m2e" />
+        </property>
+        <property name="m3a" type="java.lang.Integer">
+            <column name="m3a" />
+        </property>
+        <property name="m3b" type="java.lang.Integer">
+            <column name="m3b" />
+        </property>
+        <property name="m3c" type="java.lang.Integer">
+            <column name="m3c" />
+        </property>
+        <property name="m2aQ" type="java.lang.String">
+            <column name="m2aQ" length="50"/>
+        </property>
+        <property name="m2bQ" type="java.lang.String">
+            <column name="m2bQ" length="50"/>
+        </property>
+        <property name="m2cQ" type="java.lang.String">
+            <column name="m2cQ" length="50"/>
+        </property>
+        <property name="m2dQ" type="java.lang.String">
+            <column name="m2dQ" length="50"/>
+        </property>
+        <property name="m2eQ" type="java.lang.String">
+            <column name="m2eQ" length="50"/>
+        </property>
+    </class>
+</hibernate-mapping>

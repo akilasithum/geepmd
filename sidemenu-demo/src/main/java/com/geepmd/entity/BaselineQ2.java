@@ -11,10 +11,10 @@ public class BaselineQ2 {
     private int m5;
     private int m7;
     private int m9;
-    private int m10;
+    private int m10;/*
     private int m11;
     private int m12;
-    private int m13;
+    private int m13;*/
 
     public int getBaselineQ2Id() {
         return baselineQ2Id;
@@ -96,27 +96,4 @@ public class BaselineQ2 {
         this.m10 = m10;
     }
 
-    public int getM11() {
-        return m11;
-    }
-
-    public void setM11(int m11) {
-        this.m11 = m11;
-    }
-
-    public int getM12() {
-        return m12;
-    }
-
-    public void setM12(int m12) {
-        this.m12 = m12;
-    }
-
-    public int getM13() {
-        return m13;
-    }
-
-    public void setM13(int m13) {
-        this.m13 = m13;
-    }
 }

@@ -86,9 +86,10 @@ public class DownloadExcel extends VerticalLayout implements View {
         List<BaselineQ6> q6List = (List<BaselineQ6>)connection.getAllValues("com.geepmd.entity.BaselineQ6","baselineQ6Id");
         Map<Integer,BaselineQ6> q6Map = q6List.stream().collect(Collectors.toMap(x -> x.getMotherId(), x -> x));
         List<BaselineQ7> q7List = (List<BaselineQ7>)connection.getAllValues("com.geepmd.entity.BaselineQ7","baselineQ7Id");
-        Map<Integer,BaselineQ7> q7Map = q7List.stream().collect(Collectors.toMap(x -> x.getMotherId(), x -> x));
-        List<BaselineQ8> q8List = (List<BaselineQ8>)connection.getAllValues("com.geepmd.entity.BaselineQ8","baselineQ8Id");
-        Map<Integer,BaselineQ8> q8Map = q8List.stream().collect(Collectors.toMap(x -> x.getMotherId(), x -> x));
+        Map<Integer, BaselineQ7> q7Map = q7List.stream().collect(Collectors.toMap(x -> x.getMotherId(), x -> x));
+
+        List<BaselineQ7> q8List = (List<BaselineQ7>)connection.getAllValues("com.geepmd.entity.BaselineQ8","baselineQ8Id");
+        Map<Integer, BaselineQ7> q8Map = q8List.stream().collect(Collectors.toMap(x -> x.getMotherId(), x -> x));
 
         List<BaselineQ26> q26List = (List<BaselineQ26>)connection.getAllValues("com.geepmd.entity.BaselineQ26","baselineQ26Id");
         Map<Integer,BaselineQ26> q26Map = q26List.stream().collect(Collectors.toMap(x -> x.getSurveyId(), x -> x));
@@ -147,7 +148,7 @@ public class DownloadExcel extends VerticalLayout implements View {
             createObjCells(baselineQ26,"getD",1,9,row);
             createObjCells(baselineQ2,"getM",7,7,row);
             valColumnCount++;
-            createObjCells(baselineQ2,"getM",9,13,row);
+            createObjCells(baselineQ2,"getM",9,10,row);
             BaselineQ3 baselineQ3 = q3Map.get(common.getSurveyId());
             List<BaselineQ32> baselineQ32List = q32Map.get(common.getSurveyId());
             createObjCells(baselineQ3,"getM",1,1,row);
@@ -207,7 +208,7 @@ public class DownloadExcel extends VerticalLayout implements View {
             createObjCells(baselineQ7,"getM3b",row);
             createObjCells(baselineQ7,"getM3c",row);
 
-            BaselineQ8 baselineQ8 = q8Map.get(common.getSurveyId());
+            BaselineQ7 baselineQ8 = q8Map.get(common.getSurveyId());
             createObjCells(baselineQ8,"getM81",9,row);
             rowCount++;
         }
@@ -327,7 +328,7 @@ public class DownloadExcel extends VerticalLayout implements View {
         createCells("AF1",1,5);
         createCells("B2",1,5);
         createCells("B2.6",1,9);
-        createCells("B2",7,13);
+        createCells("B2",7,10);
         createCells("C3",1,1);
         createCells("C3.2.1",1,8);
         createCells("C3.2.2",1,8);

@@ -1,8 +1,10 @@
 package com.geepmd.ui.baseLineSurvey;
 
+import com.geepmd.ui.Survey;
 import com.geepmd.utils.Answer;
 import com.geepmd.utils.EnglishMap;
 import com.geepmd.utils.SinhalaMap;
+import com.vaadin.icons.VaadinIcons;
 import com.vaadin.shared.ui.MarginInfo;
 import com.vaadin.ui.*;
 
@@ -11,15 +13,19 @@ import java.util.Map;
 
 import static com.geepmd.utils.SurveyUtils.*;
 
-public class Tab9 extends VerticalLayout {
+public class Tab9 extends VerticalLayout{
 
     Map<String,List<String>> answerMap;
     Map<String,String> q9Map;
     Map<String,String> fields;
     String language;
-    VerticalLayout questionLayout;
+    Survey survey;
+    ComboBox privateTransportCombo;
+    ComboBox ctbCombo;
+    ComboBox privateBusCombo;
+    ComboBox threeWheelCombo;
 
-    public Tab9(String language){
+    public Tab9(String language, Survey survey){
         this.language = language;
         if(language.equals("EN")){
             answerMap = EnglishMap.getq1AnswerList();
@@ -31,118 +37,76 @@ public class Tab9 extends VerticalLayout {
             q9Map = SinhalaMap.getQ9Map();
             fields = SinhalaMap.getQ9Fields();
         }
+        this.survey = survey;
         createLayout();
         setSizeFull();
         setMargin(true);
     }
 
     private void createLayout(){
-        Label q1Label = new Label(q9Map.get("9.1"));
-        q1Label.setSizeFull();
-        addComponents(q1Label);
-        CheckBox noToAll = new CheckBox(fields.get("9.1"));
-        addComponent(noToAll);
-        noToAll.setStyleName("checkBoxMargin");
-        noToAll.addValueChangeListener(event -> {
-            setNoToAllCombo(event.getValue());
-        });
 
-        HorizontalLayout qHeaderLayout = new HorizontalLayout();
-        qHeaderLayout.setSizeFull();
-        Label tabletLabel = new Label(fields.get("a"));
-        tabletLabel.setSizeFull();
-        Label yesNoLabel = new Label(fields.get("b"));
-        yesNoLabel.setSizeFull();
-        Label startLabel = new Label(fields.get("c"));
-        startLabel.setSizeFull();
-        Label stopLabel = new Label(fields.get("d"));
-        stopLabel.setSizeFull();
-        Label documentLabel = new Label(fields.get("e"));
-        documentLabel.setSizeFull();
-        qHeaderLayout.addComponents(tabletLabel,yesNoLabel,startLabel,stopLabel,documentLabel);
-        questionLayout = new VerticalLayout();
-        questionLayout.setSizeFull();
-        questionLayout.setMargin(new MarginInfo(false,false,false,true));
-        addComponent(questionLayout);
-        questionLayout.addComponent(qHeaderLayout);
-        createTab8Questions(questionLayout,"Aspirin");
-        createTab8Questions(questionLayout,"Statin");
-        createTab8Questions(questionLayout,"Warfarin");
-        createTab8Questions(questionLayout,"Enoxaparin");
-        createTab8Questions(questionLayout,"Hormonal therapy");
-        createTab8Questions(questionLayout,"Steroids");
-        createTab8Questions(questionLayout,"Sodium valproate");
-        createTab8Questions(questionLayout,"Amiodarone");
-        createTab8Questions(questionLayout,"Tamoxifen");
-        createTab8Questions(questionLayout,"Antipsychotics");
-        createTab8Questions(questionLayout,"ACE Inhibitors");
-        createTab8Questions(questionLayout,"Angiotensin receptor blockers");
-        createTab8Questions(questionLayout,"Clomiphene Citrate");
-    }
-
-    private void createTab8Questions(VerticalLayout tab,String question){
-
-        HorizontalLayout layout = new HorizontalLayout();
+        Label timeLabel = new Label(fields.get("9"));
+        addComponent(timeLabel);
+        timeLabel.setStyleName("padHeader");
+        setComponentAlignment(timeLabel,Alignment.MIDDLE_RIGHT);
+        addComponent(setTabData(q9Map.get("9.1"),getTimeMap()));
+        addComponent(setTabData(q9Map.get("9.2"),getTimeMap()));
+        addComponent(setTabData(q9Map.get("9.3"),getTimeMap()));
+        addComponent(setTabData(q9Map.get("9.4"),getTimeMap()));
+        addComponent(new Label(q9Map.get("9.5")));
+        privateTransportCombo = new ComboBox();
+        privateTransportCombo.setSizeFull();
+        privateTransportCombo.setItems(getYesNoAnswer(language));
+        addComponent(setTabData(q9Map.get("9.5.1"),privateTransportCombo));
+        VerticalLayout layout = new VerticalLayout();
         layout.setSizeFull();
-        Label questionLabel = new Label(question);
-        questionLabel.setSizeFull();
-        ComboBox yesNoCombo =new ComboBox();
-        yesNoCombo.setSizeFull();
-        yesNoCombo.setItems(getYesNoAnswer(language));
-        yesNoCombo.setWidth("70%");
-        HorizontalLayout dependentQLayout = new HorizontalLayout();
-        dependentQLayout.setSizeFull();
-        ComboBox documentCombo = new ComboBox();
-        documentCombo.setSizeFull();
-        documentCombo.setItems(getAnwerObj(answerMap.get("9.1")));
-        documentCombo.setDescription(getAnswerDesc(answerMap.get("9.1")));
-        documentCombo.setWidth("70%");
-        dependentQLayout.addComponents(documentCombo,getYearMonthComboLayout(),getYearMonthComboLayout());
-        dependentQLayout.setEnabled(false);
-        yesNoCombo.addValueChangeListener(valueChangeEvent -> {
-            Answer answer = (Answer) valueChangeEvent.getValue();
-            if(answer == null || answer.getId() == 2){
-                dependentQLayout.setEnabled(false);
+        layout.setVisible(false);
+        layout.setMargin(false);
+        addComponent(layout);
+        ctbCombo = new ComboBox();
+        ctbCombo.setSizeFull();
+        ctbCombo.setItems(answerMap.get("9.5.1"));
+        layout.addComponent(setTabData(q9Map.get("9.5.2"),ctbCombo));
+
+        privateBusCombo = new ComboBox();
+        privateBusCombo.setSizeFull();
+        privateBusCombo.setItems(answerMap.get("9.5.1"));
+        layout.addComponent(setTabData(q9Map.get("9.5.3"),privateBusCombo));
+
+        threeWheelCombo = new ComboBox();
+        threeWheelCombo.setSizeFull();
+        threeWheelCombo.setItems(answerMap.get("9.5.1"));
+        layout.addComponent(setTabData(q9Map.get("9.5.4"),threeWheelCombo));
+
+        privateTransportCombo.addValueChangeListener(event -> {
+            Answer answer = (Answer) event.getValue();
+            if(answer != null && answer.getId() == 1){
+                layout.setVisible(true);
             }
             else{
-                dependentQLayout.setEnabled(true);
+                layout.setVisible(false);
             }
         });
-        layout.addComponents(questionLabel,yesNoCombo,dependentQLayout);
-        layout.setExpandRatio(questionLabel,1);
-        layout.setExpandRatio(yesNoCombo,1);
-        layout.setExpandRatio(dependentQLayout,3);
-        tab.addComponent(layout);
+        Button nextBtn = new Button("Next");
+        nextBtn.setIcon(VaadinIcons.ARROW_FORWARD);
+        nextBtn.setStyleName("bottomBackBtn");
+        nextBtn.addClickListener(event -> {
+            survey.SelectTab(9);
+        });
+        addComponent(nextBtn);
     }
 
-    private HorizontalLayout getYearMonthComboLayout(){
+    private HorizontalLayout getTimeMap(){
         HorizontalLayout yearMonthLayout = new HorizontalLayout();
         yearMonthLayout.setSizeFull();
-        ComboBox yearCombo = new ComboBox();
-        yearCombo.setSizeFull();
-        yearCombo.setItems(getStringList(1990,2019));
-        ComboBox monthCombo = new ComboBox();
-        monthCombo.setSizeFull();
-        monthCombo.setItems(getStringList(1,12));
-        yearMonthLayout.addComponents(yearCombo,monthCombo);
+        ComboBox hourCombo = new ComboBox();
+        hourCombo.setSizeFull();
+        hourCombo.setItems(getStringList(0,10));
+        ComboBox minuteCombo = new ComboBox();
+        minuteCombo.setSizeFull();
+        minuteCombo.setItems(getStringList(0,60));
+        yearMonthLayout.addComponents(hourCombo,minuteCombo);
         yearMonthLayout.setMargin(new MarginInfo(false,false,false,true));
         return yearMonthLayout;
-    }
-
-    private void setNoToAllCombo(boolean isNo){
-
-        for(int i = 1;i<questionLayout.getComponentCount();i++){
-            HorizontalLayout layout = (HorizontalLayout)questionLayout.getComponent(i);
-            ComboBox comboBox = (ComboBox) layout.getComponent(1);
-            Answer no = new Answer();
-            no.setId(2);
-            no.setDescription("2.නැත");
-            if(isNo) {
-                comboBox.setValue(no);
-            }
-            else {
-                comboBox.clear();
-            }
-        }
     }
 }

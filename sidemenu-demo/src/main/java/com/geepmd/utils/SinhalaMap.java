@@ -17,9 +17,10 @@ public class SinhalaMap {
         map.put("4","4. වර්තමාන ගර්භණී තත්වය පිළිබද තොරතුරු");
         map.put("5","5. ගර්භණී සමයේ රෝග ලක්ෂණ");
         map.put("6","6. කායික රෝග ඉතිහාසය");
-        map.put("7","7. මානසික  සෞඛ්\u200Dය ඇගයීම");
-        map.put("8","8. පවුලේ රෝග ඉතිහාසය");
-        map.put("9","9. ඇමුණුම 1");
+        map.put("7","7. පවුලේ රෝග ඉතිහාසය");
+        map.put("8","8. පවුලේ තොරතුරු");
+        map.put("9","9. සෞඛ්\u200Dය පහසුකම් සදහා ප්\u200Dරවේශවීමේ හැකියාව");
+        map.put("10","10. ඇමුණුම 1");
         return map;
     }
     //answers
@@ -66,12 +67,12 @@ public class SinhalaMap {
 
     public static Map<String,List<String>> getQ4AnswerList(){
         Map<String,List<String>> map = new HashMap<>();
-        map.put("4.1",Arrays.asList("1.ඔව් සැමියා සමග","2.සැමියා නොමැතිව","3.සහභාගී වූයේ නැත","4.සැසි පිළිබද නොදනී"));
+        map.put("4.2",Arrays.asList("1.ඔව් සැමියා සමග","2.සැමියා නොමැතිව","3.සහභාගී වූයේ නැත","4.සැසි පිළිබද නොදනී"));
         map.put("4.6",Arrays.asList("1.ක්\u200Dරමවත්ව","2.අක්\u200Dරමවත්ව","3.වෙනත්"));
         map.put("4.8",Arrays.asList("1.මුත්\u200Dරා සාම්පල","2.එච්.සි.ජි පටියක් මගින්","3.ස්කැන් පරීලක්ෂාවකින්","4.තහවුුරු කර නැත"));
         map.put("4.9",Arrays.asList("1.සාමාන්\u200Dය දරු උපතක්","2.සිසේරියන් සැත්කමක්","3.තවම තීරණය කර නොමැත"));
-        map.put("4.10",Arrays.asList("1.ළගම ඇති රජයේ  රෝහල","2.tetiary Hospital","3.පුද්ගලික රෝහලක්","4.නිවස",
-                "5.තීරණය කර නොමැත"));
+        map.put("4.10",Arrays.asList("1.THA","2.BHT","3.රජයේ  රෝහල","4.පුද්ගලික රෝහලක්","5.නිවස",
+                "6.තීරණය කර නොමැත"));
         return map;
     }
 
@@ -109,7 +110,31 @@ public class SinhalaMap {
         return map;
     }
 
-    public static Map<String,List<String>> getQ9AnswerList(){
+    public static Map<String,List<String>> getQ8AnswerList(){
+        Map<String,List<String>> map = new HashMap<>();
+        map.put("8.3",Arrays.asList("1.රාජ්‍යය", "2.පුද්ගලික", "3.දේශීය / ආයුර්වේද", "4.වෙනත්"));
+        map.put("8.5.4",Arrays.asList("1.නළ ජලය", "2.විවDත ළිද", "3.සනීපාරක්ෂිත ලිද / නළ ලිං", "4.ගංගා/ඇල/වැව්/උල්පත/පීල්ල/", "5.වැසි ජලය",
+                "6.බවුසර්", "7.බෝතල් කළ ජලය", "8.පිරිපහදු කරන ලද (ෆිල්ටර් ජලය)", "9.වෙනත්" ));
+        map.put("8.5.5",Arrays.asList("1.විදුලිය", "2.LPG / ස්වභාවික ගෑස්", "3.ජීව වායු", "4.භුමි තෙල්", "5.ගල් අඟුරු", "6.දර"
+                , "7.ගොම", "8.වෙනත්" ));
+        map.put("8.5.6",Arrays.asList("1.ජල මුද්‍රිත", "2.වළ වැසිකිලිය", "3.වැසිකිලි භාවිතා නොකරන", "4.වෙනත්" ));
+        map.put("8.5.7",Arrays.asList("1.මැටි ගඩොල්", "2.සිමෙන්ති ගල්", "3.ගල්", "4.දැව / උණ පතුරු", "5.යකඩ තහඩු/ටකරන්", "6.වෙනත්" ));
+        map.put("8.5.8",Arrays.asList("1.උළු", "2.ඇස්බැස්ටෝස්","3.කොන්ක්‍රීට්", "4.යකඩ තහඩු", "5.දැව / උණ පතුර", "6.මැටි ගඩොල්",
+                "7.පිදුරු", "8.වෙනත්" ));
+        map.put("8.5.9",Arrays.asList("1 =සිමෙන්ති පස් / වැලි/ මැටි", "2.ගොම මැටි", "3.දැව පොතු", "4.ඔපදැමූ දැව", "5.පිගන් ගඩොල්",
+                "6.කොන්ක්‍රීට්", "7.වෙනත්" ));
+        map.put("8.5.10",Arrays.asList("1.විදුලිය", "2.ලන්තෑරුම/පැට්ට්රෝමැක්ස් ලාම්පු/චිමිනි ලාම්පු", "3.ඉටිපන්දම්", "4.ගෑස් ලාම්පු",
+                "5.කුප්පි ලාම්පු", "6.වෙනත්" ));
+        return map;
+    }
+
+    public static Map<String,List<String>> getQ9AnswerList() {
+        Map<String, List<String>> map = new HashMap<>();
+        map.put("9.5.1",Arrays.asList("5.ඉතාමත් තෘප්තිමත්", "4.තෘප්තිමත්", "3.සාමාන්‍යයි", "2.තෘප්තිමත් නොවේ",   "1.කොහෙත්ම තෘප්තිමත් නොවේ"));
+        return map;
+    }
+
+    public static Map<String,List<String>> getQ10AnswerList(){
         Map<String,List<String>> map = new HashMap<>();
         map.put("9.1",Arrays.asList("1.දැනට භාවිතා කරයි","2.දැනට භාවිතා නොකරයි"));
         return map;
@@ -165,10 +190,10 @@ public class SinhalaMap {
 
     public static Map<String,String> getQ4Map(){
         Map<String,String> map = new HashMap<>();
-        map.put("4.1","4.1 ඔබ දරුවෙකු පිලිසිද ගැනීමට පෙර පවත්වන පූර්ව ගර්භණි සැසි සදහා සහභාගි වුනේද?");
-        map.put("4.2","4.2 පූරව ගර්භණ සැසියේදි ඔබව රක්තහීනතාවය සදහා පරීක්ෂා කළාද?");
-        map.put("4.3","4.3 පූරව ගර්භණ සැසියේදි හදවත් රෝග සදහා ඔබව  පරීක්ෂා කළාද?");
-        map.put("4.4","4.4 මෙවර ගැබ්ගැනීම සැලසුම් කළ එකක්ද?");
+        map.put("4.1","4.1 මෙවර ගැබ්ගැනීම සැලසුම් කළ එකක්ද?");
+        map.put("4.2","4.2 ඔබ දරුවෙකු පිලිසිද ගැනීමට පෙර පවත්වන පූර්ව ගර්භණි සැසි සදහා සහභාගි වුනේද?");
+        map.put("4.3","4.3 පූරව ගර්භණ සැසියේදි ඔබව රක්තහීනතාවය සදහා පරීක්ෂා කළාද?");
+        map.put("4.4","4.4 පූරව ගර්භණ සැසියේදි හදවත් රෝග සදහා ඔබව  පරීක්ෂා කළාද?");
         map.put("4.5","4.5 ඔබ මෙම පිළිසිද ගැනීමට පෙර ෆෝලික් අම්ල පෙති ලබා ගත්තේද?");
         map.put("4.6","4.6 ඔව් නම් පිළිසිද ගැනීමට පෙර අවසාන මාස තුන ඇතුලත ෆෝලික් අම්ල පෙති ලබා ගත්තේද?");
         map.put("4.7","4.7 අවසන් වරට ඔසප් වූ  දිනය කවදාද?");
@@ -205,23 +230,47 @@ public class SinhalaMap {
         return map;
     }
 
-    public static Map<String,String> getQ7Map(){
+    /*public static Map<String,String> getQ7Map(){
         Map<String,String> map = new HashMap<>();
         map.put("7.1","7.1 ඔබ ඔබේ මානසික සුවටතා වර්ධනය කරන කටයුතුවල නියෙලෙනවාද?");
         map.put("7.2","7.2 ඔබ නිරත වන මානසික සුවටතා වර්ධනය කරන කටයුතුවල විස්තර සදහන් කරන්න.");
         map.put("7.3","7.3 ඔබගේ ගර්භණීබව නිසා ඔබ කෙදිනක හෝ මොන යම් ආකාරයේ වෙනස්කමකට / විවේචනයකට ලක් වී ඇතිද?");
         return map;
+    }*/
+
+    public static Map<String,String> getQ7Map(){
+        Map<String,String> map = new HashMap<>();
+        map.put("7.1","7.1 ඔබගේ මව පියා සහෝදර සහෝදරියන් පහත රෝග වලින් පෙලෙන්නේද?");
+        return map;
     }
 
     public static Map<String,String> getQ8Map(){
         Map<String,String> map = new HashMap<>();
-        map.put("8.1","8.1 ඔබගේ මව පියා සහෝදර සහෝදරියන් පහත රෝග වලින් පෙලෙන්නේද?");
+        map.put("8.1","8.1 නිවසේ පදිංචි සාමාජිකයන් ගණන");
+        map.put("8.2","8.2 පවුලේ ගෘහමුලිකයා කවුද? (ඔබට ඇති නෑකම සඳහන් කරන්න)");
+        map.put("8.3","8.3 ඔබ සෞඛ්\u200Dය සේවා ලබා ගැනීම සඳහා වඩාත්ම කැමති මින් කුමකටද?");
+        map.put("8.4","8.4 නිවසේ සාමාජිකයන්ගේ තොරතුරු");
+        map.put("8.5","8.5 නිවාස සහ වත්කම් පිළිබඳ අයිතිය");
         return map;
     }
 
     public static Map<String,String> getQ9Map(){
         Map<String,String> map = new HashMap<>();
-        map.put("9.1","1 ඖෂධ ඉතිහාසය පිලිබද තොරතුරු");
+        map.put("9.1","9.1 ආසන්නතම නගරයට ලඟා වීමට");
+        map.put("9.2","9.2 ආසන්නතම රජයේ රෝහලට ලඟා වීමට");
+        map.put("9.3","9.3 ආසන්නතම පෞද්ගලික වෛද්\u200Dය මධ්\u200Dයස්ථානයට ලඟා වීමට ");
+        map.put("9.4","9.4 ක්ෂේත්\u200Dර කාර්යාලයට (පවුල් සෞඛ්\u200Dය නිලධාරී)");
+        map.put("9.5","9.5 ප්\u200Dරවාහන පහසුකම්වල තත්වය");
+        map.put("9.5.1","9.5.1 ඔබ පොදු ප්\u200Dරවාහන සේවා භාවිතා කරන්නේද?");
+        map.put("9.5.2","9.5.2 CTB බස්");
+        map.put("9.5.3","9.5.3 පෞද්ගලික බස්");
+        map.put("9.5.4","9.5.4 කුලී ත්\u200Dරීරෝද රථ");
+        return map;
+    }
+
+    public static Map<String,String> getQ10Map(){
+        Map<String,String> map = new HashMap<>();
+        map.put("10.1","1 ඖෂධ ඉතිහාසය පිලිබද තොරතුරු");
         return map;
     }
 
@@ -301,13 +350,15 @@ public class SinhalaMap {
         map.put("j","j.\tරුමැටික් උණ");
         map.put("k","k.\tරුමැටික් හදවත් රෝග");
         map.put("l","l.\tG6PD deficiency");
-        map.put("m","m.\tHeart Attrak");
+        map.put("m","m.\tහෘද ආබාධ");
         map.put("n","n.\tමොලයේ රුධිර කැටියක් සිරවීම");
         map.put("o","o.\tසංජජනන හදවත් රෝග");
-        map.put("p","p.\tArrhythmias");
-        map.put("q","q.\tවිශාදය");
-        map.put("r","r.\tඅනෙකුත් මානසික රෝග");
-        map.put("s","s.\tවෙනත් රෝගී තත්වයන්");
+        map.put("p","p.\tහෘද ස්පන්ධනයේ වෙනස්කම් ");
+        map.put("q","q.\tඅනෙකුත් හෘද රෝග");
+        map.put("r","r.\tවිශාදය");
+        map.put("s","s.\tඅනෙකුත් මානසික රෝග");
+        map.put("t","t.\tPCOD");
+        map.put("u","u.\tවෙනත් රෝගී තත්වයන්");
         map.put("6.21","ඔබට මෙම රෝගී තත්වය ඇති බවට තහවුරු කර ඇතිද?");
         map.put("6.22","එම රෝග විනිශ්චය සම්බන්ධව කිනම් හෝ ලිකිත වාර්තා තිබේද?");
         map.put("6.23","රෝග විනිශ්චය සිදු කළ කාලය");
@@ -318,7 +369,7 @@ public class SinhalaMap {
         return map;
     }
 
-    public static Map<String,String> getQ7Fields() {
+    public static Map<String,String> getQ11Fields() {
         Map<String, String> map = new HashMap<>();
         map.put("7.11","ක්\u200Dරියාකාරකම");
         map.put("7.31","ස්ථානය");
@@ -328,7 +379,7 @@ public class SinhalaMap {
         return map;
     }
 
-    public static Map<String,String> getQ8Fields() {
+    public static Map<String,String> getQ7Fields() {
         Map<String, String> map = new HashMap<>();
         map.put("a","a. දියවැඩියාව");
         map.put("b","b. ආගාතය / අංශ භාගය");
@@ -336,13 +387,45 @@ public class SinhalaMap {
         map.put("d","d. අක්මාව ආශිත රෝග");
         map.put("e","e. කොලෙස්ටරෝල්");
         map.put("f","f. අනෙකුත් හදවත් රෝග තත්වයන්");
-        map.put("g","g. හදවත් රෝග");
+        map.put("g","g. \tහෘද ආබාධ");
         map.put("h","h. මානසික රෝග තත්වයන්");
         map.put("i","i. වකුගඩු ආශ්\u200Dරිත රෝග");
         return map;
     }
 
-    public static Map<String,String> getQ9Fields() {
+    public static Map<String,String> getQ8Fields() {
+        Map<String, String> map = new HashMap<>();
+        map.put("8.4.1","සාමාජිකයා");
+        map.put("8.4.2","ඔබට ඇති සම්බන්දතාවය");
+        map.put("8.4.3","වයස");
+        map.put("8.5.1","8.5.1 ඔබ වාසයකරන  නිවස ඉහත වගුවේ කවරකුට හෝ අයිති නිවසක්ද?");
+        map.put("8.5.2","8.5.2 ඔබ නිවසේ කාමර කොපමණ සංඛ්\u200Dයාවක්  තිබේද (නාන කාමර හා කුස්සිය හැර)");
+        map.put("8.5.3","8.5.3 ඔබ නිදන කාමරය තව කී දෙනෙක් භාවිතා කරනවද?");
+        map.put("8.5.4","8.5.4 ඔබ නිවැසියන් පානය සඳහා ජලය ලබා ගන්නා ජල මුලාශ්\u200Dරය කුමක්ද?");
+        map.put("8.5.5","8.5.5 ඔබ නිවැසියන් ආහාර පිසීමට භාවිතා කරනු ලබන ප්\u200Dරධාන ඉන්ධන වර්ගය කුමක්ද?");
+        map.put("8.5.6","8.5.6 ඔබ භාවිතයට ගන්නා වැසිකිලිය කුමන ආකාරයක ද?");
+        map.put("8.5.7","8.5.7 ඔබ නිවසේ බිත්ති ඉදිකිරීමට යොදා ගත් ප්\u200Dරධාන අමුද්\u200Dරව්\u200Dය ?");
+        map.put("8.5.8","8.5.8 වහල සෙවිලි කිරීමට යොදාගත් ද්\u200Dරව්\u200Dය?");
+        map.put("8.5.9","8.5.9 නිවසේ පොළව සැකසීමට යොදාගත්  අමුද්\u200Dරව්\u200Dය?");
+        map.put("8.5.10","8.5.10 ඔබ නිවසේ භාවිතා කරන ප්\u200Dරධාන ආලෝක ප්\u200Dරභවය?");
+        map.put("8.5.11","8.5.11 ජංගම දුරකථන");
+        map.put("8.5.12","8.5.12 ස්ථාවර දුරකථනය");
+        map.put("8.5.13","8.5.13 මෝටර් කාරය");
+        map.put("8.5.14","8.5.14 වෑන්");
+        map.put("8.5.15","8.5.15 ත්\u200Dරී වීල් රථය");
+        map.put("8.5.16","8.5.16 මෝටර් බයික්");
+        map.put("8.5.17","ව8.5.17 ෙනත් vehicles");
+        map.put("8.5.middle","ඔබ නිවසේ මෙහි සඳහන් උපකරණ තිබේද?");
+        return map;
+    }
+
+    public static Map<String,String> getQ9Fields(){
+        Map<String,String> map = new HashMap<>();
+        map.put("9","කාලය  (පැය/විනාඩි)");
+        return map;
+    }
+
+    public static Map<String,String> getQ10Fields() {
         Map<String, String> map = new HashMap<>();
         map.put("a","පෙති කරල්");
         map.put("b","ඔව්/නැත");
