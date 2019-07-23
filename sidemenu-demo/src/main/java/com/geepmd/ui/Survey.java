@@ -51,15 +51,15 @@ public class Survey extends VerticalLayout implements View {
         language = "SN";
 
         List<MotherDetails> motherDetails = connection.getMotherDetails();
-        List<Integer> motherIdsList = new ArrayList<>();
+        List<String> motherIdsList = new ArrayList<>();
         List<String> mothersNameList = new ArrayList<>();
-        Map<Integer,String> idNameMap = new HashMap<>();
-        Map<String,Integer> nameIdMap = new HashMap<>();
+        Map<String,String> idNameMap = new HashMap<>();
+        Map<String,String> nameIdMap = new HashMap<>();
         for(MotherDetails mother : motherDetails){
-            motherIdsList.add(mother.getMotherRegNo());
+            motherIdsList.add(mother.getMotherSerialNumber());
             mothersNameList.add(mother.getMotherName());
-            idNameMap.put(mother.getMotherRegNo(),mother.getMotherName());
-            nameIdMap.put(mother.getMotherName(),mother.getMotherRegNo());
+            idNameMap.put(mother.getMotherSerialNumber(),mother.getMotherName());
+            nameIdMap.put(mother.getMotherName(),mother.getMotherSerialNumber());
         }
 
         ComboBox motherNameComboBox = new ComboBox("Select Mother Name");
@@ -160,7 +160,7 @@ public class Survey extends VerticalLayout implements View {
 
 
         //saveBtn.setCaption("Survey data saving");
-        int motherId = Integer.parseInt(motherSerialIdComboBox.getValue().toString());
+        String motherId = motherSerialIdComboBox.getValue().toString();
         User user = (User)UI.getCurrent().getSession().getAttribute("userName");
         CommonDetails common = new CommonDetails();
         common.setMotherId(motherId);
@@ -171,6 +171,8 @@ public class Survey extends VerticalLayout implements View {
         connection.insertObjectHBM(tab1.getAnswers(surveyId));
         connection.insertObjectHBM(tab2.getAnswers(surveyId));
         connection.insertObjectHBM(tab2.get26Answer(surveyId));
+        List<BaselineQ28> answer28 = tab2.get28Answers(surveyId);
+        answer28.stream().forEach(obj -> connection.insertObjectHBM(obj));
         connection.insertObjectHBM(tab3.getAnswer(surveyId));
         List<BaselineQ32> answer32 = tab3.getQ32Answers(surveyId);
         answer32.stream().forEach(obj -> connection.insertObjectHBM(obj));
@@ -181,8 +183,13 @@ public class Survey extends VerticalLayout implements View {
         connection.insertObjectHBM(tab6.getAnswers(surveyId));
         List<BaselineQ62> answer62 = tab6.getAnswer62(surveyId);
         answer62.stream().forEach(obj -> connection.insertObjectHBM(obj));
-      //  connection.insertObjectHBM(tab10.getAnswers(surveyId));
         connection.insertObjectHBM(tab7.getAnswers(surveyId));
+        connection.insertObjectHBM(tab8.getQ8Answers(surveyId));
+        List<BaselineQ84> answer84 = tab8.get84Answers(surveyId);
+        answer84.stream().forEach(obj -> connection.insertObjectHBM(obj));
+        connection.insertObjectHBM(tab9.getQ9Answers(surveyId));
+        List<BaselineQ10> answer10 = tab10.getAnswerQ10(surveyId);
+        answer10.stream().forEach(obj -> connection.insertObjectHBM(obj));
         saveBtn.setEnabled(true);
         saveBtn.setCaption("Save Survey");
         getUI().getNavigator().navigateTo("BaselineSurvey");

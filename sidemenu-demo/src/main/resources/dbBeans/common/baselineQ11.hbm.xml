@@ -3,7 +3,7 @@
         "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
 
 <hibernate-mapping>
-    <class name="com.geepmd.entity.BaselineQ10" table="baseline_q7" catalog="">
+    <class name="com.geepmd.entity.BaselineQ11" table="baseline_q7" catalog="">
         <id name="baselineQ7Id" type="java.lang.Integer">
             <column name="baselineQ7Id" />
             <generator class="identity" />

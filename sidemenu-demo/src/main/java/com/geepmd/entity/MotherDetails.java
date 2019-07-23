@@ -5,6 +5,7 @@ import java.util.Date;
 public class MotherDetails {
 
     private int motherRegNo;
+    private String motherSerialNumber;
     private String motherName;
     private int age;
     private Date date;
@@ -23,6 +24,14 @@ public class MotherDetails {
 
     public void setMotherRegNo(int motherRegNo) {
         this.motherRegNo = motherRegNo;
+    }
+
+    public String getMotherSerialNumber() {
+        return motherSerialNumber;
+    }
+
+    public void setMotherSerialNumber(String motherSerialNumber) {
+        this.motherSerialNumber = motherSerialNumber;
     }
 
     public String getMotherName() {

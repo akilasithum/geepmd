@@ -77,6 +77,8 @@ public class Tab1 extends VerticalLayout {
         ethnicityComboBoxMother.setDescription(getAnswerDesc("1.2"));
         ethnicityComboBoxFather.setItems(getQ2Answer("1.2"));
         ethnicityComboBoxFather.setDescription(getAnswerDesc("1.2"));
+        ethnicityComboBoxMother.setTextInputAllowed(false);
+        ethnicityComboBoxFather.setTextInputAllowed(false);
         setTabData(languangeMap.get("1.2"),ethnicityComboBoxMother,ethnicityComboBoxFather);
 
         understandingLevelComboMother = new ComboBox();
@@ -87,6 +89,8 @@ public class Tab1 extends VerticalLayout {
         understandingLevelComboFather.setItems(getQ2Answer("1.3"));
         understandingLevelComboMother.setDescription(getAnswerDesc("1.3"));
         understandingLevelComboFather.setDescription(getAnswerDesc("1.3"));
+        understandingLevelComboMother.setTextInputAllowed(false);
+        understandingLevelComboFather.setTextInputAllowed(false);
         setTabData(languangeMap.get("1.3"),
                 understandingLevelComboMother,understandingLevelComboFather);
 
@@ -115,13 +119,16 @@ public class Tab1 extends VerticalLayout {
         religionMotherCombo.setItems(getQ2Answer("1.4"));
         religionFatherCombo.setItems(getQ2Answer("1.4"));
         setTabData(languangeMap.get("1.4"),religionMotherCombo,religionFatherCombo);
+        religionMotherCombo.setTextInputAllowed(false);
+        religionFatherCombo.setTextInputAllowed(false);
 
         schoolGradeMother = new ComboBox();
         schoolGradeFather = new ComboBox();
         schoolGradeMother.setItems(getStringList(0,13));
         schoolGradeFather.setItems(getStringList(0,13));
         setTabData(languangeMap.get("1.5"),schoolGradeMother,schoolGradeFather);
-
+        schoolGradeMother.setTextInputAllowed(false);
+        schoolGradeFather.setTextInputAllowed(false);
 
         afterALMother = new ComboBox();
         afterALFather = new ComboBox();
@@ -131,6 +138,8 @@ public class Tab1 extends VerticalLayout {
         afterALFather.setDescription(getAnswerDesc("1.6"));
         setTabData(languangeMap.get("1.6"),afterALMother,afterALFather);
         //setTabData(tab1,"1.6 If you passed A/L, what is the education level obtained after A/L s?",afterALMother,afterALFather);
+        afterALMother.setTextInputAllowed(false);
+        afterALFather.setTextInputAllowed(false);
 
         List<Answer> yesNoList = new ArrayList<>();
         yesNoList.addAll(getQ2Answer("1.7"));
@@ -139,9 +148,13 @@ public class Tab1 extends VerticalLayout {
         sexualEduLMother.setItems(yesNoList);
         sexualEduFather.setItems(yesNoList);
         setTabData(languangeMap.get("1.7"),sexualEduLMother,sexualEduFather);
+        sexualEduLMother.setTextInputAllowed(false);
+        sexualEduFather.setTextInputAllowed(false);
+
         maritualStatusCombo = new ComboBox();
         maritualStatusCombo.setItems(getQ2Answer("1.8"));
         setTabData(languangeMap.get("1.8"),maritualStatusCombo,null);
+        maritualStatusCombo.setTextInputAllowed(false);
 
         marriedYearCombo = new ComboBox("Years");
         marriedYearCombo.setSizeFull();

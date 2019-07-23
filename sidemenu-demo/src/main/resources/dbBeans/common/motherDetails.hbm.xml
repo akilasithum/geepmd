@@ -8,8 +8,11 @@
             <column name="motherRegNo" />
             <generator class="identity" />
         </id>
+        <property name="motherSerialNumber" type="java.lang.String">
+            <column name="motherSerialNumber" length="50" />
+        </property>
         <property name="motherName" type="java.lang.String">
-            <column name="motherName"  />
+            <column name="motherName" length="50" />
         </property>
         <property name="age" type="java.lang.Integer">
             <column name="age"  />

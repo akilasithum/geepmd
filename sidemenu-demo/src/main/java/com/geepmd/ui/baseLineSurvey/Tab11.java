@@ -1,6 +1,6 @@
 package com.geepmd.ui.baseLineSurvey;
 
-import com.geepmd.entity.BaselineQ10;
+import com.geepmd.entity.BaselineQ11;
 import com.geepmd.ui.Survey;
 import com.geepmd.utils.Answer;
 import com.geepmd.utils.EnglishMap;
@@ -127,9 +127,9 @@ public class Tab11 extends VerticalLayout {
         return layout;
     }
 
-    public BaselineQ10 getAnswers(int motherId) {
+    public BaselineQ11 getAnswers(int motherId) {
 
-        BaselineQ10 answer = new BaselineQ10();
+        BaselineQ11 answer = new BaselineQ11();
         answer.setMotherId(motherId);
         if(mesTypeCombo.getValue() != null) answer.setM1(((Answer) mesTypeCombo.getValue()).getId());
 

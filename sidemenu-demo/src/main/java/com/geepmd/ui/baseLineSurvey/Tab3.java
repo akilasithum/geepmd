@@ -215,7 +215,7 @@ public class Tab3 extends VerticalLayout {
             }
             else{
                 tab3MainDetails.removeAllComponents();
-                removeComponent(tab3MainDetails);
+                //removeComponent(tab3MainDetails);
             }
         });
         Button nextBtn = new Button("Next");

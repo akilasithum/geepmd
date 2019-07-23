@@ -1,12 +1,17 @@
 package com.geepmd.ui.baseLineSurvey;
 
+import com.geepmd.entity.BaselineQ32;
+import com.geepmd.entity.BaselineQ8;
+import com.geepmd.entity.BaselineQ84;
 import com.geepmd.ui.Survey;
+import com.geepmd.utils.Answer;
 import com.geepmd.utils.EnglishMap;
 import com.geepmd.utils.SinhalaMap;
 import com.geepmd.utils.SurveyUtils;
 import com.vaadin.icons.VaadinIcons;
 import com.vaadin.ui.*;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -23,6 +28,7 @@ public class Tab8 extends VerticalLayout {
     TextField houseLeaderFld;
     ComboBox medicalPref;
     VerticalLayout q84Layout;
+    VerticalLayout q85Layout;
 
 
     public Tab8(String language, Survey survey){
@@ -92,7 +98,7 @@ public class Tab8 extends VerticalLayout {
                 for(int i = 0;i<memberCount;i++){
                     HorizontalLayout layout = new HorizontalLayout();
                     layout.setSizeFull();
-                    Label member = new Label(i+"");
+                    Label member = new Label((i+1)+"");
                     TextField relationship = new TextField();
                     relationship.setSizeFull();
                     ComboBox ageCombo = new ComboBox();
@@ -114,7 +120,7 @@ public class Tab8 extends VerticalLayout {
         Label q15Label = new Label(q8Map.get("8.5"));
         q15Label.setSizeFull();
         addComponent(q15Label);
-        VerticalLayout q85Layout = new VerticalLayout();
+        q85Layout = new VerticalLayout();
         q85Layout.setSizeFull();
         q85Layout.setMargin(true);
         addComponent(q85Layout);
@@ -151,6 +157,7 @@ public class Tab8 extends VerticalLayout {
     public HorizontalLayout get85Combo(List<?> list,String label){
         ComboBox comboBox = new ComboBox();
         comboBox.setSizeFull();
+        comboBox.setTextInputAllowed(false);
         if(list == null){
             comboBox.setItems(getYesNoAnswer(language));
         }
@@ -159,4 +166,61 @@ public class Tab8 extends VerticalLayout {
         }
         return setTabData(label,comboBox);
     }
+
+    public List<BaselineQ84> get84Answers(int surveyId){
+        List<BaselineQ84> answerList = new ArrayList<>();
+        for (int i=2;i<q84Layout.getComponentCount();i++){
+            HorizontalLayout layout = (HorizontalLayout)q84Layout.getComponent(i);
+            Label memberNo = (Label) layout.getComponent(0);
+            TextField relationship = (TextField) layout.getComponent(1);
+            ComboBox age = (ComboBox) layout.getComponent(2);
+            BaselineQ84 answer = new BaselineQ84();
+            answer.setSurveyId(surveyId);
+            if(memberNo.getValue() != null) answer.setM1(Integer.parseInt(memberNo.getValue()));
+            if(relationship.getValue() != null) answer.setM2(relationship.getValue());
+            if(age.getValue() != null) answer.setM3(Integer.parseInt(age.getValue().toString()));
+            answerList.add(answer);
+        }
+        return answerList;
+    }
+
+    public BaselineQ8 getQ8Answers(int surveyId) {
+        BaselineQ8 answer = new BaselineQ8();
+        answer.setSurveyId(surveyId);
+        if(noOfMembers.getValue() != null) answer.setM1(Integer.parseInt(noOfMembers.getValue().toString()));
+        if(houseLeaderFld.getValue() != null) answer.setM2(houseLeaderFld.getValue());
+        if(medicalPref.getValue() != null) answer.setM3(getId((Answer)medicalPref.getValue()));
+
+        for(int i=0;i<q85Layout.getComponentCount();i++){
+            if(i != 10) {
+                HorizontalLayout layout = (HorizontalLayout) q85Layout.getComponent(i);
+                ComboBox comboBox = (ComboBox) layout.getComponent(1);
+                if (i == 0 && comboBox.getValue() != null) answer.setM51(getId((Answer) comboBox.getValue()));
+                if (i == 1 && comboBox.getValue() != null)
+                    answer.setM52(Integer.parseInt(comboBox.getValue().toString()));
+                if (i == 2 && comboBox.getValue() != null)
+                    answer.setM53(Integer.parseInt(comboBox.getValue().toString()));
+                if (i == 3 && comboBox.getValue() != null) answer.setM54(getId((Answer) comboBox.getValue()));
+                if (i == 4 && comboBox.getValue() != null) answer.setM55(getId((Answer) comboBox.getValue()));
+                if (i == 5 && comboBox.getValue() != null) answer.setM56(getId((Answer) comboBox.getValue()));
+                if (i == 6 && comboBox.getValue() != null) answer.setM57(getId((Answer) comboBox.getValue()));
+                if (i == 7 && comboBox.getValue() != null) answer.setM58(getId((Answer) comboBox.getValue()));
+                if (i == 8 && comboBox.getValue() != null) answer.setM59(getId((Answer) comboBox.getValue()));
+                if (i == 9 && comboBox.getValue() != null) answer.setM510(getId((Answer) comboBox.getValue()));
+                if (i == 11 && comboBox.getValue() != null) answer.setM511(getId((Answer) comboBox.getValue()));
+                if (i == 12 && comboBox.getValue() != null) answer.setM512(getId((Answer) comboBox.getValue()));
+                if (i == 13 && comboBox.getValue() != null) answer.setM513(getId((Answer) comboBox.getValue()));
+                if (i == 14 && comboBox.getValue() != null) answer.setM514(getId((Answer) comboBox.getValue()));
+                if (i == 15 && comboBox.getValue() != null) answer.setM515(getId((Answer) comboBox.getValue()));
+                if (i == 16 && comboBox.getValue() != null) answer.setM516(getId((Answer) comboBox.getValue()));
+                if (i == 17 && comboBox.getValue() != null) answer.setM517(getId((Answer) comboBox.getValue()));
+            }
+        }
+
+        return answer;
+    }
+    private int getId(Answer answer){
+        return answer.getId();
+    }
+
 }

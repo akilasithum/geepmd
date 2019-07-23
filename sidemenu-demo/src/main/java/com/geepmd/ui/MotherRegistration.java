@@ -26,6 +26,7 @@ public class MotherRegistration extends VerticalLayout implements View {
     Grid<MotherDetails> motherDetailsGrid;
     DBConnection connection;
     TextField mNameFld;
+    TextField mSerialNo;
     TextField mAgeFld;
     DateField dateFld;
     TextField examinorId;
@@ -76,6 +77,8 @@ public class MotherRegistration extends VerticalLayout implements View {
         formLayout2.setMargin(new MarginInfo(false,false,false,true));
         mNameFld = new TextField(questionMap.get("1"));
         mNameFld.setRequiredIndicatorVisible(true);
+        mSerialNo = new TextField(questionMap.get("13"));
+        mSerialNo.setRequiredIndicatorVisible(true);
         mAgeFld = new TextField(questionMap.get("2"));
         mAgeFld.setRequiredIndicatorVisible(true);
         dateFld = new DateField(questionMap.get("3"));
@@ -98,8 +101,8 @@ public class MotherRegistration extends VerticalLayout implements View {
         submitBtn.addClickListener(event -> {insertMotherDetails();});
         clearBtn.addClickListener(event -> {clearForm();});
 
-        formLayout1.addComponents(mNameFld,mAgeFld,dateFld,examinorId,mNicNo,motherRegNo);
-        formLayout2.addComponents(startTime,familyMedicalArea,medicalArea,villageArea,antenatalClinicFld);
+        formLayout1.addComponents(mSerialNo,mNameFld,mAgeFld,dateFld,examinorId,mNicNo);
+        formLayout2.addComponents(motherRegNo,startTime,familyMedicalArea,medicalArea,villageArea,antenatalClinicFld);
 
         HorizontalLayout buttonLayout = new HorizontalLayout();
         buttonLayout.addComponents(submitBtn,clearBtn);
@@ -123,6 +126,7 @@ public class MotherRegistration extends VerticalLayout implements View {
         if(ageValidated && nicValidated) {
             if (motherName != null && !motherName.isEmpty()) {
                 MotherDetails mother = new MotherDetails();
+                mother.setMotherSerialNumber(mSerialNo.getValue());
                 mother.setMotherName(motherName);
                 mother.setAge(Integer.parseInt(motherAge));
                 if (dateFld.getValue() != null)
@@ -170,7 +174,7 @@ public class MotherRegistration extends VerticalLayout implements View {
     }
 
     private boolean validateNIC(String nic){
-        if(nic != null && nic.length() == 10){
+        if(nic != null && (nic.length() == 10 || nic.length() == 12)){
 
             return true;
         }
@@ -200,7 +204,7 @@ public class MotherRegistration extends VerticalLayout implements View {
         motherDetailsGrid.setSizeFull();
         addComponent(motherDetailsGrid);
 
-        motherDetailsGrid.addColumn(MotherDetails::getMotherRegNo).setCaption(questionMap.get("13"));
+        motherDetailsGrid.addColumn(MotherDetails::getMotherSerialNumber).setCaption(questionMap.get("13"));
         motherDetailsGrid.addColumn(MotherDetails::getMotherName).setCaption(questionMap.get("1"));
         motherDetailsGrid.addColumn(MotherDetails::getAge).setCaption(questionMap.get("2"));
         motherDetailsGrid.addColumn(MotherDetails::getDate).setCaption(questionMap.get("3"));

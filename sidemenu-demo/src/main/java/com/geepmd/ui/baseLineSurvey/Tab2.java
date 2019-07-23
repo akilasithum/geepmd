@@ -2,6 +2,7 @@ package com.geepmd.ui.baseLineSurvey;
 
 import com.geepmd.entity.BaselineQ2;
 import com.geepmd.entity.BaselineQ26;
+import com.geepmd.entity.BaselineQ28;
 import com.geepmd.ui.Survey;
 import com.geepmd.utils.Answer;
 import com.geepmd.utils.EnglishMap;
@@ -13,6 +14,7 @@ import com.vaadin.shared.ui.MarginInfo;
 import com.vaadin.ui.*;
 import org.vaadin.addons.ComboBoxMultiselect;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
@@ -38,6 +40,7 @@ public class Tab2 extends VerticalLayout {
     HorizontalLayout padSmallLayout;
     HorizontalLayout padMediumLayout;
     HorizontalLayout padLargeLayout;
+    VerticalLayout q28Layout;
     Survey survey;
 
     public Tab2(String language,Survey survey){
@@ -66,6 +69,7 @@ public class Tab2 extends VerticalLayout {
 
         mesTypeCombo = new ComboBox();
         mesTypeCombo.setItems(getYesNoAnswer(language));
+        mesTypeCombo.setTextInputAllowed(false);
         addComponent(setTabData(q2Map.get("2.1"),mesTypeCombo));
 
         mensDaysCombo = new ComboBox();
@@ -74,14 +78,17 @@ public class Tab2 extends VerticalLayout {
 
         daysCombo23 = new ComboBox();
         daysCombo23.setItems(getStringList(1,8));
+        daysCombo23.setTextInputAllowed(false);
         addComponent(setTabData(q2Map.get("2.3"), daysCombo23));
 
         yesNoCombo24 = new ComboBox();
         yesNoCombo24.setItems(getYesNoAnswer(language));
+        yesNoCombo24.setTextInputAllowed(false);
         addComponent(setTabData(q2Map.get("2.4"),yesNoCombo24));
 
         sanitaryCombo = new ComboBox();
         sanitaryCombo.setItems(getAnwerObj(answerMap.get("2.5")));
+        sanitaryCombo.setTextInputAllowed(false);
         addComponent(setTabData(q2Map.get("2.5"),sanitaryCombo));
 
         Label label26 = new Label(q2Map.get("2.6"));
@@ -91,12 +98,13 @@ public class Tab2 extends VerticalLayout {
 
         contraceptiveCombo = new ComboBox();
         contraceptiveCombo.setItems(getYesNoAnswer(language));
+        contraceptiveCombo.setTextInputAllowed(false);
         HorizontalLayout q27Layout = setTabData(q2Map.get("2.7"),contraceptiveCombo);
         addComponent(q27Layout);
 
         Label q28Label = new Label(q2Map.get("2.8"));
         q28Label.setSizeFull();
-        VerticalLayout q28Layout = new VerticalLayout();
+        q28Layout = new VerticalLayout();
         q28Layout.setSizeFull();
         q28Layout.addComponent(get28Header());
         q28Layout.addComponent(addActivitiesTable("1"));
@@ -125,6 +133,7 @@ public class Tab2 extends VerticalLayout {
 
         diagnosedCombo = new ComboBox();
         diagnosedCombo.setItems(getYesNoAnswer(language));
+        diagnosedCombo.setTextInputAllowed(false);
         HorizontalLayout q29Layout = setTabData(q2Map.get("2.9"),diagnosedCombo);
         addComponent(q29Layout);
 
@@ -135,6 +144,7 @@ public class Tab2 extends VerticalLayout {
         yesNoCombo210 = new ComboBox();
         yesNoCombo210.setItems(getStringList(1,15));
         yesNoCombo210.setSizeFull();
+        yesNoCombo210.setTextInputAllowed(false);
         q210Layout.addComponents(q210Label, yesNoCombo210);
         q210Layout.setExpandRatio(q210Label,3);
         q210Layout.setExpandRatio(yesNoCombo210,1);
@@ -297,6 +307,7 @@ public class Tab2 extends VerticalLayout {
         sideEffects.setSizeFull();
         sideEffects.setItems(getAnwerObj(answerMap.get("2.8")));
         sideEffects.setDescription(getAnswerDesc(answerMap.get("2.8")));
+        sideEffects.setTextInputAllowed(false);
         TextField method = new TextField();
         method.setSizeFull();
         TextField usedTime = new TextField();
@@ -444,6 +455,28 @@ public class Tab2 extends VerticalLayout {
         return answer;
     }
 
+    public List<BaselineQ28> get28Answers(int surveyId){
+        List<BaselineQ28> answerList = new ArrayList<>();
+        for(int i = 1;i<q28Layout.getComponentCount();i++){
+            HorizontalLayout layout = (HorizontalLayout) q28Layout.getComponent(i);
+            TextField method = (TextField) layout.getComponent(1);
+            TextField timePeriod = (TextField) layout.getComponent(2);
+            ComboBox sideEffects = (ComboBox) layout.getComponent(3);
+            TextField reason = (TextField) layout.getComponent(4);
+            if((method.getValue() != null && !method.getValue().isEmpty()) || (timePeriod.getValue() != null && !timePeriod.getValue().isEmpty())
+                    || sideEffects.getValue() != null|| (reason.getValue() != null && !reason.getValue().isEmpty())) {
+                BaselineQ28 answer = new BaselineQ28();
+                answer.setSurveyId(surveyId);
+                if (method.getValue() != null) answer.setM1(method.getValue());
+                if (timePeriod.getValue() != null) answer.setM2(timePeriod.getValue());
+                if (sideEffects.getValue() != null) answer.setM3(getId((Answer) sideEffects.getValue()));
+                if (reason.getValue() != null) answer.setM4(reason.getValue());
+                answerList.add(answer);
+            }
+        }
+        return answerList;
+    }
+
     public BaselineQ26 get26Answer(int surveyId){
         BaselineQ26 answer = new BaselineQ26();
         answer.setSurveyId(surveyId);
@@ -468,9 +501,7 @@ public class Tab2 extends VerticalLayout {
             if(i==6) answer.setD7(number);
             if(i==7) answer.setD8(number);
             if(i==8) answer.setD9(number);
-
         }
-
         return answer;
     }
 

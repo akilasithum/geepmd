@@ -5,7 +5,7 @@ import java.util.Date;
 public class CommonDetails {
 
     private int surveyId;
-    private int motherId;
+    private String motherId;
     private int examinorId;
     private Date addedDate;
     private String surveyType;
@@ -18,11 +18,11 @@ public class CommonDetails {
         this.surveyId = surveyId;
     }
 
-    public int getMotherId() {
+    public String getMotherId() {
         return motherId;
     }
 
-    public void setMotherId(int motherId) {
+    public void setMotherId(String motherId) {
         this.motherId = motherId;
     }
 

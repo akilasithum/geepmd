@@ -414,7 +414,7 @@ public class SinhalaMap {
         map.put("8.5.14","8.5.14 වෑන්");
         map.put("8.5.15","8.5.15 ත්\u200Dරී වීල් රථය");
         map.put("8.5.16","8.5.16 මෝටර් බයික්");
-        map.put("8.5.17","ව8.5.17 ෙනත් vehicles");
+        map.put("8.5.17","8.5.17 වෙනත් vehicles");
         map.put("8.5.middle","ඔබ නිවසේ මෙහි සඳහන් උපකරණ තිබේද?");
         return map;
     }

@@ -1,21 +1,19 @@
 package com.geepmd.entity;
 
-public class BaselineQ10 {
-
-    private int baselineQ10Id;
+public class BaselineQ28 {
+    private int baselineQ28Id;
     private int surveyId;
-    private int m1;
-    private int m2;
+    private String m1;
+    private String m2;
     private int m3;
     private String m4;
-    private String m5;
 
-    public int getBaselineQ10Id() {
-        return baselineQ10Id;
+    public int getBaselineQ28Id() {
+        return baselineQ28Id;
     }
 
-    public void setBaselineQ10Id(int baselineQ10Id) {
-        this.baselineQ10Id = baselineQ10Id;
+    public void setBaselineQ28Id(int baselineQ28Id) {
+        this.baselineQ28Id = baselineQ28Id;
     }
 
     public int getSurveyId() {
@@ -26,19 +24,19 @@ public class BaselineQ10 {
         this.surveyId = surveyId;
     }
 
-    public int getM1() {
+    public String getM1() {
         return m1;
     }
 
-    public void setM1(int m1) {
+    public void setM1(String m1) {
         this.m1 = m1;
     }
 
-    public int getM2() {
+    public String getM2() {
         return m2;
     }
 
-    public void setM2(int m2) {
+    public void setM2(String m2) {
         this.m2 = m2;
     }
 
@@ -56,13 +54,5 @@ public class BaselineQ10 {
 
     public void setM4(String m4) {
         this.m4 = m4;
-    }
-
-    public String getM5() {
-        return m5;
-    }
-
-    public void setM5(String m5) {
-        this.m5 = m5;
     }
 }

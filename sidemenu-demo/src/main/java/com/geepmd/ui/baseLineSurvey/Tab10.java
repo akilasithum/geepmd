@@ -1,11 +1,14 @@
 package com.geepmd.ui.baseLineSurvey;
 
+import com.geepmd.entity.BaselineQ10;
 import com.geepmd.utils.Answer;
 import com.geepmd.utils.EnglishMap;
 import com.geepmd.utils.SinhalaMap;
 import com.vaadin.shared.ui.MarginInfo;
 import com.vaadin.ui.*;
 
+import java.time.Month;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -14,7 +17,7 @@ import static com.geepmd.utils.SurveyUtils.*;
 public class Tab10 extends VerticalLayout {
 
     Map<String,List<String>> answerMap;
-    Map<String,String> q9Map;
+    Map<String,String> q10Map;
     Map<String,String> fields;
     String language;
     VerticalLayout questionLayout;
@@ -23,12 +26,12 @@ public class Tab10 extends VerticalLayout {
         this.language = language;
         if(language.equals("EN")){
             answerMap = EnglishMap.getq1AnswerList();
-            q9Map = EnglishMap.getquestion1Map();
+            q10Map = EnglishMap.getquestion1Map();
 
         }
         else{
             answerMap = SinhalaMap.getQ10AnswerList();
-            q9Map = SinhalaMap.getQ10Map();
+            q10Map = SinhalaMap.getQ10Map();
             fields = SinhalaMap.getQ10Fields();
         }
         createLayout();
@@ -37,7 +40,7 @@ public class Tab10 extends VerticalLayout {
     }
 
     private void createLayout(){
-        Label q1Label = new Label(q9Map.get("10.1"));
+        Label q1Label = new Label(q10Map.get("10.1"));
         q1Label.setSizeFull();
         addComponents(q1Label);
         CheckBox noToAll = new CheckBox(fields.get("9.1"));
@@ -129,6 +132,15 @@ public class Tab10 extends VerticalLayout {
         return yearMonthLayout;
     }
 
+    private String getYearMonthComboValue(HorizontalLayout layout){
+        ComboBox hourCombo = (ComboBox) layout.getComponent(0);
+        ComboBox minuteCombo = (ComboBox) layout.getComponent(1);
+        String time = "";
+        if(hourCombo.getValue() != null) time = String.valueOf(hourCombo.getValue()) + " ";
+        time += minuteCombo.getValue() != null ? getMothFromIndex(Integer.parseInt(minuteCombo.getValue().toString())) : "";
+        return time;
+    }
+
     private void setNoToAllCombo(boolean isNo){
 
         for(int i = 1;i<questionLayout.getComponentCount();i++){
@@ -144,5 +156,39 @@ public class Tab10 extends VerticalLayout {
                 comboBox.clear();
             }
         }
+    }
+
+    public List<BaselineQ10> getAnswerQ10(int surveyId){
+        List<BaselineQ10> answerList = new ArrayList<>();
+        for(int i = 1;i<questionLayout.getComponentCount();i++){
+            HorizontalLayout layout = (HorizontalLayout) questionLayout.getComponent(i);
+            ComboBox yesNoCombo = (ComboBox) layout.getComponent(1);
+            BaselineQ10 answer = new BaselineQ10();
+            answer.setM1(i);
+            answer.setSurveyId(surveyId);
+            if(yesNoCombo != null){
+               int choice = getId((Answer)yesNoCombo.getValue());
+               answer.setM2(choice);
+               if(choice == 1){
+                   HorizontalLayout dependentLayout = (HorizontalLayout) layout.getComponent(2);
+                   ComboBox docCombo = (ComboBox) dependentLayout.getComponent(0);
+                   String start = getYearMonthComboValue((HorizontalLayout) dependentLayout.getComponent(1));
+                   String end = getYearMonthComboValue((HorizontalLayout) dependentLayout.getComponent(2));
+                   if(docCombo.getValue() != null )answer.setM3(getId((Answer)docCombo.getValue()));
+                   if(!start.isEmpty() ) answer.setM4(start);
+                   if(!end.isEmpty()) answer.setM5(end);
+               }
+            }
+            answerList.add(answer);
+        }
+        return answerList;
+    }
+
+    private int getId(Answer answer){
+        return answer.getId();
+    }
+
+    private String getMothFromIndex(int id){
+        return Month.of(id).name();
     }
 }

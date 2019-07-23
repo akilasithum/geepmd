@@ -73,6 +73,21 @@ public class DownloadExcel extends VerticalLayout implements View {
 
         List<CommonDetails> commonList = (List<CommonDetails>)connection.getAllValues("com.geepmd.entity.CommonDetails",
                 "surveyId");
+        if(commonList == null || commonList.size() == 0){
+            try {
+                File file = new File("baseline_survey.xlsx");
+                FileResource fir = new FileResource(file);
+                FileDownloader fileDownloader = new FileDownloader(fir);
+                FileOutputStream out = new FileOutputStream(file);
+                workbook.write(out);
+                out.close();
+                workbook.close();
+                fileDownloader.extend(downloadBtn);
+            }catch (Exception e){
+                e.printStackTrace();
+            }
+            return;
+        }
         List<BaselineQ1> q1List = (List<BaselineQ1>)connection.getAllValues("com.geepmd.entity.BaselineQ1","baselineQ1Id");
         Map<Integer,BaselineQ1> q1Map = q1List.stream().collect(Collectors.toMap(x -> x.getMotherId(), x -> x));
         List<BaselineQ2> q2List = (List<BaselineQ2>)connection.getAllValues("com.geepmd.entity.BaselineQ2","baselineQ2Id");
@@ -87,12 +102,39 @@ public class DownloadExcel extends VerticalLayout implements View {
         Map<Integer,BaselineQ6> q6Map = q6List.stream().collect(Collectors.toMap(x -> x.getMotherId(), x -> x));
         List<BaselineQ7> q7List = (List<BaselineQ7>)connection.getAllValues("com.geepmd.entity.BaselineQ7","baselineQ7Id");
         Map<Integer, BaselineQ7> q7Map = q7List.stream().collect(Collectors.toMap(x -> x.getMotherId(), x -> x));
+        List<BaselineQ8> q8List = (List<BaselineQ8>)connection.getAllValues("com.geepmd.entity.BaselineQ8","baselineQ8Id");
+        Map<Integer, BaselineQ8> q8Map = q8List.stream().collect(Collectors.toMap(x -> x.getSurveyId(), x -> x));
+        List<BaselineQ9> q9List = (List<BaselineQ9>)connection.getAllValues("com.geepmd.entity.BaselineQ9","baselineQ9Id");
+        Map<Integer, BaselineQ9> q9Map = q9List.stream().collect(Collectors.toMap(x -> x.getSurveyId(), x -> x));
 
-        List<BaselineQ7> q8List = (List<BaselineQ7>)connection.getAllValues("com.geepmd.entity.BaselineQ8","baselineQ8Id");
-        Map<Integer, BaselineQ7> q8Map = q8List.stream().collect(Collectors.toMap(x -> x.getMotherId(), x -> x));
+        List<BaselineQ10> q10List = (List<BaselineQ10>)connection.getAllValues("com.geepmd.entity.BaselineQ10","baselineQ10Id");
+        Map<Integer,List<BaselineQ10>> q10Map = new HashMap<>();
+        for(BaselineQ10 base : q10List){
+            if(q10Map.containsKey(base.getSurveyId())){
+                q10Map.get(base.getSurveyId()).add(base);
+            }
+            else{
+                List<BaselineQ10> list = new ArrayList<>();
+                list.add(base);
+                q10Map.put(base.getSurveyId(),list);
+            }
+        }
 
         List<BaselineQ26> q26List = (List<BaselineQ26>)connection.getAllValues("com.geepmd.entity.BaselineQ26","baselineQ26Id");
         Map<Integer,BaselineQ26> q26Map = q26List.stream().collect(Collectors.toMap(x -> x.getSurveyId(), x -> x));
+
+        List<BaselineQ28> q28List = (List<BaselineQ28>)connection.getAllValues("com.geepmd.entity.BaselineQ28","baselineQ28Id");
+        Map<Integer,List<BaselineQ28>> q28Map = new HashMap<>();
+        for(BaselineQ28 base : q28List){
+            if(q28Map.containsKey(base.getSurveyId())){
+                q28Map.get(base.getSurveyId()).add(base);
+            }
+            else{
+                List<BaselineQ28> list = new ArrayList<>();
+                list.add(base);
+                q28Map.put(base.getSurveyId(),list);
+            }
+        }
 
         List<BaselineQ32> q32List = (List<BaselineQ32>)connection.getAllValues("com.geepmd.entity.BaselineQ32","baselineQ32Id");
         Map<Integer,List<BaselineQ32>> q32Map = new HashMap<>();
@@ -130,6 +172,20 @@ public class DownloadExcel extends VerticalLayout implements View {
                 q62Map.put(base.getMotherId(),list);
             }
         }
+
+        List<BaselineQ84> q84List = (List<BaselineQ84>)connection.getAllValues("com.geepmd.entity.BaselineQ84","baselineQ84Id");
+        Map<Integer,List<BaselineQ84>> q84Map = new HashMap<>();
+        for(BaselineQ84 base : q84List){
+            if(q84Map.containsKey(base.getSurveyId())){
+                q84Map.get(base.getSurveyId()).add(base);
+            }
+            else{
+                List<BaselineQ84> list = new ArrayList<>();
+                list.add(base);
+                q84Map.put(base.getSurveyId(),list);
+            }
+        }
+
         int rowCount = 1;
         for(CommonDetails common : commonList){
             Row row = sheet.createRow(rowCount);
@@ -147,8 +203,41 @@ public class DownloadExcel extends VerticalLayout implements View {
             createObjCells(baselineQ2,"getM",1,5,row);
             createObjCells(baselineQ26,"getD",1,9,row);
             createObjCells(baselineQ2,"getM",7,7,row);
-            valColumnCount++;
+            List<BaselineQ28> baselineQ28List = q28Map.get(common.getSurveyId());
+            if(baselineQ28List == null || baselineQ28List.size() == 0){
+                createEmptyCells(20);
+            }
+            else if(baselineQ28List.size() == 1){
+                createObjCells(baselineQ28List.get(0),"getM",1,4,row);
+                createEmptyCells(16);
+            }
+            else if(baselineQ28List.size() == 2){
+                createObjCells(baselineQ28List.get(0),"getM",1,4,row);
+                createObjCells(baselineQ28List.get(1),"getM",1,4,row);
+                createEmptyCells(12);
+            }
+            else if(baselineQ28List.size() == 3){
+                createObjCells(baselineQ28List.get(0),"getM",1,4,row);
+                createObjCells(baselineQ28List.get(1),"getM",1,4,row);
+                createObjCells(baselineQ28List.get(2),"getM",1,4,row);
+                createEmptyCells(8);
+            }
+            else if(baselineQ28List.size() == 4){
+                createObjCells(baselineQ28List.get(0),"getM",1,4,row);
+                createObjCells(baselineQ28List.get(1),"getM",1,4,row);
+                createObjCells(baselineQ28List.get(2),"getM",1,4,row);
+                createObjCells(baselineQ28List.get(3),"getM",1,4,row);
+                createEmptyCells(4);
+            }
+            else if(baselineQ28List.size() == 5){
+                createObjCells(baselineQ28List.get(0),"getM",1,4,row);
+                createObjCells(baselineQ28List.get(1),"getM",1,4,row);
+                createObjCells(baselineQ28List.get(2),"getM",1,4,row);
+                createObjCells(baselineQ28List.get(3),"getM",1,4,row);
+                createObjCells(baselineQ28List.get(4),"getM",1,4,row);
+            }
             createObjCells(baselineQ2,"getM",9,10,row);
+
             BaselineQ3 baselineQ3 = q3Map.get(common.getSurveyId());
             List<BaselineQ32> baselineQ32List = q32Map.get(common.getSurveyId());
             createObjCells(baselineQ3,"getM",1,1,row);
@@ -175,9 +264,13 @@ public class DownloadExcel extends VerticalLayout implements View {
             createObjCells(baselineQ4,"getM",1,12,row);
             List<BaselineQ51> baselineQ51List = q51Map.get(common.getSurveyId());
             BaselineQ5 baselineQ5 = q5Map.get(common.getSurveyId());
-            for(BaselineQ51 baselineQ51 : baselineQ51List){
-                createObjCells(baselineQ51,"getB",1,4,row);
-                createObjCells(baselineQ51,"getA",1,4,row);
+            if(baselineQ51List != null) {
+                for (BaselineQ51 baselineQ51 : baselineQ51List) {
+                    createObjCells(baselineQ51, "getB", 1, 4, row);
+                    createObjCells(baselineQ51, "getA", 1, 4, row);
+                }
+            }else{
+                createEmptyCells(88);
             }
             createObjCells(baselineQ5,"getM",2,3,row);
 
@@ -187,12 +280,17 @@ public class DownloadExcel extends VerticalLayout implements View {
             createObjCells(baselineQ6,"getM1b",row);
             createObjCells(baselineQ6,"getM1c",row);
             createObjCells(baselineQ6,"getM1d",row);
-            for(BaselineQ62 baselineQ62 : baselineQ62List){
-                createObjCells(baselineQ62,"getM",1,5,row);
+            if(baselineQ62List != null) {
+                for (BaselineQ62 baselineQ62 : baselineQ62List) {
+                    createObjCells(baselineQ62, "getM", 1, 5, row);
+                }
+            }
+            else{
+                createEmptyCells(105);
             }
             createObjCells(baselineQ6,"getM",3,12,row);
 
-            BaselineQ7 baselineQ7 = q7Map.get(common.getSurveyId());
+            /*BaselineQ7 baselineQ7 = q7Map.get(common.getSurveyId());
             createObjCells(baselineQ7,"getM",1,1,row);
             createObjCells(baselineQ7,"getM2aQ",row);
             createObjCells(baselineQ7,"getM2a",row);
@@ -206,10 +304,81 @@ public class DownloadExcel extends VerticalLayout implements View {
             createObjCells(baselineQ7,"getM2e",row);
             createObjCells(baselineQ7,"getM3a",row);
             createObjCells(baselineQ7,"getM3b",row);
-            createObjCells(baselineQ7,"getM3c",row);
+            createObjCells(baselineQ7,"getM3c",row);*/
 
-            BaselineQ7 baselineQ8 = q8Map.get(common.getSurveyId());
-            createObjCells(baselineQ8,"getM81",9,row);
+            BaselineQ7 baselineQ7 = q7Map.get(common.getSurveyId());
+            createObjCells(baselineQ7,"getM81",9,row);
+
+            BaselineQ8 baselineQ8 = q8Map.get(common.getSurveyId());
+            createObjCells(baselineQ8,"getM",1,3,row);
+            List<BaselineQ84> baselineQ84List = q84Map.get(common.getSurveyId());
+            if(baselineQ84List== null || baselineQ84List.size() == 0){
+                createEmptyCells(21);
+            }
+            else if(baselineQ84List.size() == 1){
+                createObjCells(baselineQ84List.get(0),"getM",1,3,row);
+                createEmptyCells(18);
+            }
+            else if(baselineQ84List.size() == 2){
+                createObjCells(baselineQ84List.get(0),"getM",1,3,row);
+                createObjCells(baselineQ84List.get(1),"getM",1,3,row);
+                createEmptyCells(15);
+            }
+            else if(baselineQ84List.size() == 3){
+                createObjCells(baselineQ84List.get(0),"getM",1,3,row);
+                createObjCells(baselineQ84List.get(1),"getM",1,3,row);
+                createObjCells(baselineQ84List.get(2),"getM",1,3,row);
+                createEmptyCells(12);
+            }
+            else if(baselineQ84List.size() == 4){
+                createObjCells(baselineQ84List.get(0),"getM",1,3,row);
+                createObjCells(baselineQ84List.get(1),"getM",1,3,row);
+                createObjCells(baselineQ84List.get(2),"getM",1,3,row);
+                createObjCells(baselineQ84List.get(3),"getM",1,3,row);
+                createEmptyCells(9);
+            }
+            else if(baselineQ84List.size() == 5){
+                createObjCells(baselineQ84List.get(0),"getM",1,3,row);
+                createObjCells(baselineQ84List.get(1),"getM",1,3,row);
+                createObjCells(baselineQ84List.get(2),"getM",1,3,row);
+                createObjCells(baselineQ84List.get(3),"getM",1,3,row);
+                createObjCells(baselineQ84List.get(4),"getM",1,3,row);
+                createEmptyCells(6);
+            }
+            else if(baselineQ84List.size() == 6){
+                createObjCells(baselineQ84List.get(0),"getM",1,3,row);
+                createObjCells(baselineQ84List.get(1),"getM",1,3,row);
+                createObjCells(baselineQ84List.get(2),"getM",1,3,row);
+                createObjCells(baselineQ84List.get(3),"getM",1,3,row);
+                createObjCells(baselineQ84List.get(4),"getM",1,3,row);
+                createObjCells(baselineQ84List.get(5),"getM",1,3,row);
+                createEmptyCells(3);
+            }
+            else if(baselineQ84List.size() == 7){
+                createObjCells(baselineQ84List.get(0),"getM",1,3,row);
+                createObjCells(baselineQ84List.get(1),"getM",1,3,row);
+                createObjCells(baselineQ84List.get(2),"getM",1,3,row);
+                createObjCells(baselineQ84List.get(3),"getM",1,3,row);
+                createObjCells(baselineQ84List.get(4),"getM",1,3,row);
+                createObjCells(baselineQ84List.get(5),"getM",1,3,row);
+                createObjCells(baselineQ84List.get(6),"getM",1,3,row);
+                createObjCells(baselineQ84List.get(7),"getM",1,3,row);
+            }
+            createObjCells(baselineQ8,"getM5",1,17,row);
+
+            BaselineQ9 baselineQ9 = q9Map.get(common.getSurveyId());
+            createObjCells(baselineQ9,"getM",1,4,row);
+            createObjCells(baselineQ9,"getM5",1,4,row);
+
+            List<BaselineQ10> baselineQ10List = q10Map.get(common.getSurveyId());
+            if(baselineQ10List != null) {
+                for (BaselineQ10 baselineQ10 : baselineQ10List) {
+                    createObjCells(baselineQ10, "getM", 1, 5, row);
+                }
+            }
+            else {
+                createEmptyCells(65);
+            }
             rowCount++;
         }
 
@@ -328,7 +497,13 @@ public class DownloadExcel extends VerticalLayout implements View {
         createCells("AF1",1,5);
         createCells("B2",1,5);
         createCells("B2.6",1,9);
-        createCells("B2",7,10);
+        createCells("B2",7,7);
+        createCells("B2.8.1",1,4);
+        createCells("B2.8.2",1,4);
+        createCells("B2.8.3",1,4);
+        createCells("B2.8.4",1,4);
+        createCells("B2.8.5",1,4);
+        createCells("B2",9,10);
         createCells("C3",1,1);
         createCells("C3.2.1",1,8);
         createCells("C3.2.2",1,8);
@@ -370,25 +545,42 @@ public class DownloadExcel extends VerticalLayout implements View {
         createCells("F6.2.q",1,5);
         createCells("F6.2.r",1,5);
         createCells("F6.2.s",1,5);
+        createCells("F6.2.t",1,5);
+        createCells("F6.2.u",1,5);
         createCells("F6",3,12);
-        createCells("G7.1");
-        createCells("G7.2.a",1,2);
-        createCells("G7.2.b",1,2);
-        createCells("G7.2.c",1,2);
-        createCells("G7.2.d",1,2);
-        createCells("G7.2.e",1,2);
-        createCells("G7.3.a");
-        createCells("G7.3.b");
-        createCells("G7.3.c");
-        createCells("F8.1.a");
-        createCells("F8.1.b");
-        createCells("F8.1.c");
-        createCells("F8.1.d");
-        createCells("F8.1.e");
-        createCells("F8.1.f");
-        createCells("F8.1.g");
-        createCells("F8.1.h");
-        createCells("F8.1.i");
+        createCells("G7.1.a");
+        createCells("G7.1.b");
+        createCells("G7.1.c");
+        createCells("G7.1.d");
+        createCells("G7.1.e");
+        createCells("G7.1.f");
+        createCells("G7.1.g");
+        createCells("G7.1.h");
+        createCells("G7.1.i");
+        createCells("H8",1,3);
+        createCells("H8.4.1",1,3);
+        createCells("H8.4.2",1,3);
+        createCells("H8.4.3",1,3);
+        createCells("H8.4.4",1,3);
+        createCells("H8.4.5",1,3);
+        createCells("H8.4.6",1,3);
+        createCells("H8.4.7",1,3);
+        createCells("H8.5",1,17);
+        createCells("I9",1,4);
+        createCells("I9.5",1,4);
+        createCells("J10.1.1",1,5);
+        createCells("J10.1.2",1,5);
+        createCells("J10.1.3",1,5);
+        createCells("J10.1.4",1,5);
+        createCells("J10.1.5",1,5);
+        createCells("J10.1.6",1,5);
+        createCells("J10.1.7",1,5);
+        createCells("J10.1.8",1,5);
+        createCells("J10.1.9",1,5);
+        createCells("J10.1.10",1,5);
+        createCells("J10.1.11",1,5);
+        createCells("J10.1.12",1,5);
+        createCells("J10.1.13",1,5);
     }
 
     private void createCells(String headerPrefix,int startIndex,int count){

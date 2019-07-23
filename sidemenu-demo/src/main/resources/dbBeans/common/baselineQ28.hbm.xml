@@ -1,0 +1,27 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+        "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping>
+    <class name="com.geepmd.entity.BaselineQ28" table="baseline_q28" catalog="">
+        <id name="baselineQ28Id" type="java.lang.Integer">
+            <column name="baselineQ28Id" />
+            <generator class="identity" />
+        </id>
+        <property name="surveyId" type="java.lang.Integer">
+            <column name="surveyId" />
+        </property>
+        <property name="m1" type="java.lang.String">
+            <column name="m1" length="50"/>
+        </property>
+        <property name="m2" type="java.lang.String">
+            <column name="m2" length="50"/>
+        </property>
+        <property name="m3" type="java.lang.Integer">
+            <column name="m3" />
+        </property>
+        <property name="m4" type="java.lang.String">
+            <column name="m4" length="100"/>
+        </property>
+    </class>
+</hibernate-mapping>

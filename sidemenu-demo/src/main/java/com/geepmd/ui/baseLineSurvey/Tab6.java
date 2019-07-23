@@ -94,6 +94,8 @@ public class Tab6 extends VerticalLayout {
         secondQAnswerLayout.addComponent(setQ62(fields.get("q")));
         secondQAnswerLayout.addComponent(setQ62(fields.get("r")));
         secondQAnswerLayout.addComponent(setQ62(fields.get("s")));
+        secondQAnswerLayout.addComponent(setQ62(fields.get("t")));
+        secondQAnswerLayout.addComponent(setQ62(fields.get("u")));
 
         HorizontalLayout q63Layout = new HorizontalLayout();
         q63Layout.setSizeFull();
