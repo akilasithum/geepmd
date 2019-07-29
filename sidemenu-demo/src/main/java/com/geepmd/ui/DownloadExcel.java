@@ -55,7 +55,6 @@ public class DownloadExcel extends VerticalLayout implements View {
 
         downloadBtn = new Button("Download Excel");
         downloadBtn.setIcon(VaadinIcons.DOWNLOAD);
-        //downloadBtn.addClickListener(event -> download());
         addComponent(downloadBtn);
         logo = new Image();
         logo.setSource(new ThemeResource("images/tenor.png"));
@@ -74,34 +73,23 @@ public class DownloadExcel extends VerticalLayout implements View {
         List<CommonDetails> commonList = (List<CommonDetails>)connection.getAllValues("com.geepmd.entity.CommonDetails",
                 "surveyId");
         if(commonList == null || commonList.size() == 0){
-            try {
-                File file = new File("baseline_survey.xlsx");
-                FileResource fir = new FileResource(file);
-                FileDownloader fileDownloader = new FileDownloader(fir);
-                FileOutputStream out = new FileOutputStream(file);
-                workbook.write(out);
-                out.close();
-                workbook.close();
-                fileDownloader.extend(downloadBtn);
-            }catch (Exception e){
-                e.printStackTrace();
-            }
+            downloadFile(workbook);
             return;
         }
         List<BaselineQ1> q1List = (List<BaselineQ1>)connection.getAllValues("com.geepmd.entity.BaselineQ1","baselineQ1Id");
-        Map<Integer,BaselineQ1> q1Map = q1List.stream().collect(Collectors.toMap(x -> x.getMotherId(), x -> x));
+        Map<Integer,BaselineQ1> q1Map = q1List.stream().collect(Collectors.toMap(x -> x.getSurveyId(), x -> x));
         List<BaselineQ2> q2List = (List<BaselineQ2>)connection.getAllValues("com.geepmd.entity.BaselineQ2","baselineQ2Id");
         Map<Integer,BaselineQ2> q2Map = q2List.stream().collect(Collectors.toMap(x -> x.getSurveyId(), x -> x));
         List<BaselineQ3> q3List = (List<BaselineQ3>)connection.getAllValues("com.geepmd.entity.BaselineQ3","baselineQ3Id");
-        Map<Integer,BaselineQ3> q3Map = q3List.stream().collect(Collectors.toMap(x -> x.getMotherId(), x -> x));
+        Map<Integer,BaselineQ3> q3Map = q3List.stream().collect(Collectors.toMap(x -> x.getSurveyId(), x -> x));
         List<BaselineQ4> q4List = (List<BaselineQ4>)connection.getAllValues("com.geepmd.entity.BaselineQ4","baselineQ4Id");
-        Map<Integer,BaselineQ4> q4Map = q4List.stream().collect(Collectors.toMap(x -> x.getMotherId(), x -> x));
+        Map<Integer,BaselineQ4> q4Map = q4List.stream().collect(Collectors.toMap(x -> x.getSurveyId(), x -> x));
         List<BaselineQ5> q5List = (List<BaselineQ5>)connection.getAllValues("com.geepmd.entity.BaselineQ5","baselineQ5Id");
-        Map<Integer,BaselineQ5> q5Map = q5List.stream().collect(Collectors.toMap(x -> x.getMotherId(), x -> x));
+        Map<Integer,BaselineQ5> q5Map = q5List.stream().collect(Collectors.toMap(x -> x.getSurveyId(), x -> x));
         List<BaselineQ6> q6List = (List<BaselineQ6>)connection.getAllValues("com.geepmd.entity.BaselineQ6","baselineQ6Id");
-        Map<Integer,BaselineQ6> q6Map = q6List.stream().collect(Collectors.toMap(x -> x.getMotherId(), x -> x));
+        Map<Integer,BaselineQ6> q6Map = q6List.stream().collect(Collectors.toMap(x -> x.getSurveyId(), x -> x));
         List<BaselineQ7> q7List = (List<BaselineQ7>)connection.getAllValues("com.geepmd.entity.BaselineQ7","baselineQ7Id");
-        Map<Integer, BaselineQ7> q7Map = q7List.stream().collect(Collectors.toMap(x -> x.getMotherId(), x -> x));
+        Map<Integer, BaselineQ7> q7Map = q7List.stream().collect(Collectors.toMap(x -> x.getSurveyId(), x -> x));
         List<BaselineQ8> q8List = (List<BaselineQ8>)connection.getAllValues("com.geepmd.entity.BaselineQ8","baselineQ8Id");
         Map<Integer, BaselineQ8> q8Map = q8List.stream().collect(Collectors.toMap(x -> x.getSurveyId(), x -> x));
         List<BaselineQ9> q9List = (List<BaselineQ9>)connection.getAllValues("com.geepmd.entity.BaselineQ9","baselineQ9Id");
@@ -139,37 +127,37 @@ public class DownloadExcel extends VerticalLayout implements View {
         List<BaselineQ32> q32List = (List<BaselineQ32>)connection.getAllValues("com.geepmd.entity.BaselineQ32","baselineQ32Id");
         Map<Integer,List<BaselineQ32>> q32Map = new HashMap<>();
         for(BaselineQ32 base : q32List){
-            if(q32Map.containsKey(base.getMotherId())){
-                q32Map.get(base.getMotherId()).add(base);
+            if(q32Map.containsKey(base.getSurveyId())){
+                q32Map.get(base.getSurveyId()).add(base);
             }
             else{
                 List<BaselineQ32> list = new ArrayList<>();
                 list.add(base);
-                q32Map.put(base.getMotherId(),list);
+                q32Map.put(base.getSurveyId(),list);
             }
         }
         List<BaselineQ51> q51List = (List<BaselineQ51>)connection.getAllValues("com.geepmd.entity.BaselineQ51","baselineQ51Id");
         Map<Integer,List<BaselineQ51>> q51Map = new HashMap<>();
         for(BaselineQ51 base : q51List){
-            if(q51Map.containsKey(base.getMotherId())){
-                q51Map.get(base.getMotherId()).add(base);
+            if(q51Map.containsKey(base.getSurveyId())){
+                q51Map.get(base.getSurveyId()).add(base);
             }
             else{
                 List<BaselineQ51> list = new ArrayList<>();
                 list.add(base);
-                q51Map.put(base.getMotherId(),list);
+                q51Map.put(base.getSurveyId(),list);
             }
         }
         List<BaselineQ62> q62List = (List<BaselineQ62>)connection.getAllValues("com.geepmd.entity.BaselineQ62","baselineQ62Id");
         Map<Integer,List<BaselineQ62>> q62Map = new HashMap<>();
         for(BaselineQ62 base : q62List){
-            if(q62Map.containsKey(base.getMotherId())){
-                q62Map.get(base.getMotherId()).add(base);
+            if(q62Map.containsKey(base.getSurveyId())){
+                q62Map.get(base.getSurveyId()).add(base);
             }
             else{
                 List<BaselineQ62> list = new ArrayList<>();
                 list.add(base);
-                q62Map.put(base.getMotherId(),list);
+                q62Map.put(base.getSurveyId(),list);
             }
         }
 
@@ -382,22 +370,23 @@ public class DownloadExcel extends VerticalLayout implements View {
             rowCount++;
         }
 
+        downloadFile(workbook);
+        logo.setVisible(false);
+    }
+
+    private void downloadFile(Workbook workbook) {
         try {
-            //fileOut = new FileOutputStream("E:\\baseline_survey.xlsx");
-            //File pdfFile = new File("baseline_survey.pdf");
-            File file=new File("baseline_survey.xlsx");
-            FileResource fir=new FileResource(file);
+            File file = new File("baseline_survey.xlsx");
+            FileResource fir = new FileResource(file);
             FileDownloader fileDownloader = new FileDownloader(fir);
             FileOutputStream out = new FileOutputStream(file);
             workbook.write(out);
             out.close();
             workbook.close();
             fileDownloader.extend(downloadBtn);
-        }
-        catch (Exception e) {
+        }catch (Exception e){
             e.printStackTrace();
         }
-        logo.setVisible(false);
     }
 
     private void createObjCells(Object obj,String methodPrefix,int startIndex,int endIndex,Row row){

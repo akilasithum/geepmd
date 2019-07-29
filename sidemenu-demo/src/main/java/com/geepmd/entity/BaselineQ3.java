@@ -3,7 +3,7 @@ package com.geepmd.entity;
 public class BaselineQ3 {
 
     private int baselineQ3Id;
-    private int motherId;
+    private int surveyId;
     private int m1;
     private int m3;
     private String m4;
@@ -19,12 +19,12 @@ public class BaselineQ3 {
         this.baselineQ3Id = baselineQ3Id;
     }
 
-    public int getMotherId() {
-        return motherId;
+    public int getSurveyId() {
+        return surveyId;
     }
 
-    public void setMotherId(int motherId) {
-        this.motherId = motherId;
+    public void setSurveyId(int surveyId) {
+        this.surveyId = surveyId;
     }
 
     public int getM1() {

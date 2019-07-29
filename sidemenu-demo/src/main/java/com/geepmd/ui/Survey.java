@@ -27,6 +27,8 @@ public class Survey extends VerticalLayout implements View {
     Tab8 tab8;
     Tab9 tab9;
     Tab10 tab10;
+    Tab11 tab11;
+    Tab12 tab12;
     ComboBox motherSerialIdComboBox;
     Button saveBtn;
 
@@ -73,6 +75,7 @@ public class Survey extends VerticalLayout implements View {
            if(event.getValue() != null && !String.valueOf(event.getValue()).isEmpty()){
                motherSerialIdComboBox.setValue(nameIdMap.get(event.getValue()));
                tabsheet.setEnabled(true);
+               //updateDetailsIfAdded(nameIdMap.get(event.getValue()));
            }
         });
 
@@ -80,6 +83,7 @@ public class Survey extends VerticalLayout implements View {
             if(event.getValue() != null){
                 motherNameComboBox.setValue(idNameMap.get(event.getValue()));
                 tabsheet.setEnabled(true);
+                //updateDetailsIfAdded(String.valueOf(event.getValue()));
             }
         });
 
@@ -112,21 +116,28 @@ public class Survey extends VerticalLayout implements View {
 
         addComponent(tabsheet);
         tabsheet.setSizeFull();
+        tabsheet.setStyleName("tabStyle");
 
         tabsheet.setEnabled(false);
 
         tab1 = new Tab1(language,this);
+        tab1.setStyleName("subTabSmallStyle");
         tab2 = new Tab2(language,this);
+        tab2.setStyleName("subTabStyle");
         tab3 = new Tab3(language,this);
         tab4 = new Tab4(language,this);
+        tab4.setStyleName("subTabSmallStyle");
         tab5 = new Tab5(language,this);
         tab6 = new Tab6(language,this);
         tab7 = new Tab7(language,this);
         tab8 = new Tab8(language,this);
+        tab8.setStyleName("subTabSmallStyle");
         tab9 = new Tab9(language,this);
-       // tab10 = new Tab11(language,this);
-
-        tab10 = new Tab10(language);
+        tab9.setStyleName("subTabSmallStyle");
+        tab10 = new Tab10(language,this);
+        tab11 = new Tab11(language,this);
+        tab12 = new Tab12(language,this);
+        tab12.setStyleName("subTabSmallStyle");
 
         Map<String,String> headerMap;
         if(language.equals("EN")){
@@ -147,7 +158,26 @@ public class Survey extends VerticalLayout implements View {
         tabsheet.addTab(tab8,headerMap.get("8"));
         tabsheet.addTab(tab9,headerMap.get("9"));
         tabsheet.addTab(tab10,headerMap.get("10"));
+        tabsheet.addTab(tab11,headerMap.get("11"));
+        tabsheet.addTab(tab12,headerMap.get("12"));
+    }
 
+    public void updateDetailsIfAdded(String motherId){
+        CommonDetails common = connection.isMotherDetailsAdded(motherId);
+        if(common != null){
+            int surveyId = common.getSurveyId();
+            BaselineQ1 q1List = (BaselineQ1)connection.getPageValue("com.geepmd.entity.BaselineQ1",surveyId);
+            BaselineQ2 q2List = (BaselineQ2)connection.getPageValue("com.geepmd.entity.BaselineQ2",surveyId);
+            BaselineQ3 q3List = (BaselineQ3)connection.getPageValue("com.geepmd.entity.BaselineQ3",surveyId);
+            BaselineQ4 q4List = (BaselineQ4)connection.getPageValue("com.geepmd.entity.BaselineQ4",surveyId);
+            BaselineQ5 q5List = (BaselineQ5)connection.getPageValue("com.geepmd.entity.BaselineQ5",surveyId);
+            BaselineQ6 q6List = (BaselineQ6)connection.getPageValue("com.geepmd.entity.BaselineQ6",surveyId);
+            BaselineQ7 q7List = (BaselineQ7)connection.getPageValue("com.geepmd.entity.BaselineQ7",surveyId);
+            BaselineQ8 q8List = (BaselineQ8)connection.getPageValue("com.geepmd.entity.BaselineQ8",surveyId);
+            BaselineQ9 q9List = (BaselineQ9)connection.getPageValue("com.geepmd.entity.BaselineQ9",surveyId);
+            List<BaselineQ10> q10List = (List<BaselineQ10>)connection.getAllValues("com.geepmd.entity.BaselineQ10",surveyId);
+            if(q1List != null) tab1.setEditData(q1List);
+        }
     }
 
     public void SelectTab(int index){
@@ -155,11 +185,6 @@ public class Survey extends VerticalLayout implements View {
     }
 
     public void insertData(){
-
-        //saveBtn.setEnabled(false);
-
-
-        //saveBtn.setCaption("Survey data saving");
         String motherId = motherSerialIdComboBox.getValue().toString();
         User user = (User)UI.getCurrent().getSession().getAttribute("userName");
         CommonDetails common = new CommonDetails();

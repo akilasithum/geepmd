@@ -1,5 +1,6 @@
 package com.geepmd.dbConnection;
 
+import com.geepmd.entity.CommonDetails;
 import com.geepmd.entity.MotherDetails;
 import com.geepmd.entity.User;
 import org.hibernate.Criteria;
@@ -88,6 +89,53 @@ public class DBConnection {
             List list = criteria.list();
             session.close();
             return list;
+        } catch (Exception e) {
+            session.close();
+            return null;
+        }
+    }
+
+    public List<?> getAllValues(String className,int surveyId){
+        Session session = HibernateUtil.getSessionFactory().openSession();
+        try
+        {
+            Criteria criteria = session.createCriteria(Class.forName(className));
+            criteria.add(Restrictions.eq("surveyId", surveyId));
+            List list = criteria.list();
+            session.close();
+            return list;
+        } catch (Exception e) {
+            session.close();
+            return null;
+        }
+    }
+
+    public Object getPageValue(String className,int surveyId){
+        Session session = HibernateUtil.getSessionFactory().openSession();
+        try
+        {
+            Criteria criteria = session.createCriteria(Class.forName(className));
+            criteria.add(Restrictions.eq("surveyId", surveyId));
+            List list = criteria.list();
+            session.close();
+            if(list != null && !list.isEmpty()) return list.get(0);
+            else return null;
+        } catch (Exception e) {
+            session.close();
+            return null;
+        }
+    }
+
+    public CommonDetails isMotherDetailsAdded(String motherId){
+        Session session = HibernateUtil.getSessionFactory().openSession();
+        try
+        {
+            Criteria criteria = session.createCriteria(CommonDetails.class);
+            criteria.add(Restrictions.eq("motherId",motherId));
+            List list = criteria.list();
+            session.close();
+            if(list == null || list.isEmpty()) return (CommonDetails)list.get(0);
+            else return null;
         } catch (Exception e) {
             session.close();
             return null;

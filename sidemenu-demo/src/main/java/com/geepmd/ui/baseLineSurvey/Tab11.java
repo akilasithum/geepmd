@@ -1,8 +1,7 @@
 package com.geepmd.ui.baseLineSurvey;
 
-import com.geepmd.entity.BaselineQ11;
+import com.geepmd.entity.CommonDetails;
 import com.geepmd.ui.Survey;
-import com.geepmd.utils.Answer;
 import com.geepmd.utils.EnglishMap;
 import com.geepmd.utils.SinhalaMap;
 import com.vaadin.icons.VaadinIcons;
@@ -12,29 +11,28 @@ import com.vaadin.ui.*;
 import java.util.List;
 import java.util.Map;
 
-import static com.geepmd.utils.SurveyUtils.*;
+import static com.geepmd.utils.SurveyUtils.getYesNoAnswer;
 
 public class Tab11 extends VerticalLayout {
 
-    Map<String,List<String>> answerMap;
-    Map<String,String> q7Map;
+    Map<String,String> q11Map;
     Map<String,String> fields;
     String language;
-    ComboBox mesTypeCombo;
-    VerticalLayout layout72;
-    VerticalLayout layout73;
     Survey survey;
+    VerticalLayout q1Layout;
+    VerticalLayout q2Layout;
+    VerticalLayout q3Layout;
+    MarginInfo leftMargin = new MarginInfo(false,false,false,true);
 
     public Tab11(String language, Survey survey){
         this.language = language;
         if(language.equals("EN")){
-            answerMap = EnglishMap.getq1AnswerList();
-            q7Map = EnglishMap.getquestion1Map();
+            q11Map = EnglishMap.getquestion1Map();
 
         }
         else{
-            answerMap = SinhalaMap.getQ7AnswerList();
-            q7Map = SinhalaMap.getQ7Map();
+
+            q11Map = SinhalaMap.getQ11Map();
             fields = SinhalaMap.getQ11Fields();
         }
         this.survey = survey;
@@ -44,135 +42,145 @@ public class Tab11 extends VerticalLayout {
     }
 
     private void createLayout(){
-        mesTypeCombo = new ComboBox();
-        mesTypeCombo.setItems(getYesNoAnswer(language));
-        addComponent(setTabData(q7Map.get("7.1"),mesTypeCombo));
 
-        Label q72Label = new Label(q7Map.get("7.2"));
-        q72Label.setSizeFull();
-        addComponent(q72Label);
-        HorizontalLayout headerLayout = new HorizontalLayout();
-        headerLayout.setSizeFull();
-        headerLayout.setMargin(new MarginInfo(false,false,false,true));
-        Label q72Header = new Label(fields.get("7.11"));
-        q72Header.setSizeFull();
-        headerLayout.addComponent(q72Header);
-        addComponent(headerLayout);
-        layout72 = new VerticalLayout();
-        layout72.setSizeFull();
-        addComponent(layout72);
-        layout72.addComponent(addActivitiesTable("A"));
-        layout72.addComponent(addActivitiesTable("B"));
-        layout72.addComponent(addActivitiesTable("C"));
-        layout72.addComponent(addActivitiesTable("D"));
-        layout72.addComponent(addActivitiesTable("E"));
+        Label examinationHeader = new Label(q11Map.get("11.1"));
+        addComponent(examinationHeader);
+        examinationHeader.setStyleName("padHeader");
+        q1Layout = new VerticalLayout();
+        q1Layout.setSizeFull();
+        addComponent(q1Layout);
+        q1Layout.setMargin(leftMargin);
+        q1Layout.setWidth("60%");
+        Map<String,String> q1Map = SinhalaMap.getQ111Fields();
+        q1Layout.addComponent(addHorizontalLayout(q1Map.get("a")));
+        q1Layout.addComponent(addHorizontalLayout(q1Map.get("b")));
+        q1Layout.addComponent(addHorizontalLayout(q1Map.get("c")));
+        q1Layout.addComponent(addHorizontalLayout(q1Map.get("d")));
+        q1Layout.addComponent(addHorizontalLayout(q1Map.get("e")));
+        q1Layout.addComponent(addHorizontalLayout(q1Map.get("f")));
+        q1Layout.addComponent(addHorizontalLayout(q1Map.get("g")));
+        q1Layout.addComponent(addHorizontalLayout(q1Map.get("h")));
+        q1Layout.addComponent(addHorizontalLayout(q1Map.get("i")));
+        q1Layout.addComponent(addHorizontalLayout(q1Map.get("j")));
+        q1Layout.addComponent(addHorizontalLayout(q1Map.get("k")));
+        q1Layout.addComponent(addHorizontalLayout(q1Map.get("h")));
 
-        Label q73Label = new Label(q7Map.get("7.3"));
-        q73Label.setSizeFull();
-        addComponent(q73Label);
+        Label precordialHeader = new Label(q11Map.get("11.2"));
+        addComponent(precordialHeader);
+        precordialHeader.setStyleName("padHeader");
+        q2Layout = new VerticalLayout();
+        q2Layout.setSizeFull();
+        addComponent(q2Layout);
+        q2Layout.setMargin(leftMargin);
+        q2Layout.setWidth("60%");
+        Map<String,String> q2Map = SinhalaMap.getQ112Fields();
+        q2Layout.addComponent(addHorizontalLayout(q2Map.get("a")));
+        q2Layout.addComponent(addHorizontalLayout(q2Map.get("b")));
+        q2Layout.addComponent(addHorizontalLayout(q2Map.get("c")));
+        q2Layout.addComponent(addHorizontalLayout(q2Map.get("d")));
+        q2Layout.addComponent(addHorizontalLayout(q2Map.get("e")));
+        q2Layout.addComponent(addHorizontalLayoutWithTextField(q2Map.get("f")));
+        q2Layout.addComponent(addHorizontalLayout(q2Map.get("g")));
+        q2Layout.addComponent(getQ2MultipleAnswerLayout(q2Map.get("h")));
 
-        HorizontalLayout q73HeaderLayout = new HorizontalLayout();
-        q73HeaderLayout.setSizeFull();
-        q73HeaderLayout.addComponents(new Label(fields.get("7.31")));
-        q73HeaderLayout.setMargin(new MarginInfo(false,false,false,true));
-        addComponent(q73HeaderLayout);
-        layout73 = new VerticalLayout();
-        layout73.setSizeFull();
-        addComponent(layout73);
-        layout73.addComponent(addQ73Layout(fields.get("7.32")));
-        layout73.addComponent(addQ73Layout(fields.get("7.33")));
-        layout73.addComponent(addQ73Layout(fields.get("7.34")));
+
+        Label auscultationHeader = new Label(q11Map.get("11.3"));
+        addComponent(auscultationHeader);
+        auscultationHeader.setStyleName("padHeader");
+        q3Layout = new VerticalLayout();
+        q3Layout.setSizeFull();
+        addComponent(q3Layout);
+        q3Layout.setMargin(leftMargin);
+        q3Layout.setWidth("60%");
+        Map<String,String> q3Map = SinhalaMap.getQ113Fields();
+        q3Layout.addComponent(addHorizontalLayout(q3Map.get("a")));
+        q3Layout.addComponent(addHorizontalLayout(q3Map.get("b")));
+        q3Layout.addComponent(addHorizontalLayout(q3Map.get("c")));
+        Label middleHeader = new Label(q3Map.get("middleHeader"));
+        middleHeader.setStyleName("padHeader");
+        q3Layout.addComponent(middleHeader);
+        q3Layout.addComponent(addHorizontalLayoutWithTextField(q3Map.get("d")));
+        q3Layout.addComponent(addHorizontalLayoutWithTextField(q3Map.get("e")));
+        q3Layout.addComponent(getMultipleAnswerLayout(q3Map.get("f"),"1st reading","2nd reading"));
+        q3Layout.addComponent(getMultipleAnswerLayout(q3Map.get("g"),"1st reading","2nd reading"));
 
         Button nextBtn = new Button("Next");
         nextBtn.setIcon(VaadinIcons.ARROW_FORWARD);
         nextBtn.setStyleName("bottomBackBtn");
         nextBtn.addClickListener(event -> {
-            survey.SelectTab(7);
+            survey.SelectTab(11);
         });
         addComponent(nextBtn);
     }
 
-    private HorizontalLayout addActivitiesTable(String letter){
+    private HorizontalLayout addHorizontalLayout(String question){
+        HorizontalLayout layout = new HorizontalLayout();
+        layout.setSizeFull();
+        Label label = new Label(question);
         ComboBox comboBox = new ComboBox();
         comboBox.setSizeFull();
-        comboBox.setItems(getAnwerObj(answerMap.get("7.2")));
-        comboBox.setDescription(getAnswerDesc(answerMap.get("7.2")));
+        comboBox.setTextInputAllowed(false);
+        comboBox.setItems(getYesNoAnswer("EN"));
+        layout.addComponents(label,comboBox);
+        return layout;
+    }
+
+    private HorizontalLayout addHorizontalLayoutWithTextField(String question){
+        HorizontalLayout layout = new HorizontalLayout();
+        layout.setSizeFull();
+        Label label = new Label(question);
         TextField textField = new TextField();
         textField.setSizeFull();
-        HorizontalLayout layout = new HorizontalLayout();
-        layout.setSizeFull();
-        layout.setWidth("70%");
-        Label letterLabel = new Label(letter);
-        letterLabel.setSizeFull();
-        layout.addComponents(letterLabel,textField,comboBox);
-        layout.setExpandRatio(letterLabel,1);
-        layout.setExpandRatio(textField,15);
-        layout.setExpandRatio(comboBox,10);
-        layout.setMargin(new MarginInfo(false,false,false,true));
+        layout.addComponents(label,textField);
         return layout;
     }
 
-    private HorizontalLayout addQ73Layout(String place){
-        ComboBox yesNoCombo = new ComboBox();
-        yesNoCombo.setSizeFull();
-        yesNoCombo.setItems(getYesNoAnswer(language));
-
-        Label label = new Label(place);
-        label.setSizeFull();
+    private HorizontalLayout getMultipleAnswerLayout(String question,String option1,String option2){
         HorizontalLayout layout = new HorizontalLayout();
         layout.setSizeFull();
-        layout.setWidth("50%");
-        layout.addComponents(label,yesNoCombo);
-        layout.setMargin(new MarginInfo(false,false,false,true));
+        Label qLabel = new Label(question);
+        TextField option1Label = new TextField(option1);
+        option1Label.setSizeFull();
+        TextField option2Label = new TextField(option2);
+        option2Label.setSizeFull();
+        layout.addComponents(qLabel,option1Label,option2Label);
         return layout;
     }
 
-    public BaselineQ11 getAnswers(int motherId) {
-
-        BaselineQ11 answer = new BaselineQ11();
-        answer.setMotherId(motherId);
-        if(mesTypeCombo.getValue() != null) answer.setM1(((Answer) mesTypeCombo.getValue()).getId());
-
-        for(int i = 0;i < layout72.getComponentCount();i++){
-            HorizontalLayout layout = (HorizontalLayout)layout72.getComponent(i);
-            String letter = ((Label)layout.getComponent(0)).getValue();
-            TextField answerVal = (TextField)layout.getComponent(1);
-            ComboBox comboBox = (ComboBox) layout.getComponent(2);
-            if(letter.equalsIgnoreCase("a") && answerVal.getValue() != null && comboBox.getValue() != null){
-                answer.setM2a(((Answer) comboBox.getValue()).getId());
-                answer.setM2aQ(answerVal.getValue());
-            }
-            else if(letter.equalsIgnoreCase("b") && answerVal.getValue() != null && comboBox.getValue() != null){
-                answer.setM2b(((Answer) comboBox.getValue()).getId());
-                answer.setM2bQ(answerVal.getValue());
-            }
-            else if(letter.equalsIgnoreCase("c") && answerVal.getValue() != null && comboBox.getValue() != null){
-                answer.setM2c(((Answer) comboBox.getValue()).getId());
-                answer.setM2cQ(answerVal.getValue());
-            }
-            else if(letter.equalsIgnoreCase("d") && answerVal.getValue() != null && comboBox.getValue() != null){
-                answer.setM2d(((Answer) comboBox.getValue()).getId());
-                answer.setM2dQ(answerVal.getValue());
-            }
-            else if(letter.equalsIgnoreCase("e") && answerVal.getValue() != null && comboBox.getValue() != null){
-                answer.setM2e(((Answer) comboBox.getValue()).getId());
-                answer.setM2eQ(answerVal.getValue());
-            }
-        }
-
-        for(int i = 0;i<layout73.getComponentCount();i++){
-            HorizontalLayout layout = (HorizontalLayout)layout73.getComponent(i);
-            ComboBox comboBox = (ComboBox) layout.getComponent(1);
-            if(i == 0 && comboBox.getValue() != null){
-                answer.setM3a(((Answer) comboBox.getValue()).getId());
-            }
-            if(i == 1 && comboBox.getValue() != null){
-                answer.setM3b(((Answer) comboBox.getValue()).getId());
-            }
-            if(i == 2 && comboBox.getValue() != null){
-                answer.setM3c(((Answer) comboBox.getValue()).getId());
-            }
-        }
-        return answer;
+    private VerticalLayout getQ2MultipleAnswerLayout(String question){
+        VerticalLayout mainLayout = new VerticalLayout();
+        mainLayout.setMargin(false);
+        mainLayout.setSizeFull();
+        HorizontalLayout layout1 = new HorizontalLayout();
+        layout1.setSizeFull();
+        layout1.setMargin(false);
+        HorizontalLayout layout2 = new HorizontalLayout();
+        layout2.setSizeFull();
+        layout2.setMargin(false);
+        Label qLabel = new Label(question);
+        Label rightLabel = new Label("Right");
+        Label leftLabel = new Label("Left");
+        Label emptyLabel = new Label("");
+        TextField rightOption1Label = new TextField("Systolic");
+        rightOption1Label.setSizeFull();
+        TextField rightOption2Label = new TextField("Diastolic");
+        rightOption2Label.setSizeFull();
+        layout1.addComponents(qLabel, rightLabel,rightOption1Label,rightOption2Label);
+        layout1.setExpandRatio(qLabel,2);
+        layout1.setExpandRatio(rightLabel,2);
+        layout1.setExpandRatio(rightOption1Label,1);
+        layout1.setExpandRatio(rightOption2Label,1);
+        TextField leftOption1Label = new TextField("Systolic");
+        leftOption1Label.setSizeFull();
+        TextField leftOption2Label = new TextField("Diastolic");
+        leftOption2Label.setSizeFull();
+        layout2.addComponents(emptyLabel, leftLabel,leftOption1Label,leftOption2Label);
+        layout2.setExpandRatio(emptyLabel,2);
+        layout2.setExpandRatio(leftLabel,2);
+        layout2.setExpandRatio(leftOption1Label,1);
+        layout2.setExpandRatio(leftOption2Label,1);
+        mainLayout.addComponents(layout1,layout2);
+        return mainLayout;
     }
+
 }

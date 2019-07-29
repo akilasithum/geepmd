@@ -8,7 +8,7 @@
             <column name="baselineQ4Id" />
             <generator class="identity" />
         </id>
-        <property name="motherId" type="java.lang.Integer">
+        <property name="surveyId" type="java.lang.Integer">
             <column name="motherId" />
         </property>
         <property name="m1" type="java.lang.Integer">

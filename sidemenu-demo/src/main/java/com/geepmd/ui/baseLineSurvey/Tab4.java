@@ -8,6 +8,10 @@ import com.geepmd.utils.SinhalaMap;
 import com.vaadin.icons.VaadinIcons;
 import com.vaadin.ui.*;
 
+import java.text.SimpleDateFormat;
+import java.time.LocalDate;
+import java.time.ZoneId;
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
@@ -24,7 +28,7 @@ public class Tab4 extends VerticalLayout {
     ComboBox pregnancyPlannedCombo;
     ComboBox lmpCombo;
     ComboBox folicAcidMonthCombo;
-    ComboBox mensesDate;
+    DateField mensesDate;
     ComboBox pregConfirmCombo;
     ComboBox deliveryPreferCombo;
     ComboBox delPlaceCombo;
@@ -53,12 +57,14 @@ public class Tab4 extends VerticalLayout {
 
         pregnancyPlannedCombo = new ComboBox();
         pregnancyPlannedCombo.setItems(getYesNoAnswer(language));
+        pregnancyPlannedCombo.setTextInputAllowed(false);
         addComponent(setTabData(q4Map.get("4.1"),pregnancyPlannedCombo));
 
         preConceptionCombo = new ComboBox();
 
         preConceptionCombo.setItems(getAnwerObj(answerMap.get("4.2")));
         HorizontalLayout preConceptionLayout = setTabData(q4Map.get("4.2"),preConceptionCombo);
+        preConceptionCombo.setTextInputAllowed(false);
         addComponent(preConceptionLayout);
         preConceptionLayout.setVisible(false);
 
@@ -69,6 +75,7 @@ public class Tab4 extends VerticalLayout {
         screenCombo = new ComboBox();
         screenCombo.setItems(getYesNoAnswer(language));
         screenCombo.setSizeFull();
+        screenCombo.setTextInputAllowed(false);
         screenLayout.addComponents(q42Label,screenCombo);
         screenLayout.setExpandRatio(q42Label,3);
         screenLayout.setExpandRatio(screenCombo,1);
@@ -82,6 +89,7 @@ public class Tab4 extends VerticalLayout {
         heartCheckCombo = new ComboBox();
         heartCheckCombo.setItems(getYesNoAnswer(language));
         heartCheckCombo.setSizeFull();
+        heartCheckCombo.setTextInputAllowed(false);
         heartChecked.addComponents(q43Label,heartCheckCombo);
         heartChecked.setExpandRatio(q43Label,3);
         heartChecked.setExpandRatio(heartCheckCombo,1);
@@ -101,12 +109,14 @@ public class Tab4 extends VerticalLayout {
 
         lmpCombo = new ComboBox();
         lmpCombo.setItems(getYesNoAnswer(language));
+        lmpCombo.setTextInputAllowed(false);
         HorizontalLayout lmpLayout = setTabData(q4Map.get("4.5"),lmpCombo);
         addComponent(lmpLayout);
         lmpLayout.setVisible(false);
 
         folicAcidMonthCombo = new ComboBox();
         folicAcidMonthCombo.setItems(getAnwerObj(answerMap.get("4.6")));
+        folicAcidMonthCombo.setTextInputAllowed(false);
         dependentLayoutAdd(lmpCombo,folicAcidMonthCombo,q4Map.get("4.6"));
 
         pregnancyPlannedCombo.addValueChangeListener(event -> {
@@ -121,29 +131,33 @@ public class Tab4 extends VerticalLayout {
             }
         });
 
-        mensesDate = new ComboBox();
-        mensesDate.setItems(getStringList(1,31));
+        mensesDate = new DateField();
         addComponent(setTabData(q4Map.get("4.7"),mensesDate));
 
         pregConfirmCombo = new ComboBox();
         pregConfirmCombo.setItems(getAnwerObj(answerMap.get("4.8")));
+        pregConfirmCombo.setTextInputAllowed(false);
         addComponent(setTabData(q4Map.get("4.8"),pregConfirmCombo));
 
         deliveryPreferCombo = new ComboBox();
         deliveryPreferCombo.setItems(getAnwerObj(answerMap.get("4.9")));
+        deliveryPreferCombo.setTextInputAllowed(false);
         addComponent(setTabData(q4Map.get("4.9"),deliveryPreferCombo));
 
         delPlaceCombo = new ComboBox();
         delPlaceCombo.setItems(getAnwerObj(answerMap.get("4.10")));
+        delPlaceCombo.setTextInputAllowed(false);
         addComponent(setTabData(q4Map.get("4.10"),delPlaceCombo));
 
 
         folicAcidNowCombo = new ComboBox();
         folicAcidNowCombo.setItems(getYesNoAnswer(language));
+        folicAcidNowCombo.setTextInputAllowed(false);
         addComponent(setTabData(q4Map.get("4.11"),folicAcidNowCombo));
 
         folicWeekCombo = new ComboBox();
         folicWeekCombo.setItems(getStringList(1,30));
+        folicWeekCombo.setTextInputAllowed(false);
         dependentLayoutAdd(folicAcidNowCombo,folicWeekCombo,q4Map.get("4.12"));
 
         Button nextBtn = new Button("Next");
@@ -180,20 +194,26 @@ public class Tab4 extends VerticalLayout {
     public BaselineQ4 getAnswers(int motherId) {
 
         BaselineQ4 answer = new BaselineQ4();
-        answer.setMotherId(motherId);
+        answer.setSurveyId(motherId);
         if(preConceptionCombo.getValue() != null) answer.setM1(getId((Answer)preConceptionCombo.getValue()));
         if(screenCombo.getValue() != null) answer.setM2(getId((Answer)screenCombo.getValue()));
         if(heartCheckCombo.getValue() != null) answer.setM3(getId((Answer)heartCheckCombo.getValue()));
         if(pregnancyPlannedCombo.getValue() != null) answer.setM4(getId((Answer)pregnancyPlannedCombo.getValue()));
         if(lmpCombo.getValue() != null) answer.setM5(getId((Answer)lmpCombo.getValue()));
         if(folicAcidMonthCombo.getValue() != null) answer.setM6(getId((Answer)folicAcidMonthCombo.getValue()));
-        if(mensesDate.getValue() != null) answer.setM7(Integer.parseInt(mensesDate.getValue().toString()));
+        if(mensesDate.getValue() != null) answer.setM7(getDateStr(mensesDate.getValue()));
         if(pregConfirmCombo.getValue() != null) answer.setM8(getId((Answer)pregConfirmCombo.getValue()));
         if(deliveryPreferCombo.getValue() != null) answer.setM9(getId((Answer)deliveryPreferCombo.getValue()));
         if(delPlaceCombo.getValue() != null) answer.setM10(getId((Answer)delPlaceCombo.getValue()));
         if(folicAcidNowCombo.getValue() != null) answer.setM11(getId((Answer)folicAcidNowCombo.getValue()));
-        if(folicWeekCombo.getValue() != null) answer.setM7(Integer.parseInt(folicWeekCombo.getValue().toString()));
+        if(folicWeekCombo.getValue() != null) answer.setM12(Integer.parseInt(folicWeekCombo.getValue().toString()));
         return answer;
+    }
+
+    private String getDateStr(LocalDate date){
+        Date dateVal = Date.from(date.atStartOfDay(ZoneId.systemDefault()).toInstant());
+        SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
+        return format.format(dateVal);
     }
 
     private int getId(Answer answer){

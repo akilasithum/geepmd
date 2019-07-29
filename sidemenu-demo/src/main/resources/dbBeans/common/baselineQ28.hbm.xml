@@ -17,8 +17,8 @@
         <property name="m2" type="java.lang.String">
             <column name="m2" length="50"/>
         </property>
-        <property name="m3" type="java.lang.Integer">
-            <column name="m3" />
+        <property name="m3" type="java.lang.String">
+            <column name="m3" length="50" />
         </property>
         <property name="m4" type="java.lang.String">
             <column name="m4" length="100"/>

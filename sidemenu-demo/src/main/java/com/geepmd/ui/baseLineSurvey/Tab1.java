@@ -239,7 +239,7 @@ public class Tab1 extends VerticalLayout {
     public BaselineQ1 getAnswers(int motherId){
 
         BaselineQ1 answer = new BaselineQ1();
-        answer.setMotherId(motherId);
+        answer.setSurveyId(motherId);
         if(motherBDayFld.getValue() != null)answer.setM1(Date.from(motherBDayFld.getValue().
                 atStartOfDay(ZoneId.systemDefault()).toInstant()));
         if(fatherBDayFld.getValue() != null)answer.setF1(Date.from(fatherBDayFld.getValue().
@@ -259,5 +259,9 @@ public class Tab1 extends VerticalLayout {
         String marriedMonth = marriedMonthCombo.getValue() != null ? String.valueOf(marriedMonthCombo.getValue()) : "";
         if(schoolGradeMother.getValue() != null) answer.setM9(marriedYear +" " + marriedMonth);
         return answer;
+    }
+
+    public void setEditData(BaselineQ1 answer){
+
     }
 }

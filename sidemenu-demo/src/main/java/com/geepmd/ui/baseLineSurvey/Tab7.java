@@ -77,6 +77,7 @@ public class Tab7 extends VerticalLayout {
         Label questionLabel = new Label(question);
         questionLabel.setSizeFull();
         ComboBox yesNoCombo = new ComboBox();
+        yesNoCombo.setTextInputAllowed(false);
         yesNoCombo.setSizeFull();
         yesNoCombo.setItems(getYesNoAnswer(language));
         horizontalLayout.addComponents(questionLabel,yesNoCombo);
@@ -85,7 +86,7 @@ public class Tab7 extends VerticalLayout {
     public BaselineQ7 getAnswers(int motherId) {
 
         BaselineQ7 answer = new BaselineQ7();
-        answer.setMotherId(motherId);
+        answer.setSurveyId(motherId);
         for(int i = 0;i< questionLayout.getComponentCount();i++){
 
             HorizontalLayout layout = (HorizontalLayout)questionLayout.getComponent(i);

@@ -41,6 +41,30 @@ $darkgreen: darken($green, 30%);
 		margin-top: 80px;
 	}
 
+	.valo-menu-responsive[width-range~="0-1500px"] .tabStyle{
+		width: 1300px !important;
+	}
+
+	.tabStyle{
+		width: 100%;
+	}
+
+	.subTabStyle{
+		width: 100%;
+	}
+
+	.valo-menu-responsive[width-range~="0-1500px"] .subTabStyle{
+		width: 1000px !important;
+	}
+
+	.subTabSmallStyle{
+		width: 100%;
+	}
+
+	.valo-menu-responsive[width-range~="0-1500px"] .subTabSmallStyle{
+		width: 800px !important;
+	}
+
 	.mobileSmallHeader{
 		display: none;
 	}
@@ -100,6 +124,14 @@ $darkgreen: darken($green, 30%);
 
 	.btnAlignment{
 		float: right;
+	}
+
+	.valo-menu-responsive[width-range~="0-900px"].v-filterselect {
+		position: relative;
+		 width: 185px;
+		height: 24px;
+		border-radius: 4px;
+		 white-space: nowrap;
 	}
 
 	.textAlignWithBold{

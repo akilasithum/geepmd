@@ -1,9 +1,11 @@
 package com.geepmd.ui.baseLineSurvey;
 
 import com.geepmd.entity.BaselineQ10;
+import com.geepmd.ui.Survey;
 import com.geepmd.utils.Answer;
 import com.geepmd.utils.EnglishMap;
 import com.geepmd.utils.SinhalaMap;
+import com.vaadin.icons.VaadinIcons;
 import com.vaadin.shared.ui.MarginInfo;
 import com.vaadin.ui.*;
 
@@ -21,8 +23,9 @@ public class Tab10 extends VerticalLayout {
     Map<String,String> fields;
     String language;
     VerticalLayout questionLayout;
+    Survey survey;
 
-    public Tab10(String language){
+    public Tab10(String language,Survey survey){
         this.language = language;
         if(language.equals("EN")){
             answerMap = EnglishMap.getq1AnswerList();
@@ -34,6 +37,7 @@ public class Tab10 extends VerticalLayout {
             q10Map = SinhalaMap.getQ10Map();
             fields = SinhalaMap.getQ10Fields();
         }
+        this.survey = survey;
         createLayout();
         setSizeFull();
         setMargin(true);
@@ -81,6 +85,14 @@ public class Tab10 extends VerticalLayout {
         createTab8Questions(questionLayout,"ACE Inhibitors");
         createTab8Questions(questionLayout,"Angiotensin receptor blockers");
         createTab8Questions(questionLayout,"Clomiphene Citrate");
+
+        Button nextBtn = new Button("Next");
+        nextBtn.setIcon(VaadinIcons.ARROW_FORWARD);
+        nextBtn.setStyleName("bottomBackBtn");
+        nextBtn.addClickListener(event -> {
+            survey.SelectTab(10);
+        });
+        addComponent(nextBtn);
     }
 
     private void createTab8Questions(VerticalLayout tab,String question){
@@ -91,15 +103,17 @@ public class Tab10 extends VerticalLayout {
         questionLabel.setSizeFull();
         ComboBox yesNoCombo =new ComboBox();
         yesNoCombo.setSizeFull();
+        yesNoCombo.setTextInputAllowed(false);
         yesNoCombo.setItems(getYesNoAnswer(language));
-        yesNoCombo.setWidth("70%");
+        yesNoCombo.setWidth("90%");
         HorizontalLayout dependentQLayout = new HorizontalLayout();
         dependentQLayout.setSizeFull();
         ComboBox documentCombo = new ComboBox();
         documentCombo.setSizeFull();
         documentCombo.setItems(getAnwerObj(answerMap.get("9.1")));
         documentCombo.setDescription(getAnswerDesc(answerMap.get("9.1")));
-        documentCombo.setWidth("70%");
+        documentCombo.setTextInputAllowed(false);
+        documentCombo.setWidth("90%");
         dependentQLayout.addComponents(documentCombo,getYearMonthComboLayout(),getYearMonthComboLayout());
         dependentQLayout.setEnabled(false);
         yesNoCombo.addValueChangeListener(valueChangeEvent -> {
@@ -114,7 +128,7 @@ public class Tab10 extends VerticalLayout {
         layout.addComponents(questionLabel,yesNoCombo,dependentQLayout);
         layout.setExpandRatio(questionLabel,1);
         layout.setExpandRatio(yesNoCombo,1);
-        layout.setExpandRatio(dependentQLayout,3);
+        layout.setExpandRatio(dependentQLayout,4);
         tab.addComponent(layout);
     }
 
@@ -128,7 +142,8 @@ public class Tab10 extends VerticalLayout {
         monthCombo.setSizeFull();
         monthCombo.setItems(getStringList(1,12));
         yearMonthLayout.addComponents(yearCombo,monthCombo);
-        yearMonthLayout.setMargin(new MarginInfo(false,false,false,true));
+        //yearMonthLayout.setMargin(new MarginInfo(false,false,false,true));
+        yearMonthLayout.setWidth("90%");
         return yearMonthLayout;
     }
 

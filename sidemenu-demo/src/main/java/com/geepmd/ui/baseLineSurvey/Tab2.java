@@ -14,10 +14,7 @@ import com.vaadin.shared.ui.MarginInfo;
 import com.vaadin.ui.*;
 import org.vaadin.addons.ComboBoxMultiselect;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 import static com.geepmd.utils.SurveyUtils.*;
 
@@ -303,7 +300,7 @@ public class Tab2 extends VerticalLayout {
     }
 
     private HorizontalLayout addActivitiesTable(String labelVal){
-        ComboBox sideEffects = new ComboBox();
+        ComboBoxMultiselect<Answer> sideEffects = new ComboBoxMultiselect();
         sideEffects.setSizeFull();
         sideEffects.setItems(getAnwerObj(answerMap.get("2.8")));
         sideEffects.setDescription(getAnswerDesc(answerMap.get("2.8")));
@@ -461,7 +458,7 @@ public class Tab2 extends VerticalLayout {
             HorizontalLayout layout = (HorizontalLayout) q28Layout.getComponent(i);
             TextField method = (TextField) layout.getComponent(1);
             TextField timePeriod = (TextField) layout.getComponent(2);
-            ComboBox sideEffects = (ComboBox) layout.getComponent(3);
+            ComboBoxMultiselect sideEffects = (ComboBoxMultiselect) layout.getComponent(3);
             TextField reason = (TextField) layout.getComponent(4);
             if((method.getValue() != null && !method.getValue().isEmpty()) || (timePeriod.getValue() != null && !timePeriod.getValue().isEmpty())
                     || sideEffects.getValue() != null|| (reason.getValue() != null && !reason.getValue().isEmpty())) {
@@ -469,12 +466,20 @@ public class Tab2 extends VerticalLayout {
                 answer.setSurveyId(surveyId);
                 if (method.getValue() != null) answer.setM1(method.getValue());
                 if (timePeriod.getValue() != null) answer.setM2(timePeriod.getValue());
-                if (sideEffects.getValue() != null) answer.setM3(getId((Answer) sideEffects.getValue()));
+                if (sideEffects.getValue() != null) answer.setM3(getStringFromSet(sideEffects.getValue()));
                 if (reason.getValue() != null) answer.setM4(reason.getValue());
                 answerList.add(answer);
             }
         }
         return answerList;
+    }
+
+    private String getStringFromSet(Set<Answer> set){
+        String  val = "";
+        for(Answer answer : set){
+            val += answer.getId() +",";
+        }
+        return val.substring(0,val.length()-1);
     }
 
     public BaselineQ26 get26Answer(int surveyId){

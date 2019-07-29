@@ -11,7 +11,7 @@
         <property name="question" type="java.lang.String">
             <column name="question" length="10"/>
         </property>
-        <property name="motherId" type="java.lang.Integer">
+        <property name="surveyId" type="java.lang.Integer">
             <column name="motherId" />
         </property>
         <property name="b1" type="java.lang.Integer">

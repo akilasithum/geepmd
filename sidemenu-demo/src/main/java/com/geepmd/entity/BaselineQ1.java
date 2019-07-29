@@ -5,7 +5,7 @@ import java.util.Date;
 public class BaselineQ1 {
 
     private int baselineQ1Id;
-    private int motherId;
+    private int surveyId;
     private Date m1;
     private int m2;
     private int m3;
@@ -29,12 +29,12 @@ public class BaselineQ1 {
         this.baselineQ1Id = baselineQ1Id;
     }
 
-    public int getMotherId() {
-        return motherId;
+    public int getSurveyId() {
+        return surveyId;
     }
 
-    public void setMotherId(int motherId) {
-        this.motherId = motherId;
+    public void setSurveyId(int surveyId) {
+        this.surveyId = surveyId;
     }
 
     public Date getM1() {

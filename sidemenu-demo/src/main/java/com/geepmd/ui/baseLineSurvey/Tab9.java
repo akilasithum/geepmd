@@ -7,7 +7,6 @@ import com.geepmd.utils.EnglishMap;
 import com.geepmd.utils.SinhalaMap;
 import com.geepmd.utils.SurveyUtils;
 import com.vaadin.icons.VaadinIcons;
-import com.vaadin.shared.ui.MarginInfo;
 import com.vaadin.ui.*;
 
 import java.util.List;
@@ -63,6 +62,7 @@ public class Tab9 extends VerticalLayout{
         addComponent(new Label(q9Map.get("9.5")));
         privateTransportCombo = new ComboBox();
         privateTransportCombo.setSizeFull();
+        privateTransportCombo.setTextInputAllowed(false);
         privateTransportCombo.setItems(getYesNoAnswer(language));
         addComponent(setTabData(q9Map.get("9.5.1"),privateTransportCombo));
         VerticalLayout layout = new VerticalLayout();
@@ -74,18 +74,21 @@ public class Tab9 extends VerticalLayout{
         ctbCombo.setSizeFull();
         ctbCombo.setItems(SurveyUtils.getAnwerObj(answerMap.get("9.5.1")));
         ctbCombo.setDescription(SurveyUtils.getAnswerDesc(answerMap.get("9.5.1")));
+        ctbCombo.setTextInputAllowed(false);
         layout.addComponent(setTabData(q9Map.get("9.5.2"),ctbCombo));
 
         privateBusCombo = new ComboBox();
         privateBusCombo.setSizeFull();
         privateBusCombo.setItems(SurveyUtils.getAnwerObj(answerMap.get("9.5.1")));
         privateBusCombo.setDescription(SurveyUtils.getAnswerDesc(answerMap.get("9.5.1")));
+        privateBusCombo.setTextInputAllowed(false);
         layout.addComponent(setTabData(q9Map.get("9.5.3"),privateBusCombo));
 
         threeWheelCombo = new ComboBox();
         threeWheelCombo.setSizeFull();
         threeWheelCombo.setItems(SurveyUtils.getAnwerObj(answerMap.get("9.5.1")));
         threeWheelCombo.setDescription(SurveyUtils.getAnswerDesc(answerMap.get("9.5.1")));
+        threeWheelCombo.setTextInputAllowed(false);
         layout.addComponent(setTabData(q9Map.get("9.5.4"),threeWheelCombo));
 
         privateTransportCombo.addValueChangeListener(event -> {
@@ -116,7 +119,7 @@ public class Tab9 extends VerticalLayout{
         minuteCombo.setSizeFull();
         minuteCombo.setItems(getStringList(0,60));
         yearMonthLayout.addComponents(hourCombo,minuteCombo);
-        yearMonthLayout.setMargin(new MarginInfo(false,false,false,true));
+       // yearMonthLayout.setMargin(new MarginInfo(false,false,false,true));
         return yearMonthLayout;
     }
 

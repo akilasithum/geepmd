@@ -5,7 +5,7 @@ public class BaselineQ28 {
     private int surveyId;
     private String m1;
     private String m2;
-    private int m3;
+    private String m3;
     private String m4;
 
     public int getBaselineQ28Id() {
@@ -40,11 +40,11 @@ public class BaselineQ28 {
         this.m2 = m2;
     }
 
-    public int getM3() {
+    public String getM3() {
         return m3;
     }
 
-    public void setM3(int m3) {
+    public void setM3(String m3) {
         this.m3 = m3;
     }
 

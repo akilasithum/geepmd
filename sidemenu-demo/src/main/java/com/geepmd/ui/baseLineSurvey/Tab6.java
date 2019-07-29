@@ -105,6 +105,7 @@ public class Tab6 extends VerticalLayout {
         q63Combo.setSizeFull();
         q63Combo.setItems(getAnwerObj(answerMap.get("6.3")));
         q63Combo.setDescription(getAnswerDesc(answerMap.get("6.3")));
+        q63Combo.setTextInputAllowed(false);
         q63Layout.addComponents(q63Label,q63Combo);
         q63Layout.setExpandRatio(q63Label,3);
         q63Layout.setExpandRatio(q63Combo,1);
@@ -117,6 +118,7 @@ public class Tab6 extends VerticalLayout {
         anemiaCombo =new ComboBoxMultiselect();
         anemiaCombo.setItems(getAnwerObj(answerMap.get("6.4")));
         anemiaCombo.setDescription(getAnswerDesc(answerMap.get("6.4")));
+        anemiaCombo.setTextInputAllowed(false);
         dependentLayout.addComponent(setTabData(q6Map.get("6.4"),anemiaCombo));
         dependentLayout.setVisible(false);
         q63Combo.addValueChangeListener(valueChangeEvent -> {
@@ -132,6 +134,7 @@ public class Tab6 extends VerticalLayout {
         monthsCombo65 = new ComboBox();
         monthsCombo65.setSizeFull();
         monthsCombo65.setItems(getStringList(0,24));
+        monthsCombo65.setTextInputAllowed(false);
         dependentLayout.addComponent(setTabData(q6Map.get("6.5"), monthsCombo65));
 
         HorizontalLayout layout = new HorizontalLayout();
@@ -148,6 +151,7 @@ public class Tab6 extends VerticalLayout {
         investigationCombo = new ComboBox();
         investigationCombo.setSizeFull();
         investigationCombo.setItems(getYesNoAnswer(language));
+        investigationCombo.setTextInputAllowed(false);
         dependentLayout.addComponent(setTabData(q6Map.get("6.7"),investigationCombo));
 
         HorizontalLayout thalassemiaLayout = new HorizontalLayout();
@@ -157,6 +161,7 @@ public class Tab6 extends VerticalLayout {
         thalassemiaCombo = new ComboBox();
         thalassemiaCombo.setSizeFull();
         thalassemiaCombo.setItems(getYesNoAnswer(language));
+        thalassemiaCombo.setTextInputAllowed(false);
         thalassemiaLayout.addComponents(thalLabel,thalassemiaCombo);
         thalassemiaLayout.setExpandRatio(thalLabel,3);
         thalassemiaLayout.setExpandRatio(thalassemiaCombo,1);
@@ -181,21 +186,25 @@ public class Tab6 extends VerticalLayout {
         thalassemiaYesCombo.setSizeFull();
         thalassemiaYesCombo.setItems(answerMap.get("6.9"));
         thalassemiaYesCombo.setDescription(getAnswerDesc(answerMap.get("6.9")));
+        thalassemiaYesCombo.setTextInputAllowed(false);
         thalDependLayout.addComponent(setTabData(q6Map.get("6.9"),thalassemiaYesCombo));
 
         bleedingCombo = new ComboBox();
         bleedingCombo.setSizeFull();
         bleedingCombo.setItems(getYesNoAnswer(language));
+        bleedingCombo.setTextInputAllowed(false);
         addComponent(setTabData(q6Map.get("6.10"),bleedingCombo));
 
         blackCombo = new ComboBox();
         blackCombo.setSizeFull();
         blackCombo.setItems(getYesNoAnswer(language));
+        blackCombo.setTextInputAllowed(false);
         addComponent(setTabData(q6Map.get("6.11"),blackCombo));
 
         wormCombo = new ComboBox();
         wormCombo.setSizeFull();
         wormCombo.setItems(getYesNoAnswer(language));
+        wormCombo.setTextInputAllowed(false);
         addComponent(setTabData(q6Map.get("6.12"),wormCombo));
 
         Button nextBtn = new Button("Next");
@@ -243,24 +252,29 @@ public class Tab6 extends VerticalLayout {
         List<Answer> yesNoList = getYesNoAnswer(language);
         ComboBox diagnosedCombo = new ComboBox();
         diagnosedCombo.setItems(yesNoList);
+        diagnosedCombo.setTextInputAllowed(false);
         diagnosedCombo.setSizeFull();
 
         ComboBox documentaryCombo = new ComboBox();
         documentaryCombo.setItems(yesNoList);
+        documentaryCombo.setTextInputAllowed(false);
         documentaryCombo.setSizeFull();
 
         ComboBox yearCombo = new ComboBox();
         yearCombo.setItems(getStringList(2000,2019));
+        yearCombo.setTextInputAllowed(false);
         yearCombo.setSizeFull();
 
         ComboBox medicationsCombo = new ComboBox();
         medicationsCombo.setItems(yesNoList);
+        medicationsCombo.setTextInputAllowed(false);
         medicationsCombo.setSizeFull();
 
         ComboBox placeCombo = new ComboBox();
         placeCombo.setItems(getAnwerObj(answerMap.get("6.2")));
         placeCombo.setDescription(getAnswerDesc(answerMap.get("6.2")));
         placeCombo.setSizeFull();
+        placeCombo.setTextInputAllowed(false);
 
         HorizontalLayout dependentLayout = new HorizontalLayout();
         dependentLayout.setSizeFull();
@@ -290,6 +304,7 @@ public class Tab6 extends VerticalLayout {
         Label label = new Label(question);
         label.setSizeFull();
         ComboBox yesNoCombo = new ComboBox();
+        yesNoCombo.setTextInputAllowed(false);
         yesNoCombo.setSizeFull();
         yesNoCombo.setItems(getYesNoAnswer(language));
         layout.addComponents(label,yesNoCombo);
@@ -300,7 +315,7 @@ public class Tab6 extends VerticalLayout {
     public BaselineQ6 getAnswers(int motherId) {
 
         BaselineQ6 answer = new BaselineQ6();
-        answer.setMotherId(motherId);
+        answer.setSurveyId(motherId);
         for(int i = 0;i<firstQAnswerLayout.getComponentCount();i++){
             HorizontalLayout layout = (HorizontalLayout)firstQAnswerLayout.getComponent(i);
             ComboBox comboBox = (ComboBox) layout.getComponent(1);
@@ -353,7 +368,7 @@ public class Tab6 extends VerticalLayout {
             ComboBox medicalCombo = (ComboBox)dependentLayout.getComponent(2);
             ComboBox sectorCombo = (ComboBox)dependentLayout.getComponent(3);
             BaselineQ62 answer = new BaselineQ62();
-            answer.setMotherId(motherId);
+            answer.setSurveyId(motherId);
             answer.setQuestion(label.substring(0,1));
             if(fCombo.getValue() != null) answer.setM1(getId((Answer)fCombo.getValue()));
             if(writtenCombo.getValue() != null) answer.setM2(getId((Answer)writtenCombo.getValue()));

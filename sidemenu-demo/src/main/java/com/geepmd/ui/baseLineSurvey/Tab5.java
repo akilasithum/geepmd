@@ -65,6 +65,9 @@ public class Tab5 extends VerticalLayout {
         afterConception.setSizeFull();
         afterConception.setStyleName("padHeader");
         headerLayout.addComponents(emptyLabel,priorConception,afterConception);
+        headerLayout.setExpandRatio(emptyLabel,1);
+        headerLayout.setExpandRatio(priorConception,2);
+        headerLayout.setExpandRatio(afterConception,2);
         addComponent(headerLayout);
 
         Label emptyLabel1 = new Label(" ");
@@ -99,8 +102,8 @@ public class Tab5 extends VerticalLayout {
         headerTextLayout.setSizeFull();
         headerTextLayout.addComponents(emptyLabel1,priorConceptionLayout,afterConceptionLayout);
         headerTextLayout.setExpandRatio(emptyLabel1,1);
-        headerTextLayout.setExpandRatio(priorConceptionLayout,1);
-        headerTextLayout.setExpandRatio(afterConceptionLayout,1);
+        headerTextLayout.setExpandRatio(priorConceptionLayout,2);
+        headerTextLayout.setExpandRatio(afterConceptionLayout,2);
         addComponent(headerTextLayout);
         q1Layout = new VerticalLayout();
         q1Layout.setSizeFull();
@@ -121,6 +124,7 @@ public class Tab5 extends VerticalLayout {
         q52ComboBox.setItems(getAnwerObj(answerMap.get("5.2")));
         q52ComboBox.setDescription(getAnswerDesc(answerMap.get("5.2")));
         q52Layout = addQ52and3Questions(q52ComboBox,q5Map.get("5.2"));
+        q52ComboBox.setTextInputAllowed(false);
         addComponent(q52Layout);
         q52Layout.setVisible(false);
 
@@ -128,6 +132,7 @@ public class Tab5 extends VerticalLayout {
         q53ComboBox.setItems(getAnwerObj(answerMap.get("5.3")));
         q53ComboBox.setDescription(getAnswerDesc(answerMap.get("5.3")));
         q53Layout = addQ52and3Questions(q53ComboBox,q5Map.get("5.3"));
+        q53ComboBox.setTextInputAllowed(false);
         addComponent(q53Layout);
         q53Layout.setVisible(false);
 
@@ -161,26 +166,35 @@ public class Tab5 extends VerticalLayout {
         layout.setSizeFull();
         Label questionLabel = new Label(question);
         questionLabel.setSizeFull();
-        layout.addComponents(questionLabel,getSymptomsLayouts(true,qNumber),getSymptomsLayouts(false,qNumber));
+        HorizontalLayout symptomsBefore = getSymptomsLayouts(true,qNumber);
+        HorizontalLayout symptomsAfter = getSymptomsLayouts(false,qNumber);
+        layout.addComponents(questionLabel,symptomsBefore,symptomsAfter);
+        layout.setExpandRatio(questionLabel,1);
+        layout.setExpandRatio(symptomsBefore,2);
+        layout.setExpandRatio(symptomsAfter,2);
         return layout;
     }
 
     private HorizontalLayout getSymptomsLayouts(boolean marginRequired,String qNumber){
         ComboBox yesNoCombo = new ComboBox();
         yesNoCombo.setSizeFull();
+        yesNoCombo.setTextInputAllowed(false);
         yesNoCombo.setItems(getYesNoAnswer(language));
 
         ComboBox frequencyCombo = new ComboBox();
         frequencyCombo.setSizeFull();
+        frequencyCombo.setTextInputAllowed(false);
         frequencyCombo.setItems(getAnwerObj(answerMap.get("5.1")));
         frequencyCombo.setDescription(getAnswerDesc(answerMap.get("5.1")));
 
         ComboBox worsenYesNoCombo = new ComboBox();
         worsenYesNoCombo.setSizeFull();
+        worsenYesNoCombo.setTextInputAllowed(false);
         worsenYesNoCombo.setItems(getYesNoAnswer(language));
 
         ComboBox adviceCombo = new ComboBox();
         adviceCombo.setSizeFull();
+        adviceCombo.setTextInputAllowed(false);
         adviceCombo.setItems(getYesNoAnswer(language));
 
         HorizontalLayout dependentLayout = new HorizontalLayout();
@@ -218,7 +232,7 @@ public class Tab5 extends VerticalLayout {
 
     public BaselineQ5 getAnswer(int motherId){
         BaselineQ5 answer = new BaselineQ5();
-        answer.setMotherId(motherId);
+        answer.setSurveyId(motherId);
         if(q52ComboBox.getValue() != null) answer.setM2(getId((Answer)q52ComboBox.getValue()));
         if(q53ComboBox.getValue() != null) answer.setM3(getId((Answer)q53ComboBox.getValue()));
         return answer;
@@ -243,7 +257,7 @@ public class Tab5 extends VerticalLayout {
             ComboBox a3Combo = (ComboBox) afterDependentLayout.getComponent(1);
             ComboBox a4Combo = (ComboBox) afterDependentLayout.getComponent(2);
             BaselineQ51 answer = new BaselineQ51();
-            answer.setMotherId(motherId);
+            answer.setSurveyId(motherId);
             answer.setQuestion(label.substring(0,1));
             if(b1Combo.getValue() != null) answer.setB1(getId((Answer)b1Combo.getValue()));
             if(b2Combo.getValue() != null) answer.setB2(getId((Answer)b2Combo.getValue()));

@@ -21,6 +21,8 @@ public class SinhalaMap {
         map.put("8","8. පවුලේ තොරතුරු");
         map.put("9","9. සෞඛ්\u200Dය පහසුකම් සදහා ප්\u200Dරවේශවීමේ හැකියාව");
         map.put("10","10. ඇමුණුම 1");
+        map.put("11","11. Physical Assessment");
+        map.put("12","12. Screening checklist");
         return map;
     }
     //answers
@@ -121,8 +123,8 @@ public class SinhalaMap {
         map.put("8.5.7",Arrays.asList("1.මැටි ගඩොල්", "2.සිමෙන්ති ගල්", "3.ගල්", "4.දැව / උණ පතුරු", "5.යකඩ තහඩු/ටකරන්", "6.වෙනත්" ));
         map.put("8.5.8",Arrays.asList("1.උළු", "2.ඇස්බැස්ටෝස්","3.කොන්ක්‍රීට්", "4.යකඩ තහඩු", "5.දැව / උණ පතුර", "6.මැටි ගඩොල්",
                 "7.පිදුරු", "8.වෙනත්" ));
-        map.put("8.5.9",Arrays.asList("1 =සිමෙන්ති පස් / වැලි/ මැටි", "2.ගොම මැටි", "3.දැව පොතු", "4.ඔපදැමූ දැව", "5.පිගන් ගඩොල්",
-                "6.කොන්ක්‍රීට්", "7.වෙනත්" ));
+        map.put("8.5.9",Arrays.asList("1.සිමෙන්ති","2.පස් / වැලි/ මැටි", "3.ගොම මැටි", "4.දැව පොතු", "5.ඔපදැමූ දැව", "6.පිගන් ගඩොල්",
+                "7.කොන්ක්‍රීට්", "8.වෙනත්" ));
         map.put("8.5.10",Arrays.asList("1.විදුලිය", "2.ලන්තෑරුම/පැට්ට්රෝමැක්ස් ලාම්පු/චිමිනි ලාම්පු", "3.ඉටිපන්දම්", "4.ගෑස් ලාම්පු",
                 "5.කුප්පි ලාම්පු", "6.වෙනත්" ));
         return map;
@@ -271,6 +273,34 @@ public class SinhalaMap {
     public static Map<String,String> getQ10Map(){
         Map<String,String> map = new HashMap<>();
         map.put("10.1","1 ඖෂධ ඉතිහාසය පිලිබද තොරතුරු");
+        return map;
+    }
+
+    public static Map<String,String> getQ11Map(){
+        Map<String,String> map = new HashMap<>();
+        map.put("11.1","11.1 Examination");
+        map.put("11.2","11.2 Precordial Examination  ");
+        map.put("11.3","11.3 Auscultation");
+        return map;
+    }
+
+    public static Map<String,String> getQ12Map(){
+        Map<String,String> map = new HashMap<>();
+        map.put("12.1","12.1 Chest pain suggestive of sinister cardiac pathology (Ischemia, Pulmonary Embolism, Aortic" +
+                " dissection or valve related pathology) ");
+        map.put("12.2","12.2 Difficulty in breathing even at rest/mild exertion (non-asthmatic)");
+        map.put("12.3","12.3 Palpitation");
+        map.put("12.4","12.4 Syncope/pre-syncope");
+        map.put("12.5","12.5 Orthopnoea");
+        map.put("12.6","12.6 Paroxysmal nocturnal dyspnoea");
+        map.put("12.7","12.7 Suspected congenital cardiac anomaly of previous newborn");
+        map.put("12.8","12.8 Hypertension chronic/ hypertensive disorders in pregnancy");
+        map.put("12.9","12.9 Dyslipidemia");
+        map.put("12.10","12.10 Rheumatic fever");
+        map.put("12.11","12.11 Any heart disease");
+        map.put("12.12","12.12 Anaemia");
+        map.put("12.13","12.13 Stroke");
+        map.put("12.14","12.14 DM");
         return map;
     }
 
@@ -433,6 +463,49 @@ public class SinhalaMap {
         map.put("d","ඖෂධ  භාවිතය ආරම්භ කල දිනය (අවුරුදු/මාස)");
         map.put("e","ඖෂධ  භාවිතය අවසන් කල දිනය (අවුරුදු/මාස)");
         map.put("9.1","කිසිවක් නැත");
+        return map;
+    }
+
+    public static Map<String,String> getQ111Fields() {
+        Map<String, String> map = new HashMap<>();
+        map.put("a","a. General");
+        map.put("b","b. Icterus");
+        map.put("c","c. Pallor");
+        map.put("d","d. Plethora");
+        map.put("e","e. Central cyanosis");
+        map.put("f","f. Xanthomata / Xanthalesma");
+        map.put("g","g. Angular stomatitis ");
+        map.put("h","h. Glossitis");
+        map.put("i","i .Evidence of dysmorphism");
+        map.put("j","j. Clubbing");
+        map.put("k","k. Ankle oedema");
+        map.put("h","h. Acanthosis nigricans ");
+        return map;
+    }
+
+    public static Map<String,String> getQ112Fields() {
+        Map<String, String> map = new HashMap<>();
+        map.put("a","a. Neck vein engorgement ");
+        map.put("b","b. Apex deviated");
+        map.put("c","c. Left para sternal heave");
+        map.put("d","d. Thrills");
+        map.put("e","e. Carotid bruit");
+        map.put("f","f. Pulse :- Rate");
+        map.put("g","g. Irregular rhythm");
+        map.put("h","h. Blood pressure (in mmHg)");
+        return map;
+    }
+
+    public static Map<String,String> getQ113Fields() {
+        Map<String, String> map = new HashMap<>();
+        map.put("a","a. Murmur");
+        map.put("b","b. Loud P2");
+        map.put("c","c. Lung bases fine crepts+");
+        map.put("middleHeader","Anthropometric measurements");
+        map.put("d","d. Height (in centimeters)");
+        map.put("e","e. Weight (in Kilograms)");
+        map.put("f","f. Waist circumference");
+        map.put("g","g. Hip circumference");
         return map;
     }
 

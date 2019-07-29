@@ -51,6 +51,7 @@ public class Tab3 extends VerticalLayout {
     private void createLayout(String language){
         conceivedTimeCombo = new ComboBox();
         conceivedTimeCombo.setItems(getStringList(1,10));
+        conceivedTimeCombo.setTextInputAllowed(false);
         addComponent(setTabData(q3Map.get("3.1"),conceivedTimeCombo));
 
         tab3MainDetails = new VerticalLayout();
@@ -106,6 +107,7 @@ public class Tab3 extends VerticalLayout {
                     layout.addComponent(ageCombo);
 
                     ComboBox outcomeCombo = new ComboBox();
+                    outcomeCombo.setTextInputAllowed(false);
                     outcomeCombo.setSizeFull();
                     outcomeCombo.setItems(getAnwerObj(answerMap.get("3.22")));
                     outcomeCombo.setDescription(getAnswerDesc(answerMap.get("3.22")));
@@ -113,6 +115,7 @@ public class Tab3 extends VerticalLayout {
 
                     ComboBoxMultiselect<Answer> complicationsCombo =new ComboBoxMultiselect();
                     complicationsCombo.setSizeFull();
+                    complicationsCombo.setTextInputAllowed(false);
                     complicationsCombo.setItems(getAnwerObj(answerMap.get("3.23")));
                     complicationsCombo.setDescription(getAnswerDesc(answerMap.get("3.23")));
                     layout.addComponent(complicationsCombo);
@@ -126,6 +129,7 @@ public class Tab3 extends VerticalLayout {
                     deliveryCombo.setSizeFull();
                     deliveryCombo.setItems(getAnwerObj(answerMap.get("3.25")));
                     deliveryCombo.setDescription(getAnswerDesc(answerMap.get("3.25")));
+                    deliveryCombo.setTextInputAllowed(false);
                     layout.addComponent(deliveryCombo);
 
                     TextField weightFld = new TextField();
@@ -142,12 +146,14 @@ public class Tab3 extends VerticalLayout {
                     neonatalCombo.setSizeFull();
                     neonatalCombo.setItems(getAnwerObj(answerMap.get("3.27")));
                     neonatalCombo.setDescription(getAnswerDesc(answerMap.get("3.27")));
+                    neonatalCombo.setTextInputAllowed(false);
                     layout.addComponent(neonatalCombo);
 
                     ComboBoxMultiselect<Answer> postpartumCombo =new ComboBoxMultiselect();
                     postpartumCombo.setSizeFull();
                     postpartumCombo.setItems(getAnwerObj(answerMap.get("3.28")));
                     postpartumCombo.setDescription(getAnswerDesc(answerMap.get("3.28")));
+                    postpartumCombo.setTextInputAllowed(false);
                     layout.addComponent(postpartumCombo);
                 }
 
@@ -155,6 +161,7 @@ public class Tab3 extends VerticalLayout {
                 breastFeedCombo.setSizeFull();
                 breastFeedCombo.setItems( getAnwerObj(answerMap.get("3.3")));
                 breastFeedCombo.setDescription(getAnswerDesc(answerMap.get("3.3")));
+                breastFeedCombo.setTextInputAllowed(false);
                 tab3MainDetails.addComponent(setTabData(q3Map.get("3.3"),breastFeedCombo));
 
                 breastFeedStopMonths = new TextField();
@@ -182,12 +189,14 @@ public class Tab3 extends VerticalLayout {
                 supplementsCombo = new ComboBox();
                 supplementsCombo.setSizeFull();
                 supplementsCombo.setItems(getYesNoAnswer(language));
+                supplementsCombo.setTextInputAllowed(false);
                 tab3MainDetails.addComponent(setTabData(q3Map.get("3.5"),supplementsCombo));
 
                 supplementsAfterCombo = new ComboBox();
                 supplementsAfterCombo.setSizeFull();
                 supplementsAfterCombo.setItems(getAnwerObj(answerMap.get("3.6")));
                 supplementsAfterCombo.setDescription(getAnswerDesc(answerMap.get("3.6")));
+                supplementsAfterCombo.setTextInputAllowed(false);
                 tab3MainDetails.addComponent(setTabData(q3Map.get("3.6"),
                         supplementsAfterCombo));
 
@@ -258,7 +267,7 @@ public class Tab3 extends VerticalLayout {
             TextField m6 = (TextField)layout.getComponent(6);
             ComboBoxMultiselect m7 = (ComboBoxMultiselect)layout.getComponent(7);
             ComboBoxMultiselect m8 = (ComboBoxMultiselect)layout.getComponent(8);
-            answer.setMotherId(motherId);
+            answer.setSurveyId(motherId);
 
             if(m1.getValue() != null) answer.setM1(Integer.parseInt(m1.getValue().toString()));
             if(m2.getValue() != null) answer.setM2(getId((Answer)m2.getValue()));
@@ -286,7 +295,7 @@ public class Tab3 extends VerticalLayout {
     public BaselineQ3 getAnswer(int motherId){
         BaselineQ3 answer = new BaselineQ3();
 
-        answer.setMotherId(motherId);
+        answer.setSurveyId(motherId);
         if(conceivedTimeCombo.getValue() != null) answer.setM1(Integer.parseInt(conceivedTimeCombo.getValue().toString()));
         if(breastFeedCombo != null && breastFeedCombo.getValue() != null) answer.setM3(getId((Answer)breastFeedCombo.getValue()));
         if(breastFeedStopMonths != null && breastFeedStopMonths.getValue() != null) answer.setM4(breastFeedStopMonths.getValue());

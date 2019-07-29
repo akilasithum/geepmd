@@ -11,10 +11,7 @@ public class BaselineQ2 {
     private int m5;
     private int m7;
     private int m9;
-    private int m10;/*
-    private int m11;
-    private int m12;
-    private int m13;*/
+    private int m10;
 
     public int getBaselineQ2Id() {
         return baselineQ2Id;
