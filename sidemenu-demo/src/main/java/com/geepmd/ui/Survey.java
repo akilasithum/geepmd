@@ -75,7 +75,7 @@ public class Survey extends VerticalLayout implements View {
            if(event.getValue() != null && !String.valueOf(event.getValue()).isEmpty()){
                motherSerialIdComboBox.setValue(nameIdMap.get(event.getValue()));
                tabsheet.setEnabled(true);
-               //updateDetailsIfAdded(nameIdMap.get(event.getValue()));
+               updateDetailsIfAdded(nameIdMap.get(event.getValue()));
            }
         });
 
@@ -83,7 +83,7 @@ public class Survey extends VerticalLayout implements View {
             if(event.getValue() != null){
                 motherNameComboBox.setValue(idNameMap.get(event.getValue()));
                 tabsheet.setEnabled(true);
-                //updateDetailsIfAdded(String.valueOf(event.getValue()));
+                updateDetailsIfAdded(String.valueOf(event.getValue()));
             }
         });
 
@@ -215,6 +215,8 @@ public class Survey extends VerticalLayout implements View {
         connection.insertObjectHBM(tab9.getQ9Answers(surveyId));
         List<BaselineQ10> answer10 = tab10.getAnswerQ10(surveyId);
         answer10.stream().forEach(obj -> connection.insertObjectHBM(obj));
+        connection.insertObjectHBM(tab11.getAnswerQ11(surveyId));
+        connection.insertObjectHBM(tab12.getAnswerQ12(surveyId));
         saveBtn.setEnabled(true);
         saveBtn.setCaption("Save Survey");
         getUI().getNavigator().navigateTo("BaselineSurvey");

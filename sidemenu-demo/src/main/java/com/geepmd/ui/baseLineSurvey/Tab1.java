@@ -9,6 +9,7 @@ import com.vaadin.data.HasValue;
 import com.vaadin.icons.VaadinIcons;
 import com.vaadin.ui.*;
 
+import java.time.LocalDate;
 import java.time.ZoneId;
 import java.util.ArrayList;
 import java.util.Date;
@@ -38,6 +39,7 @@ public class Tab1 extends VerticalLayout {
     ComboBox maritualStatusCombo;
     ComboBox marriedYearCombo;
     ComboBox marriedMonthCombo;
+    TextField questionDBUniqueIdField;
     Survey survey;
 
     public Tab1(String language,Survey survey){
@@ -54,6 +56,8 @@ public class Tab1 extends VerticalLayout {
     }
 
     private void createLayout(String language){
+        questionDBUniqueIdField = new TextField();
+        addComponent(questionDBUniqueIdField);
         Label motherLabel = new Label(fields.get("1"));
         motherLabel.setSizeFull();
         Label fatherLabel = new Label(fields.get("2"));
@@ -240,6 +244,9 @@ public class Tab1 extends VerticalLayout {
 
         BaselineQ1 answer = new BaselineQ1();
         answer.setSurveyId(motherId);
+        if(questionDBUniqueIdField.getValue() != null && !questionDBUniqueIdField.getValue().isEmpty()){
+            answer.setBaselineQ1Id(Integer.parseInt(questionDBUniqueIdField.getValue()));
+        }
         if(motherBDayFld.getValue() != null)answer.setM1(Date.from(motherBDayFld.getValue().
                 atStartOfDay(ZoneId.systemDefault()).toInstant()));
         if(fatherBDayFld.getValue() != null)answer.setF1(Date.from(fatherBDayFld.getValue().
@@ -255,13 +262,49 @@ public class Tab1 extends VerticalLayout {
         if(afterALMother.getValue() != null) answer.setM6(((Answer) afterALMother.getValue()).getId());
         if(sexualEduLMother.getValue() != null) answer.setM7(((Answer) sexualEduLMother.getValue()).getId());
         if(maritualStatusCombo.getValue() != null) answer.setM8(((Answer) maritualStatusCombo.getValue()).getId());
-        String marriedYear = marriedYearCombo.getValue() != null ? String.valueOf(marriedYearCombo.getValue()) : "";
-        String marriedMonth = marriedMonthCombo.getValue() != null ? String.valueOf(marriedMonthCombo.getValue()) : "";
-        if(schoolGradeMother.getValue() != null) answer.setM9(marriedYear +" " + marriedMonth);
+        String marriedYear = marriedYearCombo.getValue() != null ? String.valueOf(marriedYearCombo.getValue()) : "0";
+        String marriedMonth = marriedMonthCombo.getValue() != null ? String.valueOf(marriedMonthCombo.getValue()) : "0";
+        if(schoolGradeMother.getValue() != null) answer.setM9(marriedYear +"yrs " + marriedMonth+"months");
         return answer;
     }
 
     public void setEditData(BaselineQ1 answer){
+        questionDBUniqueIdField.setValue(String.valueOf(answer.getBaselineQ1Id()));
+        LocalDate motherBday = answer.getM1().toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
+        motherBDayFld.setValue(motherBday);
+        LocalDate fatherBday = answer.getF1().toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
+        fatherBDayFld.setValue(fatherBday);
+        ethnicityComboBoxMother.setValue(getAnswerObj("1.2",answer.getM2()));
+        ethnicityComboBoxFather.setValue(getAnswerObj("1.2",answer.getF2()));
+        understandingLevelComboMother.setValue(getAnswerObj("1.3",answer.getM3()));
+        understandingLevelComboFather.setValue(getAnswerObj("1.3",answer.getF3()));
+        religionMotherCombo.setValue(getAnswerObj("1.4",answer.getM4()));
+        religionFatherCombo.setValue(getAnswerObj("1.4",answer.getF4()));
+        schoolGradeMother.setValue(answer.getM5());
+        schoolGradeFather.setValue(answer.getF5());
+        afterALMother.setValue(getAnswerObj("1.6",answer.getM6()));
+        sexualEduLMother.setValue(getAnswerObj("1.7",answer.getM7()));
+        maritualStatusCombo.setValue(getAnswerObj("1.8",answer.getM8()));
+        String marriageYear = answer.getM9();
+        if(marriageYear != null && !marriageYear.isEmpty()){
+            String[] arr = marriageYear.split(" ");
+            if(arr[0] != "0yrs") marriedYearCombo.setValue(arr[0].substring(0,arr[0].length()-3));
+            if(arr[1] != "0months") marriedMonthCombo.setValue(arr[1].substring(0,arr[1].length()-6));
+        }
+    }
 
+    private Answer getAnswerObj(String question, int answer){
+        if(answer != 0) {
+            try {
+                List<String> qList = answerMap.get(question);
+                Answer answerObj = new Answer();
+                answerObj.setId(answer);
+                answerObj.setDescription(qList.get(answer-1));
+                return answerObj;
+            }catch (Exception e){
+                return null;
+            }
+        }
+        else return null;
     }
 }

@@ -13,6 +13,7 @@ import java.util.List;
 public class DBConnection {
 
     private static final DBConnection dbConnection = new DBConnection();
+    Session session;
 
     public static DBConnection getInstance(){
         return dbConnection;
@@ -48,12 +49,31 @@ public class DBConnection {
         }
     }
 
-    public int insertObjectHBM(Object details){
+    private Session getSession(){
+        if(session == null || !session.isConnected()){
+            session = HibernateUtil.getSessionFactory().openSession();
+            return session;
+        }
+        else {
+            return session;
+        }
+    }
+
+    public int insertUser(User details){
         Session session = HibernateUtil.getSessionFactory().openSession();
         session.beginTransaction();
         int id = (Integer)session.save(details);
         session.getTransaction().commit();
         session.close();
+        return id;
+    }
+
+    public int insertObjectHBM(Object details){
+        Session session = getSession();
+        session.beginTransaction();
+        int id = (Integer)session.save(details);
+        session.getTransaction().commit();
+        //session.close();
         return id;
     }
 
@@ -81,16 +101,16 @@ public class DBConnection {
     }
 
     public List<?> getAllValues(String className,String order){
-        Session session = HibernateUtil.getSessionFactory().openSession();
+        Session session = getSession();
         try
         {
             Criteria criteria = session.createCriteria(Class.forName(className));
             criteria.addOrder(Order.asc(order));
             List list = criteria.list();
-            session.close();
+            //session.close();
             return list;
         } catch (Exception e) {
-            session.close();
+            //session.close();
             return null;
         }
     }
@@ -127,17 +147,15 @@ public class DBConnection {
     }
 
     public CommonDetails isMotherDetailsAdded(String motherId){
-        Session session = HibernateUtil.getSessionFactory().openSession();
+        Session session = getSession();
         try
         {
             Criteria criteria = session.createCriteria(CommonDetails.class);
             criteria.add(Restrictions.eq("motherId",motherId));
             List list = criteria.list();
-            session.close();
-            if(list == null || list.isEmpty()) return (CommonDetails)list.get(0);
+            if(list != null || !list.isEmpty()) return (CommonDetails)list.get(0);
             else return null;
         } catch (Exception e) {
-            session.close();
             return null;
         }
     }

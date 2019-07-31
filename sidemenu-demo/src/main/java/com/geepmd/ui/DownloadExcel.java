@@ -94,7 +94,6 @@ public class DownloadExcel extends VerticalLayout implements View {
         Map<Integer, BaselineQ8> q8Map = q8List.stream().collect(Collectors.toMap(x -> x.getSurveyId(), x -> x));
         List<BaselineQ9> q9List = (List<BaselineQ9>)connection.getAllValues("com.geepmd.entity.BaselineQ9","baselineQ9Id");
         Map<Integer, BaselineQ9> q9Map = q9List.stream().collect(Collectors.toMap(x -> x.getSurveyId(), x -> x));
-
         List<BaselineQ10> q10List = (List<BaselineQ10>)connection.getAllValues("com.geepmd.entity.BaselineQ10","baselineQ10Id");
         Map<Integer,List<BaselineQ10>> q10Map = new HashMap<>();
         for(BaselineQ10 base : q10List){
@@ -107,6 +106,18 @@ public class DownloadExcel extends VerticalLayout implements View {
                 q10Map.put(base.getSurveyId(),list);
             }
         }
+        List<BaselineQ11> q11List = (List<BaselineQ11>)connection.getAllValues("com.geepmd.entity.BaselineQ11","baselineQ11Id");
+        Map<Integer, BaselineQ11> q11Map = new HashMap<>();
+        if(q11List != null){
+            q11Map = q11List.stream().collect(Collectors.toMap(x -> x.getSurveyId(), x -> x));
+        }
+        List<BaselineQ12> q12List = (List<BaselineQ12>)connection.getAllValues("com.geepmd.entity.BaselineQ12","baselineQ12Id");
+        Map<Integer, BaselineQ12> q12Map = new HashMap<>();
+        if(q12List != null){
+            q12Map = q12List.stream().collect(Collectors.toMap(x -> x.getSurveyId(), x -> x));
+        }
+
+
 
         List<BaselineQ26> q26List = (List<BaselineQ26>)connection.getAllValues("com.geepmd.entity.BaselineQ26","baselineQ26Id");
         Map<Integer,BaselineQ26> q26Map = q26List.stream().collect(Collectors.toMap(x -> x.getSurveyId(), x -> x));
@@ -278,22 +289,6 @@ public class DownloadExcel extends VerticalLayout implements View {
             }
             createObjCells(baselineQ6,"getM",3,12,row);
 
-            /*BaselineQ7 baselineQ7 = q7Map.get(common.getSurveyId());
-            createObjCells(baselineQ7,"getM",1,1,row);
-            createObjCells(baselineQ7,"getM2aQ",row);
-            createObjCells(baselineQ7,"getM2a",row);
-            createObjCells(baselineQ7,"getM2bQ",row);
-            createObjCells(baselineQ7,"getM2b",row);
-            createObjCells(baselineQ7,"getM2cQ",row);
-            createObjCells(baselineQ7,"getM2c",row);
-            createObjCells(baselineQ7,"getM2dQ",row);
-            createObjCells(baselineQ7,"getM2d",row);
-            createObjCells(baselineQ7,"getM2eQ",row);
-            createObjCells(baselineQ7,"getM2e",row);
-            createObjCells(baselineQ7,"getM3a",row);
-            createObjCells(baselineQ7,"getM3b",row);
-            createObjCells(baselineQ7,"getM3c",row);*/
-
             BaselineQ7 baselineQ7 = q7Map.get(common.getSurveyId());
             createObjCells(baselineQ7,"getM81",9,row);
 
@@ -367,6 +362,23 @@ public class DownloadExcel extends VerticalLayout implements View {
             else {
                 createEmptyCells(65);
             }
+
+            BaselineQ11 baselineQ11 = q11Map.get(common.getSurveyId());
+            if(baselineQ11 != null) {
+                createObjCells(baselineQ11, "getM1", 1, 12, row);
+                createObjCells(baselineQ11, "getM2", 1, 7, row);
+                createObjCells(baselineQ11, "getM281", 1, 2, row);
+                createObjCells(baselineQ11, "getM282", 1, 2, row);
+                createObjCells(baselineQ11, "getM3", 1, 5, row);
+                createObjCells(baselineQ11, "getM36", 1, 2, row);
+                createObjCells(baselineQ11, "getM37", 1, 2, row);
+            }
+            else {
+                createEmptyCells(32);
+            }
+
+            BaselineQ12 baselineQ12 = q12Map.get(common.getSurveyId());
+            if(baselineQ12 != null) createObjCells(baselineQ12,"getM",1,14,row);
             rowCount++;
         }
 
@@ -391,7 +403,12 @@ public class DownloadExcel extends VerticalLayout implements View {
 
     private void createObjCells(Object obj,String methodPrefix,int startIndex,int endIndex,Row row){
         try {
-
+            if(obj == null){
+                for(int i = startIndex;i<endIndex+1;i++){
+                    valColumnCount++;
+                }
+                return;
+            }
             for(int i = startIndex;i<endIndex+1;i++){
                 Method getNameMethod = obj.getClass().getMethod(methodPrefix+i);
                 String name = String.valueOf(getNameMethod.invoke(obj));
@@ -415,7 +432,12 @@ public class DownloadExcel extends VerticalLayout implements View {
 
     private void createObjCells(Object obj,String methodPrefix,int endIndex,Row row){
         try {
-
+            if(obj == null){
+                for(int i = 1;i<endIndex+1;i++){
+                    valColumnCount++;
+                }
+                return;
+            }
             for(int i = 1;i<endIndex+1;i++){
                 Method getNameMethod = obj.getClass().getMethod(methodPrefix+letterIntMap.get(i));
                 String name = String.valueOf(getNameMethod.invoke(obj));
@@ -438,8 +460,11 @@ public class DownloadExcel extends VerticalLayout implements View {
     }
 
     private void createObjCells(Object obj,String methodPrefix,Row row){
+        if(obj == null){
+            valColumnCount++;
+            return;
+        }
         try {
-
             Method getNameMethod = obj.getClass().getMethod(methodPrefix);
             String name = String.valueOf(getNameMethod.invoke(obj));
             Object object = getNameMethod.invoke(obj);
@@ -570,6 +595,14 @@ public class DownloadExcel extends VerticalLayout implements View {
         createCells("J10.1.11",1,5);
         createCells("J10.1.12",1,5);
         createCells("J10.1.13",1,5);
+        createCells("k11.1",1,12);
+        createCells("k11.2",1,7);
+        createCells("k11.281",1,2);
+        createCells("k11.282",1,2);
+        createCells("k11.3",1,5);
+        createCells("k11.36",1,2);
+        createCells("k11.37",1,2);
+        createCells("L12",1,14);
     }
 
     private void createCells(String headerPrefix,int startIndex,int count){

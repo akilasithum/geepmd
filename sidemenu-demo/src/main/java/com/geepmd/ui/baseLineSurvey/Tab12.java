@@ -1,6 +1,9 @@
 package com.geepmd.ui.baseLineSurvey;
 
+import com.geepmd.entity.BaselineQ11;
+import com.geepmd.entity.BaselineQ12;
 import com.geepmd.ui.Survey;
+import com.geepmd.utils.Answer;
 import com.geepmd.utils.EnglishMap;
 import com.geepmd.utils.SinhalaMap;
 import com.vaadin.ui.ComboBox;
@@ -8,6 +11,7 @@ import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.Label;
 import com.vaadin.ui.VerticalLayout;
 
+import java.beans.PropertyDescriptor;
 import java.util.Map;
 
 import static com.geepmd.utils.SurveyUtils.getYesNoAnswer;
@@ -75,4 +79,32 @@ public class Tab12 extends VerticalLayout {
         layout.setExpandRatio(yesNoCombo,1);
         return layout;
     }
+
+    public BaselineQ12 getAnswerQ12(int surveyId) {
+        BaselineQ12 answer = new BaselineQ12();
+        answer.setSurveyId(surveyId);
+        for (int i = 0; i < mainLayout.getComponentCount(); i++) {
+            HorizontalLayout layout = (HorizontalLayout) mainLayout.getComponent(i);
+            ComboBox comboBox = (ComboBox) layout.getComponent(1);
+            String prefix = (i + 1) + "";
+            if (comboBox.getValue() != null) callSetter(answer, "m" + prefix, getId((Answer) comboBox.getValue()));
+        }
+
+        return answer;
+    }
+
+    private void callSetter(Object obj, String fieldName, Object value){
+        PropertyDescriptor pd;
+        try {
+            pd = new PropertyDescriptor(fieldName, obj.getClass());
+            pd.getWriteMethod().invoke(obj, value);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    private int getId(Answer answer){
+        return answer.getId();
+    }
+
 }

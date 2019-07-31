@@ -146,58 +146,16 @@ public class Tab2 extends VerticalLayout {
         q210Layout.setExpandRatio(q210Label,3);
         q210Layout.setExpandRatio(yesNoCombo210,1);
 
-        /*HorizontalLayout q211Layout = new HorizontalLayout();
-        q211Layout.setSizeFull();
-        Label q211Label = new Label(q2Map.get("2.11"));
-        q210Label.setSizeFull();
-        yesNoCombo211 = new ComboBox();
-        yesNoCombo211.setItems(getYesNoAnswer(language));
-        yesNoCombo211.setSizeFull();
-        q211Layout.addComponents(q211Label,yesNoCombo211);
-        q211Layout.setExpandRatio(q211Label,3);
-        q211Layout.setExpandRatio(yesNoCombo211,1);*/
-
         diagnosedCombo.addValueChangeListener((HasValue.ValueChangeListener) valueChangeEvent -> {
             Answer answer = (Answer) valueChangeEvent.getValue();
             if(answer != null && answer.getId() == 1){
                 int index = getComponentIndex(q29Layout);
                 addComponent(q210Layout,index+1);
-                //addComponent(q211Layout,index+2);
             }
             else{
                 removeComponent(q210Layout);
-                //removeComponent(q211Layout);
             }
         });
-
-       /* q212Combo = new ComboBox();
-        q212Combo.setSizeFull();
-        q212Combo.setItems(getYesNoAnswer(language));
-        addComponent(setTabData(q2Map.get("2.12"),q212Combo));*/
-
-        /*HorizontalLayout q213Layout = new HorizontalLayout();
-        q213Layout.setSizeFull();
-        Label q213Label = new Label(q2Map.get("2.13"));
-        q213Label.setSizeFull();
-        yesNoCombo213 = new ComboBox();
-        yesNoCombo213.setItems(getYesNoAnswer(language));
-        yesNoCombo213.setSizeFull();
-        q213Layout.addComponents(q213Label,yesNoCombo213);
-        q213Layout.setExpandRatio(q213Label,3);
-        q213Layout.setExpandRatio(yesNoCombo213,1);
-        addComponent(q213Layout);
-        q213Layout.setVisible(false);*/
-
-        /*q212Combo.addValueChangeListener((HasValue.ValueChangeListener) valueChangeEvent -> {
-            Answer answer = (Answer) valueChangeEvent.getValue();
-            if(answer != null && answer.getId() == 1){
-                q213Layout.setVisible(true);
-            }
-            else{
-                q213Layout.setVisible(false);
-            }
-        });*/
-
         Button nextBtn = new Button("Next");
         nextBtn.setIcon(VaadinIcons.ARROW_FORWARD);
         nextBtn.setStyleName("bottomBackBtn");
@@ -321,7 +279,6 @@ public class Tab2 extends VerticalLayout {
         layout.setExpandRatio(usedTime,10);
         layout.setExpandRatio(sideEffects,10);
         layout.setExpandRatio(recentToStop,10);
-        //layout.setMargin(new MarginInfo(false,false,false,true));
         return layout;
     }
 
@@ -348,92 +305,6 @@ public class Tab2 extends VerticalLayout {
         return layout;
     }
 
-    private VerticalLayout set27Question(){
-        VerticalLayout mainLayout = new VerticalLayout();
-        mainLayout.setSizeFull();
-        HorizontalLayout headerLayout = new HorizontalLayout();
-        headerLayout.setSizeFull();
-        Label emptyLabel1 = new Label(" ");
-        emptyLabel1.setSizeFull();
-        Label emptyLabel2 = new Label("Yes/ No");
-        emptyLabel2.setSizeFull();
-        Label durationLabel = new Label("Used Duration (Years/Month)");
-        durationLabel.setSizeFull();
-        Label stopTime = new Label("When did you stop using it? (Year/Month)");
-        stopTime.setSizeFull();
-        Label sideEffectsLabel = new Label("Side Effects");
-        sideEffectsLabel.setSizeFull();
-        headerLayout.addComponents(emptyLabel1,emptyLabel2,durationLabel,stopTime,sideEffectsLabel);
-        headerLayout.setExpandRatio(emptyLabel1,3);
-        headerLayout.setExpandRatio(emptyLabel2,1);
-        headerLayout.setExpandRatio(durationLabel,3);
-        headerLayout.setExpandRatio(stopTime,3);
-        headerLayout.setExpandRatio(sideEffectsLabel,3);
-        mainLayout.addComponent(headerLayout);
-
-        List<String> yesNoList = Arrays.asList("Yes","No");
-
-        List<String> questionArray = Arrays.asList("Injectable (e.g.: Depo)","Oral contraceptive pills", "Implants (e.g: Jadelle)",
-                "Condoms","Intrauterine contraceptive devices","Natural methods");
-        for(String question : questionArray){
-
-            HorizontalLayout questionLayout = new HorizontalLayout();
-            questionLayout.setSizeFull();
-            Label questionLabel = new Label(question);
-            questionLabel.setSizeFull();
-            ComboBox yesNoCombo = new ComboBox();
-            yesNoCombo.setSizeFull();
-            yesNoCombo.setWidth("80%");
-            yesNoCombo.setItems(yesNoList);
-
-            ComboBox yearsCombo = new ComboBox();
-            yearsCombo.setSizeFull();
-            yearsCombo.setItems(getStringList(0,15));
-            ComboBox monthsCombo = new ComboBox();
-            monthsCombo.setItems(getStringList(0,12));
-            monthsCombo.setSizeFull();
-            HorizontalLayout durationLayout = new HorizontalLayout();
-            durationLayout.setSizeFull();
-            durationLayout.setWidth("70%");
-            durationLayout.addComponents(yearsCombo,monthsCombo);
-
-            ComboBox yearsNumberCombo = new ComboBox();
-            yearsNumberCombo.setSizeFull();
-            yearsNumberCombo.setItems(2010,2019);
-            ComboBox monthsNumberCombo = new ComboBox();
-            monthsNumberCombo.setItems(getStringList(1,12));
-            monthsNumberCombo.setSizeFull();
-            HorizontalLayout stopTimeLayout = new HorizontalLayout();
-            stopTimeLayout.setSizeFull();
-            stopTimeLayout.setWidth("70%");
-            stopTimeLayout.addComponents(yearsNumberCombo,monthsNumberCombo);
-            ComboBoxMultiselect<String> dieasesCombo =new ComboBoxMultiselect();
-            dieasesCombo.setItems(Arrays.asList("Menstrual periods heavier than usual","Menstrual cycle longer than usual",
-                    "Menstrual periods lighter than usual","Menstrual cycle shorter than usual","Spotting frequently",
-                    "Irregular menstrual cycles","Excessive weight gain"));
-            dieasesCombo.setEnabled(false);
-            durationLayout.setEnabled(false);
-            stopTimeLayout.setEnabled(false);
-            dieasesCombo.setSizeFull();
-            questionLayout.addComponents(questionLabel,yesNoCombo,durationLayout,stopTimeLayout,dieasesCombo);
-            questionLayout.setExpandRatio(questionLabel,3);
-            questionLayout.setExpandRatio(yesNoCombo,1);
-            questionLayout.setExpandRatio(durationLayout,3);
-            questionLayout.setExpandRatio(stopTimeLayout,3);
-            questionLayout.setExpandRatio(dieasesCombo,3);
-            mainLayout.addComponent(questionLayout);
-
-            yesNoCombo.addValueChangeListener((HasValue.ValueChangeListener) valueChangeEvent -> {
-                if(valueChangeEvent.getValue() != null && valueChangeEvent.getValue().equals("Yes")){
-                    dieasesCombo.setEnabled(true);
-                    durationLayout.setEnabled(true);
-                    stopTimeLayout.setEnabled(true);
-                }
-            });
-        }
-        return mainLayout;
-    }
-
     public BaselineQ2 getAnswers(int surveyId) {
 
         BaselineQ2 answer = new BaselineQ2();
@@ -446,9 +317,6 @@ public class Tab2 extends VerticalLayout {
         if(contraceptiveCombo.getValue() != null) answer.setM7(getId((Answer)contraceptiveCombo.getValue()));
         if(diagnosedCombo.getValue() != null) answer.setM9(getId((Answer)diagnosedCombo.getValue()));
         if(yesNoCombo210.getValue() != null) answer.setM10(Integer.parseInt(yesNoCombo210.getValue().toString()));
-        /*if(yesNoCombo211.getValue() != null) answer.setM11(getId((Answer)yesNoCombo211.getValue()));
-        if(q212Combo.getValue() != null) answer.setM12(getId((Answer)q212Combo.getValue()));
-        if(yesNoCombo213.getValue() != null) answer.setM13(getId((Answer)yesNoCombo213.getValue()));*/
         return answer;
     }
 
@@ -475,11 +343,14 @@ public class Tab2 extends VerticalLayout {
     }
 
     private String getStringFromSet(Set<Answer> set){
-        String  val = "";
-        for(Answer answer : set){
-            val += answer.getId() +",";
+        if(set != null && set.size() != 0) {
+            String val = "";
+            for (Answer answer : set) {
+                val += answer.getId() + ",";
+            }
+            return val.substring(0, val.length() - 1);
         }
-        return val.substring(0,val.length()-1);
+        return "";
     }
 
     public BaselineQ26 get26Answer(int surveyId){

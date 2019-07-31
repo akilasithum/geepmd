@@ -42,5 +42,6 @@ connection.provider_class">org.hibernate.connection.C3P0ConnectionProvider</prop
         <mapping resource="dbBeans/common/baselineQ84.hbm.xml"></mapping>
         <mapping resource="dbBeans/common/baselineQ9.hbm.xml"></mapping>
         <mapping resource="dbBeans/common/baselineQ10.hbm.xml"></mapping>
+        <mapping resource="dbBeans/common/baselineQ12.hbm.xml"></mapping>
     </session-factory>
 </hibernate-configuration>

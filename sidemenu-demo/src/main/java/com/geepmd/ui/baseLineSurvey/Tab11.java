@@ -1,13 +1,17 @@
 package com.geepmd.ui.baseLineSurvey;
 
+import com.geepmd.entity.BaselineQ11;
 import com.geepmd.entity.CommonDetails;
 import com.geepmd.ui.Survey;
+import com.geepmd.utils.Answer;
 import com.geepmd.utils.EnglishMap;
 import com.geepmd.utils.SinhalaMap;
 import com.vaadin.icons.VaadinIcons;
 import com.vaadin.shared.ui.MarginInfo;
 import com.vaadin.ui.*;
 
+import java.beans.PropertyDescriptor;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -23,6 +27,10 @@ public class Tab11 extends VerticalLayout {
     VerticalLayout q2Layout;
     VerticalLayout q3Layout;
     MarginInfo leftMargin = new MarginInfo(false,false,false,true);
+    TextField rightOption1Label;
+    TextField leftOption1Label;
+    TextField rightOption2Label;
+    TextField leftOption2Label;
 
     public Tab11(String language, Survey survey){
         this.language = language;
@@ -161,18 +169,18 @@ public class Tab11 extends VerticalLayout {
         Label rightLabel = new Label("Right");
         Label leftLabel = new Label("Left");
         Label emptyLabel = new Label("");
-        TextField rightOption1Label = new TextField("Systolic");
+        rightOption1Label = new TextField("Systolic");
         rightOption1Label.setSizeFull();
-        TextField rightOption2Label = new TextField("Diastolic");
+        rightOption2Label = new TextField("Diastolic");
         rightOption2Label.setSizeFull();
         layout1.addComponents(qLabel, rightLabel,rightOption1Label,rightOption2Label);
         layout1.setExpandRatio(qLabel,2);
         layout1.setExpandRatio(rightLabel,2);
         layout1.setExpandRatio(rightOption1Label,1);
         layout1.setExpandRatio(rightOption2Label,1);
-        TextField leftOption1Label = new TextField("Systolic");
+        leftOption1Label = new TextField("Systolic");
         leftOption1Label.setSizeFull();
-        TextField leftOption2Label = new TextField("Diastolic");
+        leftOption2Label = new TextField("Diastolic");
         leftOption2Label.setSizeFull();
         layout2.addComponents(emptyLabel, leftLabel,leftOption1Label,leftOption2Label);
         layout2.setExpandRatio(emptyLabel,2);
@@ -183,4 +191,77 @@ public class Tab11 extends VerticalLayout {
         return mainLayout;
     }
 
+    public BaselineQ11 getAnswerQ11(int surveyId) {
+        BaselineQ11 answer = new BaselineQ11();
+        answer.setSurveyId(surveyId);
+        for(int i = 0 ;i<q1Layout.getComponentCount();i++){
+            HorizontalLayout layout = (HorizontalLayout) q1Layout.getComponent(i);
+            ComboBox comboBox = (ComboBox) layout.getComponent(1);
+            String prefix = (i+1)+"";
+            if(comboBox.getValue() != null) callSetter(answer,"m1"+prefix,getId((Answer)comboBox.getValue()));
+        }
+
+
+        for(int i = 0 ;i<7 ;i++){
+            HorizontalLayout layout = (HorizontalLayout) q2Layout.getComponent(i);
+            String prefix = (i+1)+"";
+            if(i != 5){
+                ComboBox comboBox = (ComboBox) layout.getComponent(1);
+                if(comboBox.getValue() != null) callSetter(answer,"m2"+prefix,getId((Answer)comboBox.getValue()));
+            }
+            else{
+                TextField textField = (TextField) layout.getComponent(1);
+                if(textField.getValue() != null) callSetter(answer,"m2"+prefix,textField.getValue());
+            }
+        }
+        if(leftOption1Label.getValue() != null) answer.setM2821(leftOption1Label.getValue());
+        if(leftOption2Label.getValue() != null) answer.setM2822(leftOption2Label.getValue());
+        if(rightOption1Label.getValue() != null) answer.setM2811(rightOption1Label.getValue());
+        if(rightOption2Label.getValue() != null) answer.setM2812(rightOption2Label.getValue());
+
+        for(int i = 0 ;i<8 ;i++) {
+            if (i != 3) {
+                HorizontalLayout layout = (HorizontalLayout) q3Layout.getComponent(i);
+
+                if (i == 0 || i == 1 || i == 2) {
+                    String prefix = (i + 1) + "";
+                    ComboBox comboBox = (ComboBox) layout.getComponent(1);
+                    if (comboBox.getValue() != null)
+                        callSetter(answer, "m3" + prefix, getId((Answer) comboBox.getValue()));
+                } else if(i == 4 || i == 5) {
+                    String prefix = i + "";
+                    TextField textField = (TextField) layout.getComponent(1);
+                    if (textField.getValue() != null) callSetter(answer, "m3" + prefix, textField.getValue());
+                }
+                else{
+                    TextField option1 = (TextField) layout.getComponent(1);
+                    TextField option2 = (TextField) layout.getComponent(2);
+                    if(i == 6){
+                        if(option1.getValue() != null) answer.setM361(option1.getValue());
+                        if(option2.getValue() != null) answer.setM362(option2.getValue());
+                    }
+                    if(i == 7){
+                        if(option1.getValue() != null) answer.setM371(option1.getValue());
+                        if(option2.getValue() != null) answer.setM372(option2.getValue());
+                    }
+                }
+            }
+        }
+
+        return answer;
+    }
+
+    private void callSetter(Object obj, String fieldName, Object value){
+        PropertyDescriptor pd;
+        try {
+            pd = new PropertyDescriptor(fieldName, obj.getClass());
+            pd.getWriteMethod().invoke(obj, value);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    private int getId(Answer answer){
+        return answer.getId();
+    }
 }
