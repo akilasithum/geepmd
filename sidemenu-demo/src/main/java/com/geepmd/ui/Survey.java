@@ -8,6 +8,7 @@ import com.geepmd.utils.SinhalaMap;
 import com.vaadin.navigator.View;
 import com.vaadin.navigator.ViewChangeListener;
 import com.vaadin.ui.*;
+import org.hibernate.Session;
 import org.vaadin.dialogs.ConfirmDialog;
 
 import java.util.*;
@@ -166,18 +167,33 @@ public class Survey extends VerticalLayout implements View {
         CommonDetails common = connection.isMotherDetailsAdded(motherId);
         if(common != null){
             int surveyId = common.getSurveyId();
-            BaselineQ1 q1List = (BaselineQ1)connection.getPageValue("com.geepmd.entity.BaselineQ1",surveyId);
-            BaselineQ2 q2List = (BaselineQ2)connection.getPageValue("com.geepmd.entity.BaselineQ2",surveyId);
-            BaselineQ3 q3List = (BaselineQ3)connection.getPageValue("com.geepmd.entity.BaselineQ3",surveyId);
-            BaselineQ4 q4List = (BaselineQ4)connection.getPageValue("com.geepmd.entity.BaselineQ4",surveyId);
-            BaselineQ5 q5List = (BaselineQ5)connection.getPageValue("com.geepmd.entity.BaselineQ5",surveyId);
-            BaselineQ6 q6List = (BaselineQ6)connection.getPageValue("com.geepmd.entity.BaselineQ6",surveyId);
-            BaselineQ7 q7List = (BaselineQ7)connection.getPageValue("com.geepmd.entity.BaselineQ7",surveyId);
-            BaselineQ8 q8List = (BaselineQ8)connection.getPageValue("com.geepmd.entity.BaselineQ8",surveyId);
-            BaselineQ9 q9List = (BaselineQ9)connection.getPageValue("com.geepmd.entity.BaselineQ9",surveyId);
-            List<BaselineQ10> q10List = (List<BaselineQ10>)connection.getAllValues("com.geepmd.entity.BaselineQ10",surveyId);
+            Session session = connection.getSession();
+            BaselineQ1 q1List = (BaselineQ1)connection.getPageValue("com.geepmd.entity.BaselineQ1",surveyId,session);
+            BaselineQ2 q2List = (BaselineQ2)connection.getPageValue("com.geepmd.entity.BaselineQ2",surveyId,session);
+            BaselineQ3 q3List = (BaselineQ3)connection.getPageValue("com.geepmd.entity.BaselineQ3",surveyId,session);
+            BaselineQ4 q4List = (BaselineQ4)connection.getPageValue("com.geepmd.entity.BaselineQ4",surveyId,session);
+            BaselineQ5 q5List = (BaselineQ5)connection.getPageValue("com.geepmd.entity.BaselineQ5",surveyId,session);
+            BaselineQ6 q6List = (BaselineQ6)connection.getPageValue("com.geepmd.entity.BaselineQ6",surveyId,session);
+            BaselineQ7 q7List = (BaselineQ7)connection.getPageValue("com.geepmd.entity.BaselineQ7",surveyId,session);
+            BaselineQ8 q8List = (BaselineQ8)connection.getPageValue("com.geepmd.entity.BaselineQ8",surveyId,session);
+            BaselineQ9 q9List = (BaselineQ9)connection.getPageValue("com.geepmd.entity.BaselineQ9",surveyId,session);
+            List<BaselineQ10> q10List = (List<BaselineQ10>)connection.getAllValues("com.geepmd.entity.BaselineQ10",surveyId,session);
+            BaselineQ26 q26List = (BaselineQ26) connection.getPageValue("com.geepmd.entity.BaselineQ26",surveyId,session);
+            List<BaselineQ28> q28List = (List<BaselineQ28>) connection.getAllValues("com.geepmd.entity.BaselineQ28",surveyId,session);
+            List<BaselineQ32> q32List = (List<BaselineQ32>) connection.getAllValues("com.geepmd.entity.BaselineQ32",surveyId,session);
+            List<BaselineQ51> q51List = (List<BaselineQ51>) connection.getAllValues("com.geepmd.entity.BaselineQ51",surveyId,session);
+            List<BaselineQ62> q62List = (List<BaselineQ62>) connection.getAllValues("com.geepmd.entity.BaselineQ62",surveyId,session);
+            List<BaselineQ84> q84List = (List<BaselineQ84>) connection.getAllValues("com.geepmd.entity.BaselineQ84",surveyId,session);
+            connection.closeSession(session);
             if(q1List != null) tab1.setEditData(q1List);
-        }
+            if(q2List != null) tab2.setEditData(q2List,q26List,q28List);
+            if(q3List != null) tab3.setEditData(q3List,q32List);
+            if(q4List != null) tab4.setEditData(q4List);
+            if(q5List != null) tab5.setEditData(q5List,q51List);
+            if(q6List != null) tab6.setEditData(q6List,q62List);
+
+            if(q8List != null) tab8.setEditData(q8List,q84List);
+          }
     }
 
     public void SelectTab(int index){
@@ -192,31 +208,33 @@ public class Survey extends VerticalLayout implements View {
         common.setSurveyType("Baseline");
         common.setAddedDate(new Date());
         common.setExaminorId(user.getUserId());
-        int surveyId = connection.insertObjectHBM(common);
-        connection.insertObjectHBM(tab1.getAnswers(surveyId));
-        connection.insertObjectHBM(tab2.getAnswers(surveyId));
-        connection.insertObjectHBM(tab2.get26Answer(surveyId));
+        Session session = connection.getSession();
+        int surveyId = connection.insertObjectHBM(common,session);
+        connection.insertObjectHBM(tab1.getAnswers(surveyId),session);
+        connection.insertObjectHBM(tab2.getAnswers(surveyId),session);
+        connection.insertObjectHBM(tab2.get26Answer(surveyId),session);
         List<BaselineQ28> answer28 = tab2.get28Answers(surveyId);
-        answer28.stream().forEach(obj -> connection.insertObjectHBM(obj));
-        connection.insertObjectHBM(tab3.getAnswer(surveyId));
+        answer28.stream().forEach(obj -> connection.insertObjectHBM(obj,session));
+        connection.insertObjectHBM(tab3.getAnswer(surveyId),session);
         List<BaselineQ32> answer32 = tab3.getQ32Answers(surveyId);
-        answer32.stream().forEach(obj -> connection.insertObjectHBM(obj));
-        connection.insertObjectHBM(tab4.getAnswers(surveyId));
-        connection.insertObjectHBM(tab5.getAnswer(surveyId));
+        answer32.stream().forEach(obj -> connection.insertObjectHBM(obj,session));
+        connection.insertObjectHBM(tab4.getAnswers(surveyId),session);
+        connection.insertObjectHBM(tab5.getAnswer(surveyId),session);
         List<BaselineQ51> answer51 = tab5.getAnswer51(surveyId);
-        answer51.stream().forEach(obj -> connection.insertObjectHBM(obj));
-        connection.insertObjectHBM(tab6.getAnswers(surveyId));
+        answer51.stream().forEach(obj -> connection.insertObjectHBM(obj,session));
+        connection.insertObjectHBM(tab6.getAnswers(surveyId),session);
         List<BaselineQ62> answer62 = tab6.getAnswer62(surveyId);
-        answer62.stream().forEach(obj -> connection.insertObjectHBM(obj));
-        connection.insertObjectHBM(tab7.getAnswers(surveyId));
-        connection.insertObjectHBM(tab8.getQ8Answers(surveyId));
+        answer62.stream().forEach(obj -> connection.insertObjectHBM(obj,session));
+        connection.insertObjectHBM(tab7.getAnswers(surveyId),session);
+        connection.insertObjectHBM(tab8.getQ8Answers(surveyId),session);
         List<BaselineQ84> answer84 = tab8.get84Answers(surveyId);
-        answer84.stream().forEach(obj -> connection.insertObjectHBM(obj));
-        connection.insertObjectHBM(tab9.getQ9Answers(surveyId));
+        answer84.stream().forEach(obj -> connection.insertObjectHBM(obj,session));
+        connection.insertObjectHBM(tab9.getQ9Answers(surveyId),session);
         List<BaselineQ10> answer10 = tab10.getAnswerQ10(surveyId);
-        answer10.stream().forEach(obj -> connection.insertObjectHBM(obj));
-        connection.insertObjectHBM(tab11.getAnswerQ11(surveyId));
-        connection.insertObjectHBM(tab12.getAnswerQ12(surveyId));
+        answer10.stream().forEach(obj -> connection.insertObjectHBM(obj,session));
+        connection.insertObjectHBM(tab11.getAnswerQ11(surveyId),session);
+        connection.insertObjectHBM(tab12.getAnswerQ12(surveyId),session);
+        connection.closeSession(session);
         saveBtn.setEnabled(true);
         saveBtn.setCaption("Save Survey");
         getUI().getNavigator().navigateTo("BaselineSurvey");

@@ -14,6 +14,7 @@ import org.vaadin.addons.ComboBoxMultiselect;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 import static com.geepmd.utils.SurveyUtils.*;
 
@@ -37,6 +38,7 @@ public class Tab6 extends VerticalLayout {
     ComboBox blackCombo;
     ComboBox wormCombo;
     Survey survey;
+    TextField questionDBUniqueIdField;
 
     public Tab6(String language,Survey survey){
         this.language = language;
@@ -57,6 +59,9 @@ public class Tab6 extends VerticalLayout {
     }
 
     private void createLayout(){
+        questionDBUniqueIdField = new TextField();
+        questionDBUniqueIdField.setVisible(false);
+        addComponent(questionDBUniqueIdField);
         Label firstQ = new Label(q6Map.get("6.1"));
         firstQ.setSizeFull();
         addComponent(firstQ);
@@ -315,6 +320,9 @@ public class Tab6 extends VerticalLayout {
     public BaselineQ6 getAnswers(int motherId) {
 
         BaselineQ6 answer = new BaselineQ6();
+        if(questionDBUniqueIdField.getValue() != null && !questionDBUniqueIdField.getValue().isEmpty()){
+            answer.setBaselineQ6Id(Integer.parseInt(questionDBUniqueIdField.getValue()));
+        }
         answer.setSurveyId(motherId);
         for(int i = 0;i<firstQAnswerLayout.getComponentCount();i++){
             HorizontalLayout layout = (HorizontalLayout)firstQAnswerLayout.getComponent(i);
@@ -343,7 +351,8 @@ public class Tab6 extends VerticalLayout {
         }
         if(monthsCombo65.getValue() != null) answer.setM3(Integer.parseInt(monthsCombo65.getValue().toString()));
         if(yearCombo.getValue() != null || monthCombo.getValue() != null){
-            answer.setM6(yearCombo.getValue() + "years " +monthCombo.getValue()+"months");
+            answer.setM6((yearCombo.getValue() != null ? yearCombo.getValue() : 0) + "years "
+                    +(monthCombo.getValue()!= null ? monthCombo.getValue() : 0) +"months");
         }
         if(investigationCombo.getValue() != null) answer.setM7(getId((Answer)investigationCombo.getValue()));
         if(thalassemiaCombo.getValue() != null) answer.setM8(getId((Answer)thalassemiaCombo.getValue()));
@@ -379,6 +388,67 @@ public class Tab6 extends VerticalLayout {
             list.add(answer);
         }
         return list;
+    }
+
+    public void setEditData(BaselineQ6 answer,List<BaselineQ62> answer62){
+        questionDBUniqueIdField.setValue(String.valueOf(answer.getBaselineQ6Id()));
+        for(int i = 0;i<firstQAnswerLayout.getComponentCount();i++){
+            HorizontalLayout layout = (HorizontalLayout)firstQAnswerLayout.getComponent(i);
+            ComboBox comboBox = (ComboBox) layout.getComponent(1);
+            if(i == 0 && answer.getM1a() != 0){
+                comboBox.setValue(getYesNoObject("SN",answer.getM1a()));
+            }
+            if(i == 1 && answer.getM1b() != 0){
+                comboBox.setValue(getYesNoObject("SN",answer.getM1b()));
+            }
+            if(i == 2 && answer.getM1c() != 0){
+                comboBox.setValue(getYesNoObject("SN",answer.getM1c()));
+            }
+            if(i == 3 && answer.getM1d() != 0){
+                comboBox.setValue(getYesNoObject("SN",answer.getM1d()));
+            }
+        }
+        q63Combo.setValue(getAnswerObj(answer.getM3(),answerMap.get("6.3")));
+        anemiaCombo.setValue(getAnswerSetFromString(answer.getM4(),answerMap.get("6.4")));
+        if(answer.getM5() != 0)monthsCombo65.setValue(String.valueOf(answer.getM5()));
+
+        String marriageYear = answer.getM6();
+        if(marriageYear != null && !marriageYear.isEmpty()){
+            String[] arr = marriageYear.split(" ");
+            if(arr[0] != "0years") yearCombo.setValue(arr[0].substring(0,arr[0].length()-3));
+            if(arr[1] != "0months") monthCombo.setValue(arr[1].substring(0,arr[1].length()-6));
+        }
+        investigationCombo.setValue(getYesNoObject("SN",answer.getM7()));
+        thalassemiaCombo.setValue(getYesNoObject("SN",answer.getM8()));
+        thalassemiaYesCombo.setValue(getAnswerObj(answer.getM9(),answerMap.get("6.9")));
+        bleedingCombo.setValue(getYesNoObject("SN",answer.getM10()));
+        blackCombo.setValue(getYesNoObject("SN",answer.getM11()));
+        wormCombo.setValue(getYesNoObject("SN",answer.getM12()));
+
+        Map<String,BaselineQ62> map = answer62.stream().collect( Collectors.toMap(x -> x.getQuestion(), x -> x));
+
+        for(int i = 0 ;i<secondQAnswerLayout.getComponentCount();i++) {
+            HorizontalLayout horizontalLayout = (HorizontalLayout) secondQAnswerLayout.getComponent(i);
+            String label = ((Label) horizontalLayout.getComponent(0)).getValue();
+            ComboBox fCombo = (ComboBox) horizontalLayout.getComponent(1);
+            HorizontalLayout dependentLayout = (HorizontalLayout) horizontalLayout.getComponent(2);
+            ComboBox writtenCombo = (ComboBox) dependentLayout.getComponent(0);
+            ComboBox yearCombo = (ComboBox) dependentLayout.getComponent(1);
+            ComboBox medicalCombo = (ComboBox) dependentLayout.getComponent(2);
+            ComboBox sectorCombo = (ComboBox) dependentLayout.getComponent(3);
+            if(map.containsKey(label.substring(0,1))){
+                BaselineQ62 baselineQ62 = map.get(label.substring(0,1));
+                if(baselineQ62.getM1() != 0){
+                    fCombo.setValue(getYesNoObject("SN",baselineQ62.getM1()));
+                    if(baselineQ62.getM1() == 1){
+                        writtenCombo.setValue(getYesNoObject("SN",baselineQ62.getM2()));
+                        if(baselineQ62.getM3() != 0)yearCombo.setValue(String.valueOf(baselineQ62.getM3()));
+                        medicalCombo.setValue(getYesNoObject("SN",baselineQ62.getM4()));
+                        sectorCombo.setValue(getAnswerObj(baselineQ62.getM5(),answerMap.get("6.2")));
+                    }
+                }
+            }
+        }
     }
 
     private int getId(Answer answer){

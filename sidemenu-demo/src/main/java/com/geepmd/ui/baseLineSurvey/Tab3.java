@@ -1,5 +1,7 @@
 package com.geepmd.ui.baseLineSurvey;
 
+import com.geepmd.entity.BaselineQ2;
+import com.geepmd.entity.BaselineQ26;
 import com.geepmd.entity.BaselineQ3;
 import com.geepmd.entity.BaselineQ32;
 import com.geepmd.ui.Survey;
@@ -29,6 +31,7 @@ public class Tab3 extends VerticalLayout {
     VerticalLayout tab3MainDetails;
     VerticalLayout q32MainLayout;
     Survey survey;
+    TextField questionDBUniqueIdField;
 
     public Tab3(String language,Survey survey){
         this.language = language;
@@ -49,6 +52,9 @@ public class Tab3 extends VerticalLayout {
     }
 
     private void createLayout(String language){
+        questionDBUniqueIdField = new TextField();
+        questionDBUniqueIdField.setVisible(false);
+        addComponent(questionDBUniqueIdField);
         conceivedTimeCombo = new ComboBox();
         conceivedTimeCombo.setItems(getStringList(1,10));
         conceivedTimeCombo.setTextInputAllowed(false);
@@ -294,8 +300,10 @@ public class Tab3 extends VerticalLayout {
 
     public BaselineQ3 getAnswer(int motherId){
         BaselineQ3 answer = new BaselineQ3();
-
         answer.setSurveyId(motherId);
+        if(questionDBUniqueIdField.getValue() != null && !questionDBUniqueIdField.getValue().isEmpty()){
+            answer.setBaselineQ3Id(Integer.parseInt(questionDBUniqueIdField.getValue()));
+        }
         if(conceivedTimeCombo.getValue() != null) answer.setM1(Integer.parseInt(conceivedTimeCombo.getValue().toString()));
         if(breastFeedCombo != null && breastFeedCombo.getValue() != null) answer.setM3(getId((Answer)breastFeedCombo.getValue()));
         if(breastFeedStopMonths != null && breastFeedStopMonths.getValue() != null) answer.setM4(breastFeedStopMonths.getValue());
@@ -304,6 +312,40 @@ public class Tab3 extends VerticalLayout {
         if(ironUsedMonths != null && ironUsedMonths.getValue() != null) answer.setM7(ironUsedMonths.getValue());
         return answer;
     }
+
+    public void setEditData(BaselineQ3 answer, List<BaselineQ32> answer32){
+        questionDBUniqueIdField.setValue(String.valueOf(answer.getBaselineQ3Id()));
+        if(answer.getM1() != 0) conceivedTimeCombo.setValue(String.valueOf(answer.getM1()));
+        if(answer.getM1() != 0 && answer.getM1() > 1){
+            breastFeedCombo.setValue(getAnswerObj(answer.getM3(),answerMap.get("3.3")));
+            breastFeedStopMonths.setValue(answer.getM4());
+            supplementsCombo.setValue(getYesNoObject("SN",answer.getM5()));
+            supplementsAfterCombo.setValue(getAnswerObj(answer.getM6(),answerMap.get("3.6")));
+            ironUsedMonths.setValue(answer.getM7());
+
+            for(int i = 0;i<answer32.size();i++){
+                HorizontalLayout layout = (HorizontalLayout) q32MainLayout.getComponent(i);
+                ComboBox m1 = (ComboBox)layout.getComponent(1);
+                ComboBox m2 = (ComboBox)layout.getComponent(2);
+                ComboBoxMultiselect m3 = (ComboBoxMultiselect)layout.getComponent(3);
+                ComboBox m4 = (ComboBox)layout.getComponent(4);
+                ComboBox m5 = (ComboBox)layout.getComponent(5);
+                TextField m6 = (TextField)layout.getComponent(6);
+                ComboBoxMultiselect m7 = (ComboBoxMultiselect)layout.getComponent(7);
+                ComboBoxMultiselect m8 = (ComboBoxMultiselect)layout.getComponent(8);
+                BaselineQ32 baselineQ32 = answer32.get(i);
+                if(baselineQ32.getM1() != 0) m1.setValue(String.valueOf(baselineQ32.getM1()));
+                m2.setValue(getAnswerObj(baselineQ32.getM2(),answerMap.get("3.22")));
+                m3.setValue(getAnswerSetFromString(baselineQ32.getM3(),answerMap.get("3.23")));
+                if(baselineQ32.getM4() != 0) m4.setValue(String.valueOf(baselineQ32.getM4()));
+                m5.setValue(getAnswerObj(baselineQ32.getM5(),answerMap.get("3.25")));
+                m6.setValue(baselineQ32.getM6());
+                m7.setValue(getAnswerSetFromString(baselineQ32.getM7(),answerMap.get("3.27")));
+                m8.setValue(getAnswerSetFromString(baselineQ32.getM8(),answerMap.get("3.28")));
+            }
+        }
+    }
+
 
     private int getId(Answer answer){
         return answer.getId();

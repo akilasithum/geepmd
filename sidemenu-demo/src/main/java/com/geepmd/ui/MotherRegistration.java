@@ -11,6 +11,7 @@ import com.vaadin.navigator.ViewChangeListener;
 import com.vaadin.shared.ui.MarginInfo;
 import com.vaadin.ui.*;
 import com.vaadin.ui.themes.ValoTheme;
+import org.hibernate.Session;
 
 import java.time.LocalDate;
 import java.time.ZoneId;
@@ -139,8 +140,9 @@ public class MotherRegistration extends VerticalLayout implements View {
                 mother.setPhmDivision(medicalArea.getValue());
                 mother.setGnDivision(villageArea.getValue());
                 mother.setAntenatalClinic(antenatalClinicFld.getValue());
-
-                int motherId = connection.insertObjectHBM(mother);
+                Session session = connection.getSession();
+                int motherId = connection.insertObjectHBM(mother,session);
+                connection.closeSession(session);
                 if (motherId != 0) {
                     Notification.show("Mother's serial number is " + motherName);
                     mother.setMotherRegNo(motherId);

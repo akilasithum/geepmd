@@ -137,7 +137,7 @@ public class LoginPage extends VerticalLayout implements View {
                     user.setDesignation(designationVal);
                     user.setFullName(fullNameVal);
                     user.setPassword(passwordVal);
-                    int id = connection.insertObjectHBM(user);
+                    int id = connection.insertUser(user);
                     if(id != 0){
                         signUpContentWindow.close();
                         Notification.show("User creation successfully. You can logged in now");

@@ -59,6 +59,34 @@ public class SurveyUtils {
         return answerList;
     }
 
+    public static Answer getYesNoObject(String language,int option){
+        if(option != 0) {
+            Answer answer = new Answer();
+            if (language.equals("EN")) {
+                if (option == 1) {
+                    answer.setId(1);
+                    answer.setDescription("1.Yes");
+                } else {
+                    answer.setId(2);
+                    answer.setDescription("2.No");
+                }
+            } else {
+
+                if (option == 1) {
+                    answer.setId(1);
+                    answer.setDescription("1.ඔව්");
+                } else {
+                    answer.setId(2);
+                    answer.setDescription("2.නැත");
+                }
+            }
+            return answer;
+        }
+        else{
+            return null;
+        }
+    }
+
     public static List<Answer> getAnwerObj(List<String> answers){
         List<Answer> answerList = new ArrayList<>();
         int i = 1;
@@ -98,5 +126,37 @@ public class SurveyUtils {
         map.put(14,"n");
         map.put(15,"o");
         return map;
+    }
+
+    public static Answer getAnswerObj(int answer,List<String> qList){
+        if(answer != 0) {
+            try {
+                Answer answerObj = new Answer();
+                answerObj.setId(answer);
+                answerObj.setDescription(qList.get(answer-1));
+                return answerObj;
+            }catch (Exception e){
+                return null;
+            }
+        }
+        else return null;
+    }
+
+    public static Set<Answer> getAnswerSetFromString(String str,List<String> answers){
+        Set<Answer> anserSet = new HashSet<>();
+        if(str != null && !str.isEmpty()) {
+
+            String[] arr = str.split(",");
+            for(String answer : Arrays.asList(arr)){
+                Answer answer1 = new Answer();
+                int id = Integer.parseInt(answer);
+                answer1.setId(id);
+                answer1.setDescription(answers.get(id+1));
+            }
+            return anserSet;
+        }
+        else {
+            return anserSet;
+        }
     }
 }

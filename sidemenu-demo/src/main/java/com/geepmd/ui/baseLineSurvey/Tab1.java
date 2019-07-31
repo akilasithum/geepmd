@@ -57,6 +57,7 @@ public class Tab1 extends VerticalLayout {
 
     private void createLayout(String language){
         questionDBUniqueIdField = new TextField();
+        questionDBUniqueIdField.setVisible(false);
         addComponent(questionDBUniqueIdField);
         Label motherLabel = new Label(fields.get("1"));
         motherLabel.setSizeFull();

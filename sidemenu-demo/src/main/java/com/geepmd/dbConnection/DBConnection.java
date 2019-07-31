@@ -49,13 +49,19 @@ public class DBConnection {
         }
     }
 
-    private Session getSession(){
+    public Session getSession(){
         if(session == null || !session.isConnected()){
             session = HibernateUtil.getSessionFactory().openSession();
             return session;
         }
         else {
             return session;
+        }
+    }
+
+    public void closeSession(Session session){
+        if(session != null && session.isConnected()){
+            session.close();
         }
     }
 
@@ -68,12 +74,10 @@ public class DBConnection {
         return id;
     }
 
-    public int insertObjectHBM(Object details){
-        Session session = getSession();
+    public int insertObjectHBM(Object details,Session session){
         session.beginTransaction();
         int id = (Integer)session.save(details);
         session.getTransaction().commit();
-        //session.close();
         return id;
     }
 
@@ -100,29 +104,24 @@ public class DBConnection {
         }
     }
 
-    public List<?> getAllValues(String className,String order){
-        Session session = getSession();
+    public List<?> getAllValues(Session session,String className,String order){
         try
         {
             Criteria criteria = session.createCriteria(Class.forName(className));
             criteria.addOrder(Order.asc(order));
             List list = criteria.list();
-            //session.close();
             return list;
         } catch (Exception e) {
-            //session.close();
             return null;
         }
     }
 
-    public List<?> getAllValues(String className,int surveyId){
-        Session session = HibernateUtil.getSessionFactory().openSession();
+    public List<?> getAllValues(String className,int surveyId,Session session){
         try
         {
             Criteria criteria = session.createCriteria(Class.forName(className));
             criteria.add(Restrictions.eq("surveyId", surveyId));
             List list = criteria.list();
-            session.close();
             return list;
         } catch (Exception e) {
             session.close();
@@ -130,14 +129,12 @@ public class DBConnection {
         }
     }
 
-    public Object getPageValue(String className,int surveyId){
-        Session session = HibernateUtil.getSessionFactory().openSession();
+    public Object getPageValue(String className,int surveyId,Session session){
         try
         {
             Criteria criteria = session.createCriteria(Class.forName(className));
             criteria.add(Restrictions.eq("surveyId", surveyId));
             List list = criteria.list();
-            session.close();
             if(list != null && !list.isEmpty()) return list.get(0);
             else return null;
         } catch (Exception e) {

@@ -181,7 +181,7 @@ public class Tab10 extends VerticalLayout {
             BaselineQ10 answer = new BaselineQ10();
             answer.setM1(i);
             answer.setSurveyId(surveyId);
-            if(yesNoCombo != null){
+            if(yesNoCombo != null && yesNoCombo.getValue() != null){
                int choice = getId((Answer)yesNoCombo.getValue());
                answer.setM2(choice);
                if(choice == 1){

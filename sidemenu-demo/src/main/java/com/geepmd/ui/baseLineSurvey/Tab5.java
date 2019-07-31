@@ -13,10 +13,9 @@ import com.vaadin.ui.*;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
-import static com.geepmd.utils.SurveyUtils.getAnswerDesc;
-import static com.geepmd.utils.SurveyUtils.getAnwerObj;
-import static com.geepmd.utils.SurveyUtils.getYesNoAnswer;
+import static com.geepmd.utils.SurveyUtils.*;
 
 public class Tab5 extends VerticalLayout {
 
@@ -30,6 +29,7 @@ public class Tab5 extends VerticalLayout {
     Survey survey;
     HorizontalLayout q52Layout;
     HorizontalLayout q53Layout;
+    TextField questionDBUniqueIdField;
 
     public Tab5(String language,Survey survey){
         this.language = language;
@@ -50,6 +50,9 @@ public class Tab5 extends VerticalLayout {
     }
 
     private void createLayout(){
+        questionDBUniqueIdField = new TextField();
+        questionDBUniqueIdField.setVisible(false);
+        addComponent(questionDBUniqueIdField);
         Label firstQLabel = new Label(q5Map.get("5.1"));
         firstQLabel.setSizeFull();
         addComponent(firstQLabel);
@@ -233,6 +236,9 @@ public class Tab5 extends VerticalLayout {
     public BaselineQ5 getAnswer(int motherId){
         BaselineQ5 answer = new BaselineQ5();
         answer.setSurveyId(motherId);
+        if(questionDBUniqueIdField.getValue() != null && !questionDBUniqueIdField.getValue().isEmpty()){
+            answer.setBaselineQ5Id(Integer.parseInt(questionDBUniqueIdField.getValue()));
+        }
         if(q52ComboBox.getValue() != null) answer.setM2(getId((Answer)q52ComboBox.getValue()));
         if(q53ComboBox.getValue() != null) answer.setM3(getId((Answer)q53ComboBox.getValue()));
         return answer;
@@ -269,8 +275,51 @@ public class Tab5 extends VerticalLayout {
             if(a4Combo.getValue() != null) answer.setA4(getId((Answer)a4Combo.getValue()));
             list.add(answer);
         }
-
         return list;
+    }
+
+    public void setEditData(BaselineQ5 answer,List<BaselineQ51> answers52){
+        questionDBUniqueIdField.setValue(String.valueOf(answer.getBaselineQ5Id()));
+        q52ComboBox.setValue(getAnswerObj(answer.getM3(),answerMap.get("5.2")));
+        q53ComboBox.setValue(getAnswerObj(answer.getM3(),answerMap.get("5.3")));
+
+        Map<String,BaselineQ51> map = answers52.stream().collect( Collectors.toMap(x -> x.getQuestion(), x -> x));
+
+        for(int i = 0;i<answers52.size();i++){
+            HorizontalLayout horizontalLayout = (HorizontalLayout) q1Layout.getComponent(i);
+            String label = ((Label) horizontalLayout.getComponent(0)).getValue();
+            HorizontalLayout beforeLayout = (HorizontalLayout) horizontalLayout.getComponent(1);
+            HorizontalLayout beforeDependentLayout = (HorizontalLayout) beforeLayout.getComponent(1);
+            HorizontalLayout afterLayout = (HorizontalLayout) horizontalLayout.getComponent(2);
+            HorizontalLayout afterDependentLayout = (HorizontalLayout) afterLayout.getComponent(1);
+            ComboBox b1Combo = (ComboBox) beforeLayout.getComponent(0);
+            ComboBox b2Combo = (ComboBox) beforeDependentLayout.getComponent(0);
+            ComboBox b3Combo = (ComboBox) beforeDependentLayout.getComponent(1);
+            ComboBox b4Combo = (ComboBox) beforeDependentLayout.getComponent(2);
+            ComboBox a1Combo = (ComboBox) afterLayout.getComponent(0);
+            ComboBox a2Combo = (ComboBox) afterDependentLayout.getComponent(0);
+            ComboBox a3Combo = (ComboBox) afterDependentLayout.getComponent(1);
+            ComboBox a4Combo = (ComboBox) afterDependentLayout.getComponent(2);
+            if(map.containsKey(label.substring(0,1))){
+                BaselineQ51 baselineQ51 = map.get(label.substring(0,1));
+                if(baselineQ51.getB1() != 0){
+                    b1Combo.setValue(getYesNoObject("SN",baselineQ51.getB1()));
+                    if(baselineQ51.getB1() == 1){
+                        b2Combo.setValue(getAnswerObj(baselineQ51.getB2(),answerMap.get("5.1")));
+                        b3Combo.setValue(getYesNoObject("SN",baselineQ51.getB3()));
+                        b4Combo.setValue(getYesNoObject("SN",baselineQ51.getB4()));
+                    }
+                }
+                if(baselineQ51.getA1() != 0){
+                    a1Combo.setValue(getYesNoObject("SN",baselineQ51.getA1()));
+                    if(baselineQ51.getA1() == 1){
+                        a2Combo.setValue(getAnswerObj(baselineQ51.getA2(),answerMap.get("5.1")));
+                        a3Combo.setValue(getYesNoObject("SN",baselineQ51.getA3()));
+                        a4Combo.setValue(getYesNoObject("SN",baselineQ51.getA4()));
+                    }
+                }
+            }
+        }
     }
 
     private int getId(Answer answer){

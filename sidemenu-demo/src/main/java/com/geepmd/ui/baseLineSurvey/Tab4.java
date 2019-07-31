@@ -8,6 +8,7 @@ import com.geepmd.utils.SinhalaMap;
 import com.vaadin.icons.VaadinIcons;
 import com.vaadin.ui.*;
 
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.ZoneId;
@@ -35,6 +36,7 @@ public class Tab4 extends VerticalLayout {
     ComboBox folicAcidNowCombo;
     ComboBox folicWeekCombo;
     Survey survey;
+    TextField questionDBUniqueIdField;
 
     public Tab4(String language,Survey survey){
         this.language = language;
@@ -54,6 +56,9 @@ public class Tab4 extends VerticalLayout {
     }
 
     private void createLayout(){
+        questionDBUniqueIdField = new TextField();
+        questionDBUniqueIdField.setVisible(false);
+        addComponent(questionDBUniqueIdField);
 
         pregnancyPlannedCombo = new ComboBox();
         pregnancyPlannedCombo.setItems(getYesNoAnswer(language));
@@ -195,10 +200,13 @@ public class Tab4 extends VerticalLayout {
 
         BaselineQ4 answer = new BaselineQ4();
         answer.setSurveyId(motherId);
-        if(preConceptionCombo.getValue() != null) answer.setM1(getId((Answer)preConceptionCombo.getValue()));
-        if(screenCombo.getValue() != null) answer.setM2(getId((Answer)screenCombo.getValue()));
-        if(heartCheckCombo.getValue() != null) answer.setM3(getId((Answer)heartCheckCombo.getValue()));
-        if(pregnancyPlannedCombo.getValue() != null) answer.setM4(getId((Answer)pregnancyPlannedCombo.getValue()));
+        if(questionDBUniqueIdField.getValue() != null && !questionDBUniqueIdField.getValue().isEmpty()){
+            answer.setBaselineQ4Id(Integer.parseInt(questionDBUniqueIdField.getValue()));
+        }
+        if(pregnancyPlannedCombo.getValue() != null) answer.setM1(getId((Answer)pregnancyPlannedCombo.getValue()));
+        if(preConceptionCombo.getValue() != null) answer.setM2(getId((Answer)preConceptionCombo.getValue()));
+        if(screenCombo.getValue() != null) answer.setM3(getId((Answer)screenCombo.getValue()));
+        if(heartCheckCombo.getValue() != null) answer.setM4(getId((Answer)heartCheckCombo.getValue()));
         if(lmpCombo.getValue() != null) answer.setM5(getId((Answer)lmpCombo.getValue()));
         if(folicAcidMonthCombo.getValue() != null) answer.setM6(getId((Answer)folicAcidMonthCombo.getValue()));
         if(mensesDate.getValue() != null) answer.setM7(getDateStr(mensesDate.getValue()));
@@ -214,6 +222,35 @@ public class Tab4 extends VerticalLayout {
         Date dateVal = Date.from(date.atStartOfDay(ZoneId.systemDefault()).toInstant());
         SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
         return format.format(dateVal);
+    }
+
+    public void setEditData(BaselineQ4 answer){
+        questionDBUniqueIdField.setValue(String.valueOf(answer.getBaselineQ4Id()));
+        pregnancyPlannedCombo.setValue(getYesNoObject("SN",answer.getM1()));
+        preConceptionCombo.setValue(getAnswerObj(answer.getM3(),answerMap.get("4.2")));
+        screenCombo.setValue(getYesNoObject("SN",answer.getM2()));
+        heartCheckCombo.setValue(getYesNoObject("SN",answer.getM4()));
+        lmpCombo.setValue(getYesNoObject("SN",answer.getM5()));
+        folicAcidMonthCombo.setValue(getAnswerObj(answer.getM6(),answerMap.get("4.6")));
+        Date mensesDateVal = getDateFromStr(answer.getM7());
+        if(mensesDateVal != null ) {
+            LocalDate motherBday = mensesDateVal.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
+            mensesDate.setValue(motherBday);
+        }
+        pregConfirmCombo.setValue(getAnswerObj(answer.getM8(),answerMap.get("4.8")));
+        deliveryPreferCombo.setValue(getAnswerObj(answer.getM9(),answerMap.get("4.9")));
+        delPlaceCombo.setValue(getAnswerObj(answer.getM10(),answerMap.get("4.10")));
+        folicAcidNowCombo.setValue(getYesNoObject("SN",answer.getM11()));
+        if(answer.getM12() != 0) folicWeekCombo.setValue(String.valueOf(answer.getM12()));
+
+    }
+
+    private Date getDateFromStr(String str){
+        try {
+            return new SimpleDateFormat("yyyy-MM-dd").parse(str);
+        } catch (ParseException e) {
+            return null;
+        }
     }
 
     private int getId(Answer answer){
