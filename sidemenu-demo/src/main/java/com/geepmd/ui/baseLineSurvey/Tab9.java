@@ -26,6 +26,7 @@ public class Tab9 extends VerticalLayout{
     ComboBox privateBusCombo;
     ComboBox threeWheelCombo;
     VerticalLayout firstSetLayout;
+    TextField questionDBUniqueIdField;
 
     public Tab9(String language, Survey survey){
         this.language = language;
@@ -46,7 +47,9 @@ public class Tab9 extends VerticalLayout{
     }
 
     private void createLayout(){
-
+        questionDBUniqueIdField = new TextField();
+        questionDBUniqueIdField.setVisible(false);
+        addComponent(questionDBUniqueIdField);
         Label timeLabel = new Label(fields.get("9"));
         addComponent(timeLabel);
         timeLabel.setStyleName("padHeader");
@@ -126,7 +129,9 @@ public class Tab9 extends VerticalLayout{
     public BaselineQ9 getQ9Answers(int surveyId) {
         BaselineQ9 answer = new BaselineQ9();
         answer.setSurveyId(surveyId);
-
+        if(questionDBUniqueIdField.getValue() != null && !questionDBUniqueIdField.getValue().isEmpty()){
+            answer.setBaselineQ9Id(Integer.parseInt(questionDBUniqueIdField.getValue()));
+        }
         for(int i = 0;i<firstSetLayout.getComponentCount();i++){
             HorizontalLayout layout = (HorizontalLayout)((HorizontalLayout)firstSetLayout.getComponent(i)).getComponent(1);
             ComboBox hourCombo = (ComboBox) layout.getComponent(0);
@@ -150,6 +155,43 @@ public class Tab9 extends VerticalLayout{
         if(isReverse)
         return answerReverse(answer.getId());
         else return answer.getId();
+    }
+
+    public void setEditData(BaselineQ9 answer) {
+        questionDBUniqueIdField.setValue(String.valueOf(answer.getBaselineQ9Id()));
+        for(int i = 0;i<firstSetLayout.getComponentCount();i++){
+            HorizontalLayout layout = (HorizontalLayout)((HorizontalLayout)firstSetLayout.getComponent(i)).getComponent(1);
+            ComboBox hourCombo = (ComboBox) layout.getComponent(0);
+            ComboBox minuteCombo = (ComboBox) layout.getComponent(1);
+            String time = "";
+            if(i == 0 && answer.getM1() != null) time = answer.getM1();
+            if(i == 1 && answer.getM2() != null) time = answer.getM2();
+            if(i == 2 && answer.getM3() != null) time = answer.getM3();
+            if(i == 3 && answer.getM4() != null) time = answer.getM4();
+
+            if(!time.isEmpty()){
+                if(time.contains("Hr")) {
+                    String[] timeArr = time.split("Hr");
+                    hourCombo.setValue(timeArr[0]);
+                    String[] minute = timeArr[1].split("Min");
+                    if(!minute[0].trim().equals("00"))
+                        minuteCombo.setValue(minute[0]);
+
+                }
+            else{
+                    String[] minute = time.split("Min");
+                    if(!minute[0].trim().equals("00"))
+                        minuteCombo.setValue(minute[0]);
+                }
+            }
+        }
+        privateTransportCombo.setValue(getYesNoObject("SN",answer.getM51()));
+        if(answer.getM51() != 1){
+            ctbCombo.setValue(getAnswerObj(answer.getM52(),answerMap.get("9.5.1")));
+            privateBusCombo.setValue(getAnswerObj(answer.getM52(),answerMap.get("9.5.1")));
+            threeWheelCombo.setValue(getAnswerObj(answer.getM52(),answerMap.get("9.5.1")));
+        }
+
     }
 
     private int answerReverse(int answer){

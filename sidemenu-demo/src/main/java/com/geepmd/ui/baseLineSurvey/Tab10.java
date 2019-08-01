@@ -13,6 +13,7 @@ import java.time.Month;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 import static com.geepmd.utils.SurveyUtils.*;
 
@@ -197,6 +198,36 @@ public class Tab10 extends VerticalLayout {
             answerList.add(answer);
         }
         return answerList;
+    }
+
+    public void setEditData(List<BaselineQ10> answer) {
+
+
+        Map<Integer,BaselineQ10> map = answer.stream().collect( Collectors.toMap(x -> x.getM1(), x -> x));
+
+        for(int i = 1 ;i<=answer.size();i++) {
+            HorizontalLayout layout = (HorizontalLayout) questionLayout.getComponent(i);
+            ComboBox yesNoCombo = (ComboBox) layout.getComponent(1);
+            HorizontalLayout dependentLayout = (HorizontalLayout) layout.getComponent(2);
+            ComboBox currentCombo = (ComboBox) dependentLayout.getComponent(0);
+                BaselineQ10 baselineQ62 = map.get(i);
+                if(baselineQ62.getM2() != 0){
+                    yesNoCombo.setValue(getYesNoObject("SN",baselineQ62.getM2()));
+                    if(baselineQ62.getM1() == 1){
+                        currentCombo.setValue(getAnswerObj(baselineQ62.getM3(),answerMap.get("9.1")));
+                        HorizontalLayout startLayout = (HorizontalLayout) dependentLayout.getComponent(1);
+                        HorizontalLayout stopLayout = (HorizontalLayout) dependentLayout.getComponent(2);
+
+                        ComboBox startYearCombo = (ComboBox) startLayout.getComponent(0);
+                        ComboBox startMonthCombo = (ComboBox) startLayout.getComponent(1);
+
+                        ComboBox stopYearCombo = (ComboBox) startLayout.getComponent(0);
+                        ComboBox stopMonthCombo = (ComboBox) startLayout.getComponent(1);
+
+
+                    }
+                }
+        }
     }
 
     private int getId(Answer answer){

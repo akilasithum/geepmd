@@ -193,6 +193,8 @@ public class Survey extends VerticalLayout implements View {
             if(q6List != null) tab6.setEditData(q6List,q62List);
 
             if(q8List != null) tab8.setEditData(q8List,q84List);
+            if(q9List != null) tab9.setEditData(q9List);
+            if(q10List != null) tab10.setEditData(q10List);
           }
     }
 
