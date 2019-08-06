@@ -1,36 +1,36 @@
 package com.geepmd.dbConnection;
-
-import org.hibernate.Session;
 import org.hibernate.SessionFactory;
+import org.hibernate.boot.Metadata;
+import org.hibernate.boot.MetadataSources;
+import org.hibernate.boot.registry.StandardServiceRegistry;
 import org.hibernate.boot.registry.StandardServiceRegistryBuilder;
-import org.hibernate.cfg.Configuration;
-import org.hibernate.service.ServiceRegistry;
-
-import java.util.HashMap;
-import java.util.Map;
 
 public class HibernateUtil {
-
-    static SessionFactory sessionFactoryObj;
-    private static SessionFactory buildSessionFactory() {
-        // Creating Configuration Instance & Passing Hibernate Configuration File
-        Configuration configObj = new Configuration();
-        configObj.configure("hibernate.cfg.xml");
-
-        // Since Hibernate Version 4.x, ServiceRegistry Is Being Used
-        ServiceRegistry serviceRegistryObj = new StandardServiceRegistryBuilder().applySettings(configObj.getProperties()).build();
-
-        // Creating Hibernate SessionFactory Instance
-        sessionFactoryObj = configObj.buildSessionFactory(serviceRegistryObj);
-        return sessionFactoryObj;
-    }
-
+    private static StandardServiceRegistry registry;
+    private static SessionFactory sessionFactory;
     public static SessionFactory getSessionFactory() {
-        return buildSessionFactory();
+        if (sessionFactory == null) {
+            try {
+                // Create registry
+                registry = new StandardServiceRegistryBuilder().configure().build();
+                // Create MetadataSources
+                MetadataSources sources = new MetadataSources(registry);
+                // Create Metadata
+                Metadata metadata = sources.getMetadataBuilder().build();
+                // Create SessionFactory
+                sessionFactory = metadata.getSessionFactoryBuilder().build();
+            } catch (Exception e) {
+                e.printStackTrace();
+                if (registry != null) {
+                    StandardServiceRegistryBuilder.destroy(registry);
+                }
+            }
+        }
+        return sessionFactory;
     }
-
     public static void shutdown() {
-        // Close caches and connection pools
-        getSessionFactory().close();
+        if (registry != null) {
+            StandardServiceRegistryBuilder.destroy(registry);
+        }
     }
 }

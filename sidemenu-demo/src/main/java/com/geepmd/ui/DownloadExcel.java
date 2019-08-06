@@ -16,7 +16,6 @@ import com.vaadin.ui.UI;
 import com.vaadin.ui.VerticalLayout;
 import org.apache.poi.ss.usermodel.*;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
-import org.hibernate.Session;
 
 import java.io.File;
 import java.io.FileOutputStream;
@@ -47,7 +46,7 @@ public class DownloadExcel extends VerticalLayout implements View {
     }
 
     public DownloadExcel(){
-        connection = DBConnection.getInstance();
+        connection = (DBConnection) UI.getCurrent().getSession().getAttribute("dbConnection");
         letterIntMap = SurveyUtils.getLetterIntMap();
         createLayout();
     }
@@ -70,32 +69,31 @@ public class DownloadExcel extends VerticalLayout implements View {
         Sheet sheet = workbook.createSheet("Baseline survey");
         createHeaderRow(workbook,sheet);
         FileOutputStream fileOut = null;
-        Session session = connection.getSession();
-        List<CommonDetails> commonList = (List<CommonDetails>)connection.getAllValues(session,"com.geepmd.entity.CommonDetails",
+        List<CommonDetails> commonList = (List<CommonDetails>)connection.getAllValues("com.geepmd.entity.CommonDetails",
                 "surveyId");
         if(commonList == null || commonList.size() == 0){
             downloadFile(workbook);
             return;
         }
-        List<BaselineQ1> q1List = (List<BaselineQ1>)connection.getAllValues(session,"com.geepmd.entity.BaselineQ1","baselineQ1Id");
+        List<BaselineQ1> q1List = (List<BaselineQ1>)connection.getAllValues("com.geepmd.entity.BaselineQ1","baselineQ1Id");
         Map<Integer,BaselineQ1> q1Map = q1List.stream().collect(Collectors.toMap(x -> x.getSurveyId(), x -> x));
-        List<BaselineQ2> q2List = (List<BaselineQ2>)connection.getAllValues(session,"com.geepmd.entity.BaselineQ2","baselineQ2Id");
+        List<BaselineQ2> q2List = (List<BaselineQ2>)connection.getAllValues("com.geepmd.entity.BaselineQ2","baselineQ2Id");
         Map<Integer,BaselineQ2> q2Map = q2List.stream().collect(Collectors.toMap(x -> x.getSurveyId(), x -> x));
-        List<BaselineQ3> q3List = (List<BaselineQ3>)connection.getAllValues(session,"com.geepmd.entity.BaselineQ3","baselineQ3Id");
+        List<BaselineQ3> q3List = (List<BaselineQ3>)connection.getAllValues("com.geepmd.entity.BaselineQ3","baselineQ3Id");
         Map<Integer,BaselineQ3> q3Map = q3List.stream().collect(Collectors.toMap(x -> x.getSurveyId(), x -> x));
-        List<BaselineQ4> q4List = (List<BaselineQ4>)connection.getAllValues(session,"com.geepmd.entity.BaselineQ4","baselineQ4Id");
+        List<BaselineQ4> q4List = (List<BaselineQ4>)connection.getAllValues("com.geepmd.entity.BaselineQ4","baselineQ4Id");
         Map<Integer,BaselineQ4> q4Map = q4List.stream().collect(Collectors.toMap(x -> x.getSurveyId(), x -> x));
-        List<BaselineQ5> q5List = (List<BaselineQ5>)connection.getAllValues(session,"com.geepmd.entity.BaselineQ5","baselineQ5Id");
+        List<BaselineQ5> q5List = (List<BaselineQ5>)connection.getAllValues("com.geepmd.entity.BaselineQ5","baselineQ5Id");
         Map<Integer,BaselineQ5> q5Map = q5List.stream().collect(Collectors.toMap(x -> x.getSurveyId(), x -> x));
-        List<BaselineQ6> q6List = (List<BaselineQ6>)connection.getAllValues(session,"com.geepmd.entity.BaselineQ6","baselineQ6Id");
+        List<BaselineQ6> q6List = (List<BaselineQ6>)connection.getAllValues("com.geepmd.entity.BaselineQ6","baselineQ6Id");
         Map<Integer,BaselineQ6> q6Map = q6List.stream().collect(Collectors.toMap(x -> x.getSurveyId(), x -> x));
-        List<BaselineQ7> q7List = (List<BaselineQ7>)connection.getAllValues(session,"com.geepmd.entity.BaselineQ7","baselineQ7Id");
+        List<BaselineQ7> q7List = (List<BaselineQ7>)connection.getAllValues("com.geepmd.entity.BaselineQ7","baselineQ7Id");
         Map<Integer, BaselineQ7> q7Map = q7List.stream().collect(Collectors.toMap(x -> x.getSurveyId(), x -> x));
-        List<BaselineQ8> q8List = (List<BaselineQ8>)connection.getAllValues(session,"com.geepmd.entity.BaselineQ8","baselineQ8Id");
+        List<BaselineQ8> q8List = (List<BaselineQ8>)connection.getAllValues("com.geepmd.entity.BaselineQ8","baselineQ8Id");
         Map<Integer, BaselineQ8> q8Map = q8List.stream().collect(Collectors.toMap(x -> x.getSurveyId(), x -> x));
-        List<BaselineQ9> q9List = (List<BaselineQ9>)connection.getAllValues(session,"com.geepmd.entity.BaselineQ9","baselineQ9Id");
+        List<BaselineQ9> q9List = (List<BaselineQ9>)connection.getAllValues("com.geepmd.entity.BaselineQ9","baselineQ9Id");
         Map<Integer, BaselineQ9> q9Map = q9List.stream().collect(Collectors.toMap(x -> x.getSurveyId(), x -> x));
-        List<BaselineQ10> q10List = (List<BaselineQ10>)connection.getAllValues(session,"com.geepmd.entity.BaselineQ10","baselineQ10Id");
+        List<BaselineQ10> q10List = (List<BaselineQ10>)connection.getAllValues("com.geepmd.entity.BaselineQ10","baselineQ10Id");
         Map<Integer,List<BaselineQ10>> q10Map = new HashMap<>();
         for(BaselineQ10 base : q10List){
             if(q10Map.containsKey(base.getSurveyId())){
@@ -107,12 +105,12 @@ public class DownloadExcel extends VerticalLayout implements View {
                 q10Map.put(base.getSurveyId(),list);
             }
         }
-        List<BaselineQ11> q11List = (List<BaselineQ11>)connection.getAllValues(session,"com.geepmd.entity.BaselineQ11","baselineQ11Id");
+        List<BaselineQ11> q11List = (List<BaselineQ11>)connection.getAllValues("com.geepmd.entity.BaselineQ11","baselineQ11Id");
         Map<Integer, BaselineQ11> q11Map = new HashMap<>();
         if(q11List != null){
             q11Map = q11List.stream().collect(Collectors.toMap(x -> x.getSurveyId(), x -> x));
         }
-        List<BaselineQ12> q12List = (List<BaselineQ12>)connection.getAllValues(session,"com.geepmd.entity.BaselineQ12","baselineQ12Id");
+        List<BaselineQ12> q12List = (List<BaselineQ12>)connection.getAllValues("com.geepmd.entity.BaselineQ12","baselineQ12Id");
         Map<Integer, BaselineQ12> q12Map = new HashMap<>();
         if(q12List != null){
             q12Map = q12List.stream().collect(Collectors.toMap(x -> x.getSurveyId(), x -> x));
@@ -120,10 +118,10 @@ public class DownloadExcel extends VerticalLayout implements View {
 
 
 
-        List<BaselineQ26> q26List = (List<BaselineQ26>)connection.getAllValues(session,"com.geepmd.entity.BaselineQ26","baselineQ26Id");
+        List<BaselineQ26> q26List = (List<BaselineQ26>)connection.getAllValues("com.geepmd.entity.BaselineQ26","baselineQ26Id");
         Map<Integer,BaselineQ26> q26Map = q26List.stream().collect(Collectors.toMap(x -> x.getSurveyId(), x -> x));
 
-        List<BaselineQ28> q28List = (List<BaselineQ28>)connection.getAllValues(session,"com.geepmd.entity.BaselineQ28","baselineQ28Id");
+        List<BaselineQ28> q28List = (List<BaselineQ28>)connection.getAllValues("com.geepmd.entity.BaselineQ28","baselineQ28Id");
         Map<Integer,List<BaselineQ28>> q28Map = new HashMap<>();
         for(BaselineQ28 base : q28List){
             if(q28Map.containsKey(base.getSurveyId())){
@@ -136,7 +134,7 @@ public class DownloadExcel extends VerticalLayout implements View {
             }
         }
 
-        List<BaselineQ32> q32List = (List<BaselineQ32>)connection.getAllValues(session,"com.geepmd.entity.BaselineQ32","baselineQ32Id");
+        List<BaselineQ32> q32List = (List<BaselineQ32>)connection.getAllValues("com.geepmd.entity.BaselineQ32","baselineQ32Id");
         Map<Integer,List<BaselineQ32>> q32Map = new HashMap<>();
         for(BaselineQ32 base : q32List){
             if(q32Map.containsKey(base.getSurveyId())){
@@ -148,7 +146,7 @@ public class DownloadExcel extends VerticalLayout implements View {
                 q32Map.put(base.getSurveyId(),list);
             }
         }
-        List<BaselineQ51> q51List = (List<BaselineQ51>)connection.getAllValues(session,"com.geepmd.entity.BaselineQ51","baselineQ51Id");
+        List<BaselineQ51> q51List = (List<BaselineQ51>)connection.getAllValues("com.geepmd.entity.BaselineQ51","baselineQ51Id");
         Map<Integer,List<BaselineQ51>> q51Map = new HashMap<>();
         for(BaselineQ51 base : q51List){
             if(q51Map.containsKey(base.getSurveyId())){
@@ -160,7 +158,7 @@ public class DownloadExcel extends VerticalLayout implements View {
                 q51Map.put(base.getSurveyId(),list);
             }
         }
-        List<BaselineQ62> q62List = (List<BaselineQ62>)connection.getAllValues(session,"com.geepmd.entity.BaselineQ62","baselineQ62Id");
+        List<BaselineQ62> q62List = (List<BaselineQ62>)connection.getAllValues("com.geepmd.entity.BaselineQ62","baselineQ62Id");
         Map<Integer,List<BaselineQ62>> q62Map = new HashMap<>();
         for(BaselineQ62 base : q62List){
             if(q62Map.containsKey(base.getSurveyId())){
@@ -173,7 +171,7 @@ public class DownloadExcel extends VerticalLayout implements View {
             }
         }
 
-        List<BaselineQ84> q84List = (List<BaselineQ84>)connection.getAllValues(session,"com.geepmd.entity.BaselineQ84","baselineQ84Id");
+        List<BaselineQ84> q84List = (List<BaselineQ84>)connection.getAllValues("com.geepmd.entity.BaselineQ84","baselineQ84Id");
         Map<Integer,List<BaselineQ84>> q84Map = new HashMap<>();
         for(BaselineQ84 base : q84List){
             if(q84Map.containsKey(base.getSurveyId())){
@@ -185,7 +183,6 @@ public class DownloadExcel extends VerticalLayout implements View {
                 q84Map.put(base.getSurveyId(),list);
             }
         }
-        connection.closeSession(session);
 
         int rowCount = 1;
         for(CommonDetails common : commonList){
@@ -347,7 +344,6 @@ public class DownloadExcel extends VerticalLayout implements View {
                 createObjCells(baselineQ84List.get(4),"getM",1,3,row);
                 createObjCells(baselineQ84List.get(5),"getM",1,3,row);
                 createObjCells(baselineQ84List.get(6),"getM",1,3,row);
-                createObjCells(baselineQ84List.get(7),"getM",1,3,row);
             }
             createObjCells(baselineQ8,"getM5",1,17,row);
 

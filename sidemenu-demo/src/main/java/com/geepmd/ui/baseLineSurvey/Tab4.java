@@ -203,18 +203,53 @@ public class Tab4 extends VerticalLayout {
         if(questionDBUniqueIdField.getValue() != null && !questionDBUniqueIdField.getValue().isEmpty()){
             answer.setBaselineQ4Id(Integer.parseInt(questionDBUniqueIdField.getValue()));
         }
-        if(pregnancyPlannedCombo.getValue() != null) answer.setM1(getId((Answer)pregnancyPlannedCombo.getValue()));
-        if(preConceptionCombo.getValue() != null) answer.setM2(getId((Answer)preConceptionCombo.getValue()));
-        if(screenCombo.getValue() != null) answer.setM3(getId((Answer)screenCombo.getValue()));
-        if(heartCheckCombo.getValue() != null) answer.setM4(getId((Answer)heartCheckCombo.getValue()));
-        if(lmpCombo.getValue() != null) answer.setM5(getId((Answer)lmpCombo.getValue()));
-        if(folicAcidMonthCombo.getValue() != null) answer.setM6(getId((Answer)folicAcidMonthCombo.getValue()));
+        if(pregnancyPlannedCombo.getValue() != null) {
+            answer.setM1(getId((Answer)pregnancyPlannedCombo.getValue()));
+            if(getId((Answer)pregnancyPlannedCombo.getValue()) == 1){
+                if(preConceptionCombo.getValue() != null) {
+                    answer.setM2(getId((Answer)preConceptionCombo.getValue()));
+                    if(getId((Answer)preConceptionCombo.getValue()) == 1){
+                        if(screenCombo.getValue() != null) answer.setM3(getId((Answer)screenCombo.getValue()));
+                        if(heartCheckCombo.getValue() != null) answer.setM4(getId((Answer)heartCheckCombo.getValue()));
+                    }
+                    else{
+                        answer.setM3(8888);
+                        answer.setM4(8888);
+                    }
+                }
+                if(lmpCombo.getValue() != null){
+                    answer.setM5(getId((Answer)lmpCombo.getValue()));
+                    if(getId((Answer)lmpCombo.getValue()) == 1){
+                        if(folicAcidMonthCombo.getValue() != null) answer.setM6(getId((Answer)folicAcidMonthCombo.getValue()));
+                    }
+                    else {
+                        answer.setM6(8888);
+                    }
+                }
+            }
+            else {
+                answer.setM2(8888);
+                answer.setM3(8888);
+                answer.setM4(8888);
+                answer.setM5(8888);
+                answer.setM6(8888);
+            }
+        }
+
         if(mensesDate.getValue() != null) answer.setM7(getDateStr(mensesDate.getValue()));
         if(pregConfirmCombo.getValue() != null) answer.setM8(getId((Answer)pregConfirmCombo.getValue()));
         if(deliveryPreferCombo.getValue() != null) answer.setM9(getId((Answer)deliveryPreferCombo.getValue()));
         if(delPlaceCombo.getValue() != null) answer.setM10(getId((Answer)delPlaceCombo.getValue()));
-        if(folicAcidNowCombo.getValue() != null) answer.setM11(getId((Answer)folicAcidNowCombo.getValue()));
-        if(folicWeekCombo.getValue() != null) answer.setM12(Integer.parseInt(folicWeekCombo.getValue().toString()));
+        if(folicAcidNowCombo.getValue() != null) {
+            answer.setM11(getId((Answer)folicAcidNowCombo.getValue()));
+            if(getId((Answer)folicAcidNowCombo.getValue()) == 1){
+                if(folicWeekCombo.getValue() != null) answer.setM12(Integer.parseInt(folicWeekCombo.getValue().toString()));
+            }
+            else {
+                answer.setM12(8888);
+            }
+        }
+
         return answer;
     }
 
@@ -227,15 +262,17 @@ public class Tab4 extends VerticalLayout {
     public void setEditData(BaselineQ4 answer){
         questionDBUniqueIdField.setValue(String.valueOf(answer.getBaselineQ4Id()));
         pregnancyPlannedCombo.setValue(getYesNoObject("SN",answer.getM1()));
-        preConceptionCombo.setValue(getAnswerObj(answer.getM3(),answerMap.get("4.2")));
-        screenCombo.setValue(getYesNoObject("SN",answer.getM2()));
+        preConceptionCombo.setValue(getAnswerObj(answer.getM2(),answerMap.get("4.2")));
+        screenCombo.setValue(getYesNoObject("SN",answer.getM3()));
         heartCheckCombo.setValue(getYesNoObject("SN",answer.getM4()));
         lmpCombo.setValue(getYesNoObject("SN",answer.getM5()));
         folicAcidMonthCombo.setValue(getAnswerObj(answer.getM6(),answerMap.get("4.6")));
-        Date mensesDateVal = getDateFromStr(answer.getM7());
-        if(mensesDateVal != null ) {
-            LocalDate motherBday = mensesDateVal.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
-            mensesDate.setValue(motherBday);
+        if(answer.getM7() != null && !answer.getM7().trim().isEmpty()) {
+            Date mensesDateVal = getDateFromStr(answer.getM7());
+            if (mensesDateVal != null) {
+                LocalDate motherBday = mensesDateVal.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
+                mensesDate.setValue(motherBday);
+            }
         }
         pregConfirmCombo.setValue(getAnswerObj(answer.getM8(),answerMap.get("4.8")));
         deliveryPreferCombo.setValue(getAnswerObj(answer.getM9(),answerMap.get("4.9")));

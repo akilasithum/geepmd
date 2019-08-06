@@ -25,6 +25,7 @@ public class Tab10 extends VerticalLayout {
     String language;
     VerticalLayout questionLayout;
     Survey survey;
+    TextField questionDBUniqueIdField;
 
     public Tab10(String language,Survey survey){
         this.language = language;
@@ -45,6 +46,9 @@ public class Tab10 extends VerticalLayout {
     }
 
     private void createLayout(){
+        questionDBUniqueIdField = new TextField();
+        questionDBUniqueIdField.setVisible(false);
+        addComponent(questionDBUniqueIdField);
         Label q1Label = new Label(q10Map.get("10.1"));
         q1Label.setSizeFull();
         addComponents(q1Label);
@@ -194,6 +198,11 @@ public class Tab10 extends VerticalLayout {
                    if(!start.isEmpty() ) answer.setM4(start);
                    if(!end.isEmpty()) answer.setM5(end);
                }
+               else{
+                   answer.setM3(8888);
+                   answer.setM4("8888");
+                   answer.setM5("8888");
+               }
             }
             answerList.add(answer);
         }
@@ -213,18 +222,31 @@ public class Tab10 extends VerticalLayout {
                 BaselineQ10 baselineQ62 = map.get(i);
                 if(baselineQ62.getM2() != 0){
                     yesNoCombo.setValue(getYesNoObject("SN",baselineQ62.getM2()));
-                    if(baselineQ62.getM1() == 1){
+                    if(baselineQ62.getM2() == 1){
                         currentCombo.setValue(getAnswerObj(baselineQ62.getM3(),answerMap.get("9.1")));
                         HorizontalLayout startLayout = (HorizontalLayout) dependentLayout.getComponent(1);
                         HorizontalLayout stopLayout = (HorizontalLayout) dependentLayout.getComponent(2);
+                        String startStr = baselineQ62.getM4();
+                        String stopStr = baselineQ62.getM5();
 
                         ComboBox startYearCombo = (ComboBox) startLayout.getComponent(0);
                         ComboBox startMonthCombo = (ComboBox) startLayout.getComponent(1);
-
-                        ComboBox stopYearCombo = (ComboBox) startLayout.getComponent(0);
-                        ComboBox stopMonthCombo = (ComboBox) startLayout.getComponent(1);
-
-
+                        if(startStr != null && !startStr.isEmpty()){
+                            String[] arr = startStr.split(" ");
+                            if(arr.length == 2){
+                                startYearCombo.setValue(arr[0]);
+                                startMonthCombo.setValue(getIndexFromMonth(arr[1]));
+                            }
+                        }
+                        ComboBox stopYearCombo = (ComboBox) stopLayout.getComponent(0);
+                        ComboBox stopMonthCombo = (ComboBox) stopLayout.getComponent(1);
+                        if(stopStr != null && !stopStr.isEmpty()){
+                            String[] arr = stopStr.split(" ");
+                            if(arr.length == 2){
+                                stopYearCombo.setValue(arr[0]);
+                                stopMonthCombo.setValue(getIndexFromMonth(arr[1]));
+                            }
+                        }
                     }
                 }
         }
@@ -236,5 +258,9 @@ public class Tab10 extends VerticalLayout {
 
     private String getMothFromIndex(int id){
         return Month.of(id).name();
+    }
+
+    private int getIndexFromMonth(String month){
+        return Month.valueOf(month.toUpperCase()).getValue();
     }
 }

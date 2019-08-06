@@ -60,7 +60,7 @@ public class SurveyUtils {
     }
 
     public static Answer getYesNoObject(String language,int option){
-        if(option != 0) {
+        if(option != 0 && option != 8888) {
             Answer answer = new Answer();
             if (language.equals("EN")) {
                 if (option == 1) {
@@ -129,7 +129,7 @@ public class SurveyUtils {
     }
 
     public static Answer getAnswerObj(int answer,List<String> qList){
-        if(answer != 0) {
+        if(answer != 0 && answer != 8888) {
             try {
                 Answer answerObj = new Answer();
                 answerObj.setId(answer);
@@ -144,14 +144,17 @@ public class SurveyUtils {
 
     public static Set<Answer> getAnswerSetFromString(String str,List<String> answers){
         Set<Answer> anserSet = new HashSet<>();
-        if(str != null && !str.isEmpty()) {
+        if(str != null && !str.isEmpty() && !str.trim().equals("")) {
 
             String[] arr = str.split(",");
             for(String answer : Arrays.asList(arr)){
                 Answer answer1 = new Answer();
                 int id = Integer.parseInt(answer);
-                answer1.setId(id);
-                answer1.setDescription(answers.get(id+1));
+                if(id != 0) {
+                    answer1.setId(id);
+                    answer1.setDescription(answers.get(id - 1));
+                    anserSet.add(answer1);
+                }
             }
             return anserSet;
         }

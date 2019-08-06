@@ -2,20 +2,15 @@ package com.geepmd.ui;
 
 import com.geepmd.dbConnection.DBConnection;
 import com.geepmd.entity.MotherDetails;
-import com.geepmd.utils.EnglishMap;
 import com.geepmd.utils.SinhalaMap;
-import com.geepmd.utils.SurveyUtils;
-import com.vaadin.event.dd.acceptcriteria.Not;
 import com.vaadin.navigator.View;
 import com.vaadin.navigator.ViewChangeListener;
 import com.vaadin.shared.ui.MarginInfo;
 import com.vaadin.ui.*;
-import com.vaadin.ui.themes.ValoTheme;
 import org.hibernate.Session;
 
 import java.time.LocalDate;
 import java.time.ZoneId;
-import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
@@ -58,7 +53,7 @@ public class MotherRegistration extends VerticalLayout implements View {
             questionMap = SinhalaMap.getMotherData();
         }
         motherDetailsGrid = new Grid<>();
-        connection = DBConnection.getInstance();
+        connection = (DBConnection) UI.getCurrent().getSession().getAttribute("dbConnection");
         createMainLayout();
     }
 
@@ -68,9 +63,6 @@ public class MotherRegistration extends VerticalLayout implements View {
         header.addStyleName("surveyHeader");
         MarginInfo rightMargin = new MarginInfo(false,true,false,false);;
         addComponent(header);
-
-        DBConnection connection = DBConnection.getInstance();
-        connection.isLoginSuccessful("","");
 
         FormLayout formLayout1 = new FormLayout();
         FormLayout formLayout2 = new FormLayout();
@@ -140,9 +132,7 @@ public class MotherRegistration extends VerticalLayout implements View {
                 mother.setPhmDivision(medicalArea.getValue());
                 mother.setGnDivision(villageArea.getValue());
                 mother.setAntenatalClinic(antenatalClinicFld.getValue());
-                Session session = connection.getSession();
-                int motherId = connection.insertObjectHBM(mother,session);
-                connection.closeSession(session);
+                int motherId = connection.saveObjectHBM(mother);
                 if (motherId != 0) {
                     Notification.show("Mother's serial number is " + motherName);
                     mother.setMotherRegNo(motherId);

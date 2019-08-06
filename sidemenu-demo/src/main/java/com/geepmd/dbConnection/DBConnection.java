@@ -7,49 +7,59 @@ import org.hibernate.Criteria;
 import org.hibernate.Session;
 import org.hibernate.criterion.Order;
 import org.hibernate.criterion.Restrictions;
+import sun.security.pkcs11.Secmod;
 
 import java.util.List;
 
 public class DBConnection {
 
-    private static final DBConnection dbConnection = new DBConnection();
     Session session;
 
-    public static DBConnection getInstance(){
-        return dbConnection;
+    public DBConnection(){
+        session = getSession();
     }
 
+
     public boolean isLoginSuccessful(String userName,String password){
-        Session session = HibernateUtil.getSessionFactory().openSession();
+        Session session = getSession();
         try
         {
             Criteria criteria = session.createCriteria(User.class);
             criteria.add(Restrictions.eq("userName", userName));
             criteria.add(Restrictions.eq("password", password));
             List retList =  criteria.list();
-            session.close();
             return retList != null && !retList.isEmpty();
         } catch (Exception e) {
-            session.close();
+            return false;
+        }
+    }
+
+    public boolean isUserNameExists(String userName) {
+        try
+        {
+            Session session = getSession();
+            Criteria criteria = session.createCriteria(User.class);
+            criteria.add(Restrictions.eq("userName", userName));
+            List retList =  criteria.list();
+            return retList != null && !retList.isEmpty();
+        } catch (Exception e) {
             return false;
         }
     }
 
     public List<MotherDetails> getMotherDetails(){
-        Session session = HibernateUtil.getSessionFactory().openSession();
         try
         {
+            Session session = getSession();
             Criteria criteria = session.createCriteria(MotherDetails.class);
             List retList =  criteria.list();
-            session.close();
             return retList;
         } catch (Exception e) {
-            session.close();
             return null;
         }
     }
 
-    public Session getSession(){
+    private Session getSession(){
         if(session == null || !session.isConnected()){
             session = HibernateUtil.getSessionFactory().openSession();
             return session;
@@ -59,14 +69,14 @@ public class DBConnection {
         }
     }
 
-    public void closeSession(Session session){
+    public void closeSession(){
         if(session != null && session.isConnected()){
-            session.close();
+            session.disconnect();
         }
     }
 
     public int insertUser(User details){
-        Session session = HibernateUtil.getSessionFactory().openSession();
+        Session session = getSession();
         session.beginTransaction();
         int id = (Integer)session.save(details);
         session.getTransaction().commit();
@@ -74,37 +84,51 @@ public class DBConnection {
         return id;
     }
 
-    public int insertObjectHBM(Object details,Session session){
+    public void saveOrUpdateHBM(Object details){
+        Session session = getSession();
+        session.beginTransaction();
+        session.saveOrUpdate(details);
+        session.getTransaction().commit();
+    }
+
+    public int saveObjectHBM(Object details){
+        Session session = getSession();
         session.beginTransaction();
         int id = (Integer)session.save(details);
         session.getTransaction().commit();
         return id;
     }
 
-    public void updateObjectHBM(Object details){
-        Session session = HibernateUtil.getSessionFactory().openSession();
-        session.beginTransaction();
-        session.update(details);
-        session.getTransaction().commit();
-        session.close();
+    public void deleteBySurveyId(String className,int surveyId){
+        Session session = getSession();
+        try
+        {
+            Criteria criteria = session.createCriteria(Class.forName(className));
+            criteria.add(Restrictions.eq("surveyId", surveyId));
+            List list = criteria.list();
+            for(Object obj : list){
+                session.delete(obj);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     public User getUser(String userName) {
-        Session session = HibernateUtil.getSessionFactory().openSession();
+        Session session = getSession();
         try
         {
             Criteria criteria = session.createCriteria(User.class);
             criteria.add(Restrictions.eq("userName", userName));
             List retList =  criteria.list();
-            session.close();
             return (User) retList.get(0);
         } catch (Exception e) {
-            session.close();
             return null;
         }
     }
 
-    public List<?> getAllValues(Session session,String className,String order){
+    public List<?> getAllValues(String className,String order){
+        Session session = getSession();
         try
         {
             Criteria criteria = session.createCriteria(Class.forName(className));
@@ -116,7 +140,8 @@ public class DBConnection {
         }
     }
 
-    public List<?> getAllValues(String className,int surveyId,Session session){
+    public List<?> getAllValues(String className,int surveyId){
+        Session session = getSession();
         try
         {
             Criteria criteria = session.createCriteria(Class.forName(className));
@@ -124,12 +149,12 @@ public class DBConnection {
             List list = criteria.list();
             return list;
         } catch (Exception e) {
-            session.close();
             return null;
         }
     }
 
-    public Object getPageValue(String className,int surveyId,Session session){
+    public Object getPageValue(String className,int surveyId){
+        Session session = getSession();
         try
         {
             Criteria criteria = session.createCriteria(Class.forName(className));
@@ -138,7 +163,6 @@ public class DBConnection {
             if(list != null && !list.isEmpty()) return list.get(0);
             else return null;
         } catch (Exception e) {
-            session.close();
             return null;
         }
     }

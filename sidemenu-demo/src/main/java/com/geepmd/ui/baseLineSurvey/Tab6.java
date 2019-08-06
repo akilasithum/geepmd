@@ -189,7 +189,7 @@ public class Tab6 extends VerticalLayout {
 
         thalassemiaYesCombo = new ComboBox();
         thalassemiaYesCombo.setSizeFull();
-        thalassemiaYesCombo.setItems(answerMap.get("6.9"));
+        thalassemiaYesCombo.setItems(getAnwerObj(answerMap.get("6.9")));
         thalassemiaYesCombo.setDescription(getAnswerDesc(answerMap.get("6.9")));
         thalassemiaYesCombo.setTextInputAllowed(false);
         thalDependLayout.addComponent(setTabData(q6Map.get("6.9"),thalassemiaYesCombo));
@@ -341,26 +341,42 @@ public class Tab6 extends VerticalLayout {
             }
         }
 
-        if(q63Combo.getValue() != null) answer.setM3(getId((Answer)q63Combo.getValue()));
-        if(anemiaCombo.getValue() != null && anemiaCombo.getValue().size() != 0){
-            String val="";
-            for(Answer answer1 : anemiaCombo.getValue()){
-                val += answer1.getId()+",";
+        if(q63Combo.getValue() != null) {
+            answer.setM3(getId((Answer)q63Combo.getValue()));
+            if(getId((Answer)q63Combo.getValue()) == 1){
+                if(anemiaCombo.getValue() != null && anemiaCombo.getValue().size() != 0){
+                    String val="";
+                    for(Answer answer1 : anemiaCombo.getValue()){
+                        val += answer1.getId()+",";
+                    }
+                    answer.setM4(val.substring(0,val.length()-1));
+                }
+                if(monthsCombo65.getValue() != null) answer.setM3(Integer.parseInt(monthsCombo65.getValue().toString()));
+                if(yearCombo.getValue() != null || monthCombo.getValue() != null){
+                    answer.setM6((yearCombo.getValue() != null ? yearCombo.getValue() : 0) + "years "
+                            +(monthCombo.getValue()!= null ? monthCombo.getValue() : 0) +"months");
+                }
+                if(investigationCombo.getValue() != null) answer.setM7(getId((Answer)investigationCombo.getValue()));
             }
-            answer.setM4(val.substring(0,val.length()-1));
+            else{
+                answer.setM4("8888");
+                answer.setM5(8888);
+                answer.setM6("8888");
+                answer.setM7(8888);
+            }
         }
-        if(monthsCombo65.getValue() != null) answer.setM3(Integer.parseInt(monthsCombo65.getValue().toString()));
-        if(yearCombo.getValue() != null || monthCombo.getValue() != null){
-            answer.setM6((yearCombo.getValue() != null ? yearCombo.getValue() : 0) + "years "
-                    +(monthCombo.getValue()!= null ? monthCombo.getValue() : 0) +"months");
+        if(thalassemiaCombo.getValue() != null) {
+            answer.setM8(getId((Answer)thalassemiaCombo.getValue()));
+            if(getId((Answer)thalassemiaCombo.getValue()) == 1){
+                if(thalassemiaYesCombo.getValue() != null) answer.setM9(getId((Answer)thalassemiaYesCombo.getValue()));
+            }
+            else{
+                answer.setM9(8888);
+            }
         }
-        if(investigationCombo.getValue() != null) answer.setM7(getId((Answer)investigationCombo.getValue()));
-        if(thalassemiaCombo.getValue() != null) answer.setM8(getId((Answer)thalassemiaCombo.getValue()));
-        if(thalassemiaYesCombo.getValue() != null) answer.setM9(getId((Answer)thalassemiaYesCombo.getValue()));
         if(bleedingCombo.getValue() != null) answer.setM10(getId((Answer)bleedingCombo.getValue()));
         if(blackCombo.getValue() != null) answer.setM11(getId((Answer)blackCombo.getValue()));
         if(wormCombo.getValue() != null) answer.setM12(getId((Answer)wormCombo.getValue()));
-
         return answer;
     }
 
@@ -379,12 +395,21 @@ public class Tab6 extends VerticalLayout {
             BaselineQ62 answer = new BaselineQ62();
             answer.setSurveyId(motherId);
             answer.setQuestion(label.substring(0,1));
-            if(fCombo.getValue() != null) answer.setM1(getId((Answer)fCombo.getValue()));
-            if(writtenCombo.getValue() != null) answer.setM2(getId((Answer)writtenCombo.getValue()));
-            if(yearCombo.getValue() != null) answer.setM3(Integer.parseInt(yearCombo.getValue().toString()));
-            if(medicalCombo.getValue() != null) answer.setM4(getId((Answer)medicalCombo.getValue()));
-            if(sectorCombo.getValue() != null) answer.setM5(getId((Answer)sectorCombo.getValue()));
-
+            if(fCombo.getValue() != null) {
+                answer.setM1(getId((Answer)fCombo.getValue()));
+                if(getId((Answer)fCombo.getValue()) == 1){
+                    if(writtenCombo.getValue() != null) answer.setM2(getId((Answer)writtenCombo.getValue()));
+                    if(yearCombo.getValue() != null) answer.setM3(Integer.parseInt(yearCombo.getValue().toString()));
+                    if(medicalCombo.getValue() != null) answer.setM4(getId((Answer)medicalCombo.getValue()));
+                    if(sectorCombo.getValue() != null) answer.setM5(getId((Answer)sectorCombo.getValue()));
+                }
+                else{
+                    answer.setM2(8888);
+                    answer.setM3(8888);
+                    answer.setM4(8888);
+                    answer.setM5(8888);
+                }
+            }
             list.add(answer);
         }
         return list;

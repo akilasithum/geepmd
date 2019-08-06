@@ -2,6 +2,7 @@ package org.vaadin.teemusa.sidemenu.demo;
 
 import javax.servlet.annotation.WebServlet;
 
+import com.geepmd.dbConnection.DBConnection;
 import com.geepmd.ui.*;
 import com.vaadin.server.*;
 import org.vaadin.dialogs.ConfirmDialog;
@@ -26,7 +27,7 @@ import com.vaadin.ui.VerticalLayout;
 @Theme("demo")
 @Title("GEEPMD - RAPCO")
 @Viewport("user-scalable=no,initial-scale=1.0")
-public class DemoUI extends UI {
+public class DemoUI extends UI implements SessionDestroyListener{
 
 	private String previousPage;
 
@@ -51,6 +52,7 @@ public class DemoUI extends UI {
 		navigator.addView("BaselineSurvey", Survey.class);
 		navigator.addView("Login", LoginPage.class);
 		navigator.addView("DownloadExcel", DownloadExcel.class);
+		navigator.addView("EditProfile",EditProfile.class);
 
 		navigator.navigateTo("Login");
 		sideMenu.showHideMenu(false);
@@ -74,14 +76,18 @@ public class DemoUI extends UI {
 		});
 
 		sideMenu.addMenuItem("Edit Profile", VaadinIcons.USER_CARD, () -> {
-			VerticalLayout content = new VerticalLayout();
-			content.addComponent(new Label("Another layout"));
-			sideMenu.setContent(content);
+			navigator.navigateTo("EditProfile");
 		});
 
 		sideMenu.addMenuItem("Sign Out", VaadinIcons.SIGN_OUT, () -> {
 			logoutUser();
 		});
+	}
+
+	@Override
+	public void sessionDestroy(SessionDestroyEvent event) {
+		DBConnection connection = (DBConnection) UI.getCurrent().getSession().getAttribute("dbConnection");
+		connection.closeSession();
 	}
 
 
@@ -101,6 +107,8 @@ public class DemoUI extends UI {
 					public void onClose(ConfirmDialog dialog) {
 						if (dialog.isConfirmed()) {
 							getSession().setAttribute("userName","");
+							DBConnection connection = (DBConnection) UI.getCurrent().getSession().getAttribute("dbConnection");
+							connection.closeSession();
 							getUI().getNavigator().navigateTo("Login");
 							hideMenu();
 						}

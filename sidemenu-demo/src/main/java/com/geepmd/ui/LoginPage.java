@@ -22,7 +22,7 @@ public class LoginPage extends VerticalLayout implements View {
     public static final MarginInfo leftMargin = new MarginInfo(false,false,false,true);
 
     public LoginPage(){
-        connection = DBConnection.getInstance();
+        connection = new DBConnection();
         VerticalLayout mainLayout = new VerticalLayout();
         setStyleName("bgimg");
         setSizeFull();
@@ -65,7 +65,8 @@ public class LoginPage extends VerticalLayout implements View {
                         && password.getValue() != null && !password.getValue().isEmpty()) {
                      if(connection.isLoginSuccessful(username.getValue(), password.getValue())){
                          User user = connection.getUser(username.getValue());
-                    UI.getCurrent().getSession().setAttribute("userName", user);
+                         UI.getCurrent().getSession().setAttribute("userName", user);
+                         UI.getCurrent().getSession().setAttribute("dbConnection",connection);
                     ((DemoUI) getUI()).navigateToDashboard();
                      }else{
                           Notification.show("Invalid credentials", Notification.Type.ERROR_MESSAGE);
@@ -82,9 +83,13 @@ public class LoginPage extends VerticalLayout implements View {
         signUpBtn.addClickListener(clickEvent -> {showSignUpContent();});
         HorizontalLayout forgotBtnLayout = new HorizontalLayout();
         forgotBtnLayout.setSizeFull();
-        Link link = new Link("Forgot password?",
-                null);
+
+        Button link = new Button("Reset Password");
+        link.setStyleName("myButton");
         forgotBtnLayout.addComponents(link,signUpBtn);
+        link.addClickListener(event -> {
+            Notification.show("Please contact administrator");
+        });
         content.addComponents(send,forgotBtnLayout);
         content.setSizeFull();
         content.setWidth("80%");
@@ -131,6 +136,11 @@ public class LoginPage extends VerticalLayout implements View {
             if(userNameVal != null && !userNameVal.isEmpty() && designationVal != null && !designationVal.isEmpty() &&
             fullNameVal != null && !fullNameVal.isEmpty() && passwordVal != null && !passwordVal.isEmpty() &&
             reEnterPasswordVal != null && !reEnterPasswordVal.isEmpty()){
+                if(connection.isUserNameExists(userNameVal)){
+                    Notification.show("Username already exists. Please choose another username", Notification.Type.WARNING_MESSAGE);
+                    userName.focus();
+                    return;
+                }
                 if(passwordVal.equals(reEnterPasswordVal)){
                     User user = new User();
                     user.setUserName(userNameVal);

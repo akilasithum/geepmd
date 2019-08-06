@@ -11,11 +11,13 @@ import com.vaadin.shared.ui.MarginInfo;
 import com.vaadin.ui.*;
 
 import java.beans.PropertyDescriptor;
+import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
 import static com.geepmd.utils.SurveyUtils.getYesNoAnswer;
+import static com.geepmd.utils.SurveyUtils.getYesNoObject;
 
 public class Tab11 extends VerticalLayout {
 
@@ -31,6 +33,7 @@ public class Tab11 extends VerticalLayout {
     TextField leftOption1Label;
     TextField rightOption2Label;
     TextField leftOption2Label;
+    TextField questionDBUniqueIdField;
 
     public Tab11(String language, Survey survey){
         this.language = language;
@@ -50,7 +53,9 @@ public class Tab11 extends VerticalLayout {
     }
 
     private void createLayout(){
-
+        questionDBUniqueIdField = new TextField();
+        questionDBUniqueIdField.setVisible(false);
+        addComponent(questionDBUniqueIdField);
         Label examinationHeader = new Label(q11Map.get("11.1"));
         addComponent(examinationHeader);
         examinationHeader.setStyleName("padHeader");
@@ -193,6 +198,9 @@ public class Tab11 extends VerticalLayout {
 
     public BaselineQ11 getAnswerQ11(int surveyId) {
         BaselineQ11 answer = new BaselineQ11();
+        if(questionDBUniqueIdField.getValue() != null && !questionDBUniqueIdField.getValue().isEmpty()){
+            answer.setBaselineQ11Id(Integer.parseInt(questionDBUniqueIdField.getValue()));
+        }
         answer.setSurveyId(surveyId);
         for(int i = 0 ;i<q1Layout.getComponentCount();i++){
             HorizontalLayout layout = (HorizontalLayout) q1Layout.getComponent(i);
@@ -251,6 +259,62 @@ public class Tab11 extends VerticalLayout {
         return answer;
     }
 
+    public void setEditData(BaselineQ11 answer) {
+        questionDBUniqueIdField.setValue(String.valueOf(answer.getBaselineQ11Id()));
+        for(int i = 0 ;i<q1Layout.getComponentCount();i++){
+            HorizontalLayout layout = (HorizontalLayout) q1Layout.getComponent(i);
+            ComboBox comboBox = (ComboBox) layout.getComponent(1);
+            String prefix = (i+1)+"";
+
+            comboBox.setValue(getYesNoObject("SN", callGetter(answer, "m1"+prefix)));
+        }
+        for(int i = 0 ;i<7 ;i++){
+            HorizontalLayout layout = (HorizontalLayout) q2Layout.getComponent(i);
+            String prefix = (i+1)+"";
+            if(i != 5){
+                ComboBox comboBox = (ComboBox) layout.getComponent(1);
+                comboBox.setValue(getYesNoObject("SN", callGetter(answer, "m2"+prefix)));
+            }
+            else{
+                TextField textField = (TextField) layout.getComponent(1);
+                textField.setValue( String.valueOf(callGetter(answer, "m1"+prefix)));
+            }
+        }
+        leftOption1Label.setValue(answer.getM2821());
+        leftOption2Label.setValue(answer.getM2822());
+        rightOption1Label.setValue(answer.getM2811());
+        rightOption2Label.setValue(answer.getM2812());
+
+        for(int i = 0 ;i<8 ;i++) {
+            if (i != 3) {
+                HorizontalLayout layout = (HorizontalLayout) q3Layout.getComponent(i);
+
+                if (i == 0 || i == 1 || i == 2) {
+                    String prefix = (i + 1) + "";
+                    ComboBox comboBox = (ComboBox) layout.getComponent(1);
+
+                    comboBox.setValue(getYesNoObject("SN", callGetter(answer, "m3"+prefix)));
+                } else if(i == 4 || i == 5) {
+                    String prefix = i + "";
+                    TextField textField = (TextField) layout.getComponent(1);
+                    textField.setValue( String.valueOf(callGetter(answer, "m3"+prefix)));
+                }
+                else{
+                    TextField option1 = (TextField) layout.getComponent(1);
+                    TextField option2 = (TextField) layout.getComponent(2);
+                    if(i == 6){
+                        option1.setValue(answer.getM361());
+                        option2.setValue(answer.getM362());
+                    }
+                    if(i == 7){
+                        option1.setValue(answer.getM371());
+                        option2.setValue(answer.getM372());
+                    }
+                }
+            }
+        }
+    }
+
     private void callSetter(Object obj, String fieldName, Object value){
         PropertyDescriptor pd;
         try {
@@ -258,6 +322,18 @@ public class Tab11 extends VerticalLayout {
             pd.getWriteMethod().invoke(obj, value);
         } catch (Exception e) {
             e.printStackTrace();
+        }
+    }
+
+    private int callGetter(Object obj, String fieldName){
+        PropertyDescriptor pd;
+        try {
+            pd = new PropertyDescriptor(fieldName, obj.getClass());
+            Method getter = pd.getReadMethod();
+            return Integer.parseInt(getter.invoke(obj).toString());
+
+        } catch (Exception e) {
+            return 0;
         }
     }
 

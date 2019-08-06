@@ -1,5 +1,6 @@
 package com.geepmd.ui.baseLineSurvey;
 
+import com.geepmd.entity.BaselineQ1;
 import com.geepmd.entity.BaselineQ7;
 import com.geepmd.ui.Survey;
 import com.geepmd.utils.Answer;
@@ -12,6 +13,7 @@ import java.util.List;
 import java.util.Map;
 
 import static com.geepmd.utils.SurveyUtils.getYesNoAnswer;
+import static com.geepmd.utils.SurveyUtils.getYesNoObject;
 
 public class Tab7 extends VerticalLayout {
 
@@ -21,6 +23,7 @@ public class Tab7 extends VerticalLayout {
     String language;
     VerticalLayout questionLayout;
     Survey survey;
+    TextField questionDBUniqueIdField;
 
     public Tab7(String language, Survey survey){
         this.language = language;
@@ -41,6 +44,9 @@ public class Tab7 extends VerticalLayout {
     }
 
     private void createLayout(){
+        questionDBUniqueIdField = new TextField();
+        questionDBUniqueIdField.setVisible(false);
+        addComponent(questionDBUniqueIdField);
         Label q1Header = new Label(q7Map.get("7.1"));
         q1Header.setSizeFull();
         addComponent(q1Header);
@@ -86,6 +92,9 @@ public class Tab7 extends VerticalLayout {
     public BaselineQ7 getAnswers(int motherId) {
 
         BaselineQ7 answer = new BaselineQ7();
+        if(questionDBUniqueIdField.getValue() != null && !questionDBUniqueIdField.getValue().isEmpty()){
+            answer.setBaselineQ7Id(Integer.parseInt(questionDBUniqueIdField.getValue()));
+        }
         answer.setSurveyId(motherId);
         for(int i = 0;i< questionLayout.getComponentCount();i++){
 
@@ -106,4 +115,23 @@ public class Tab7 extends VerticalLayout {
 
         return answer;
     }
+
+    public void setEditData(BaselineQ7 answer){
+        questionDBUniqueIdField.setValue(String.valueOf(answer.getBaselineQ7Id()));
+        for(int i = 0;i< questionLayout.getComponentCount();i++){
+            HorizontalLayout layout = (HorizontalLayout)questionLayout.getComponent(i);
+            ComboBox yesNoCombo = (ComboBox) layout.getComponent(1);
+            if(i == 0 && answer.getM81a() != 0) yesNoCombo.setValue(getYesNoObject("SN",answer.getM81a()));
+            if(i == 1 && answer.getM81b() != 0) yesNoCombo.setValue(getYesNoObject("SN",answer.getM81b()));
+            if(i == 2 && answer.getM81c() != 0) yesNoCombo.setValue(getYesNoObject("SN",answer.getM81c()));
+            if(i == 3 && answer.getM81d() != 0) yesNoCombo.setValue(getYesNoObject("SN",answer.getM81d()));
+            if(i == 4 && answer.getM81e() != 0) yesNoCombo.setValue(getYesNoObject("SN",answer.getM81e()));
+            if(i == 5 && answer.getM81f() != 0) yesNoCombo.setValue(getYesNoObject("SN",answer.getM81f()));
+            if(i == 6 && answer.getM81g() != 0) yesNoCombo.setValue(getYesNoObject("SN",answer.getM81g()));
+            if(i == 7 && answer.getM81h() != 0) yesNoCombo.setValue(getYesNoObject("SN",answer.getM81h()));
+            if(i == 8 && answer.getM81i() != 0) yesNoCombo.setValue(getYesNoObject("SN",answer.getM81i()));
+        }
+    }
+
+
 }

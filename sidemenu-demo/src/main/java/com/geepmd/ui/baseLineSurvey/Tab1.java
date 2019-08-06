@@ -152,7 +152,7 @@ public class Tab1 extends VerticalLayout {
         sexualEduFather = new ComboBox();
         sexualEduLMother.setItems(yesNoList);
         sexualEduFather.setItems(yesNoList);
-        setTabData(languangeMap.get("1.7"),sexualEduLMother,sexualEduFather);
+        setTabData(languangeMap.get("1.7"),sexualEduLMother,null);
         sexualEduLMother.setTextInputAllowed(false);
         sexualEduFather.setTextInputAllowed(false);
 
@@ -254,27 +254,43 @@ public class Tab1 extends VerticalLayout {
                 atStartOfDay(ZoneId.systemDefault()).toInstant()));
         if(ethnicityComboBoxMother.getValue() != null) answer.setM2(((Answer) ethnicityComboBoxMother.getValue()).getId());
         if(ethnicityComboBoxFather.getValue() != null) answer.setF2(((Answer) ethnicityComboBoxFather.getValue()).getId());
+
         if(understandingLevelComboMother.getValue() != null) answer.setM3(((Answer) understandingLevelComboMother.getValue()).getId());
+        else if(!understandingLevelComboMother.isEnabled())answer.setM3(8888);
+
         if(understandingLevelComboFather.getValue() != null) answer.setF3(((Answer) understandingLevelComboFather.getValue()).getId());
+        else if(!understandingLevelComboFather.isEnabled())answer.setM3(8888);
+
         if(religionMotherCombo.getValue() != null) answer.setM4(((Answer) religionMotherCombo.getValue()).getId());
         if(religionFatherCombo.getValue() != null) answer.setF4(((Answer) religionFatherCombo.getValue()).getId());
         if(schoolGradeMother.getValue() != null) answer.setM5(Integer.parseInt(schoolGradeMother.getValue().toString()));
         if(schoolGradeFather.getValue() != null) answer.setF5(Integer.parseInt(schoolGradeFather.getValue().toString()));
         if(afterALMother.getValue() != null) answer.setM6(((Answer) afterALMother.getValue()).getId());
         if(sexualEduLMother.getValue() != null) answer.setM7(((Answer) sexualEduLMother.getValue()).getId());
-        if(maritualStatusCombo.getValue() != null) answer.setM8(((Answer) maritualStatusCombo.getValue()).getId());
-        String marriedYear = marriedYearCombo.getValue() != null ? String.valueOf(marriedYearCombo.getValue()) : "0";
-        String marriedMonth = marriedMonthCombo.getValue() != null ? String.valueOf(marriedMonthCombo.getValue()) : "0";
-        if(schoolGradeMother.getValue() != null) answer.setM9(marriedYear +"yrs " + marriedMonth+"months");
+        if(maritualStatusCombo.getValue() != null) {
+            answer.setM8(((Answer) maritualStatusCombo.getValue()).getId());
+            if(((Answer) maritualStatusCombo.getValue()).getId() == 1){
+                String marriedYear = marriedYearCombo.getValue() != null ? String.valueOf(marriedYearCombo.getValue()) : "0";
+                String marriedMonth = marriedMonthCombo.getValue() != null ? String.valueOf(marriedMonthCombo.getValue()) : "0";
+                answer.setM9(marriedYear +"yrs " + marriedMonth+"months");
+            }
+            else{
+                answer.setM9("8888");
+            }
+        }
         return answer;
     }
 
     public void setEditData(BaselineQ1 answer){
         questionDBUniqueIdField.setValue(String.valueOf(answer.getBaselineQ1Id()));
-        LocalDate motherBday = answer.getM1().toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
-        motherBDayFld.setValue(motherBday);
-        LocalDate fatherBday = answer.getF1().toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
-        fatherBDayFld.setValue(fatherBday);
+        if(answer.getM1() != null) {
+            LocalDate motherBday = answer.getM1().toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
+            motherBDayFld.setValue(motherBday);
+        }
+        if(answer.getF1() != null) {
+            LocalDate fatherBday = answer.getF1().toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
+            fatherBDayFld.setValue(fatherBday);
+        }
         ethnicityComboBoxMother.setValue(getAnswerObj("1.2",answer.getM2()));
         ethnicityComboBoxFather.setValue(getAnswerObj("1.2",answer.getF2()));
         understandingLevelComboMother.setValue(getAnswerObj("1.3",answer.getM3()));
@@ -289,13 +305,15 @@ public class Tab1 extends VerticalLayout {
         String marriageYear = answer.getM9();
         if(marriageYear != null && !marriageYear.isEmpty()){
             String[] arr = marriageYear.split(" ");
-            if(arr[0] != "0yrs") marriedYearCombo.setValue(arr[0].substring(0,arr[0].length()-3));
-            if(arr[1] != "0months") marriedMonthCombo.setValue(arr[1].substring(0,arr[1].length()-6));
+            if(arr != null && arr.length == 2) {
+                if (arr[0] != "0yrs") marriedYearCombo.setValue(arr[0].substring(0, arr[0].length() - 3));
+                if (arr[1] != "0months") marriedMonthCombo.setValue(arr[1].substring(0, arr[1].length() - 6));
+            }
         }
     }
 
     private Answer getAnswerObj(String question, int answer){
-        if(answer != 0) {
+        if(answer != 0 && answer != 8888) {
             try {
                 List<String> qList = answerMap.get(question);
                 Answer answerObj = new Answer();

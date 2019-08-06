@@ -239,13 +239,22 @@ public class Tab5 extends VerticalLayout {
         if(questionDBUniqueIdField.getValue() != null && !questionDBUniqueIdField.getValue().isEmpty()){
             answer.setBaselineQ5Id(Integer.parseInt(questionDBUniqueIdField.getValue()));
         }
-        if(q52ComboBox.getValue() != null) answer.setM2(getId((Answer)q52ComboBox.getValue()));
-        if(q53ComboBox.getValue() != null) answer.setM3(getId((Answer)q53ComboBox.getValue()));
+        if(q52Layout.isVisible()) {
+            if (q52ComboBox.getValue() != null) answer.setM2(getId((Answer) q52ComboBox.getValue()));
+        }
+        else{
+            answer.setM2(8888);
+        }
+        if(q53Layout.isVisible()) {
+            if (q53ComboBox.getValue() != null) answer.setM3(getId((Answer) q53ComboBox.getValue()));
+        }
+        else{
+            answer.setM3(8888);
+        }
         return answer;
     }
 
     public List<BaselineQ51> getAnswer51(int motherId) {
-
         List<BaselineQ51> list = new ArrayList<>();
         for (int i = 0; i < q1Layout.getComponentCount(); i++) {
             HorizontalLayout horizontalLayout = (HorizontalLayout) q1Layout.getComponent(i);
@@ -265,14 +274,32 @@ public class Tab5 extends VerticalLayout {
             BaselineQ51 answer = new BaselineQ51();
             answer.setSurveyId(motherId);
             answer.setQuestion(label.substring(0,1));
-            if(b1Combo.getValue() != null) answer.setB1(getId((Answer)b1Combo.getValue()));
-            if(b2Combo.getValue() != null) answer.setB2(getId((Answer)b2Combo.getValue()));
-            if(b3Combo.getValue() != null) answer.setB3(getId((Answer)b3Combo.getValue()));
-            if(b4Combo.getValue() != null) answer.setB4(getId((Answer)b4Combo.getValue()));
-            if(a1Combo.getValue() != null) answer.setA1(getId((Answer)a1Combo.getValue()));
-            if(a2Combo.getValue() != null) answer.setA2(getId((Answer)a2Combo.getValue()));
-            if(a3Combo.getValue() != null) answer.setA3(getId((Answer)a3Combo.getValue()));
-            if(a4Combo.getValue() != null) answer.setA4(getId((Answer)a4Combo.getValue()));
+            if(b1Combo.getValue() != null) {
+                answer.setB1(getId((Answer)b1Combo.getValue()));
+                if(getId((Answer)b1Combo.getValue()) == 1){
+                    if(b2Combo.getValue() != null) answer.setB2(getId((Answer)b2Combo.getValue()));
+                    if(b3Combo.getValue() != null) answer.setB3(getId((Answer)b3Combo.getValue()));
+                    if(b4Combo.getValue() != null) answer.setB4(getId((Answer)b4Combo.getValue()));
+                }
+                else{
+                    answer.setB2(8888);
+                    answer.setB3(8888);
+                    answer.setB4(8888);
+                }
+            }
+            if(a1Combo.getValue() != null) {
+                answer.setA1(getId((Answer)a1Combo.getValue()));
+                if(getId((Answer)a1Combo.getValue()) == 1){
+                    if(a2Combo.getValue() != null) answer.setA2(getId((Answer)a2Combo.getValue()));
+                    if(a3Combo.getValue() != null) answer.setA3(getId((Answer)a3Combo.getValue()));
+                    if(a4Combo.getValue() != null) answer.setA4(getId((Answer)a4Combo.getValue()));
+                }
+                else{
+                    answer.setA2(8888);
+                    answer.setA3(8888);
+                    answer.setA4(8888);
+                }
+            }
             list.add(answer);
         }
         return list;

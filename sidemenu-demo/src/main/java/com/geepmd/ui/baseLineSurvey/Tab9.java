@@ -145,10 +145,20 @@ public class Tab9 extends VerticalLayout{
             if(i == 2) answer.setM3(time);
             if(i == 3) answer.setM4(time);
         }
-        if(privateTransportCombo.getValue() != null) answer.setM51(getId((Answer) privateTransportCombo.getValue(),false));
-        if(ctbCombo.getValue() != null) answer.setM52(getId((Answer) ctbCombo.getValue(),true));
-        if(privateBusCombo.getValue() != null) answer.setM53(getId((Answer) privateBusCombo.getValue(),true));
-        if(threeWheelCombo.getValue() != null) answer.setM54(getId((Answer) threeWheelCombo.getValue(),true));
+        if(privateTransportCombo.getValue() != null) {
+            answer.setM51(getId((Answer) privateTransportCombo.getValue(),false));
+            if(getId((Answer) privateTransportCombo.getValue(),false) == 1){
+                if(ctbCombo.getValue() != null) answer.setM52(getId((Answer) ctbCombo.getValue(),true));
+                if(privateBusCombo.getValue() != null) answer.setM53(getId((Answer) privateBusCombo.getValue(),true));
+                if(threeWheelCombo.getValue() != null) answer.setM54(getId((Answer) threeWheelCombo.getValue(),true));
+            }
+            else{
+                answer.setM52(8888);
+                answer.setM53(8888);
+                answer.setM54(8888);
+            }
+        }
+
         return answer;
     }
     private int getId(Answer answer,boolean isReverse){

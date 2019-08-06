@@ -6,15 +6,14 @@ import com.geepmd.ui.Survey;
 import com.geepmd.utils.Answer;
 import com.geepmd.utils.EnglishMap;
 import com.geepmd.utils.SinhalaMap;
-import com.vaadin.ui.ComboBox;
-import com.vaadin.ui.HorizontalLayout;
-import com.vaadin.ui.Label;
-import com.vaadin.ui.VerticalLayout;
+import com.vaadin.ui.*;
 
 import java.beans.PropertyDescriptor;
+import java.lang.reflect.Method;
 import java.util.Map;
 
 import static com.geepmd.utils.SurveyUtils.getYesNoAnswer;
+import static com.geepmd.utils.SurveyUtils.getYesNoObject;
 
 public class Tab12 extends VerticalLayout {
 
@@ -22,6 +21,7 @@ public class Tab12 extends VerticalLayout {
     String language;
     Survey survey;
     VerticalLayout mainLayout;
+    TextField questionDBUniqueIdField;
 
     public Tab12(String language, Survey survey){
         this.language = language;
@@ -40,6 +40,9 @@ public class Tab12 extends VerticalLayout {
     }
 
     private void createLayout(){
+        questionDBUniqueIdField = new TextField();
+        questionDBUniqueIdField.setVisible(false);
+        addComponent(questionDBUniqueIdField);
         Label label = new Label("Cardiovascular diseases – Screening checklist - History");
         label.setStyleName("padHeader");
         addComponent(label);
@@ -82,6 +85,9 @@ public class Tab12 extends VerticalLayout {
 
     public BaselineQ12 getAnswerQ12(int surveyId) {
         BaselineQ12 answer = new BaselineQ12();
+        if(questionDBUniqueIdField.getValue() != null && !questionDBUniqueIdField.getValue().isEmpty()){
+            answer.setBaselineQ12Id(Integer.parseInt(questionDBUniqueIdField.getValue()));
+        }
         answer.setSurveyId(surveyId);
         for (int i = 0; i < mainLayout.getComponentCount(); i++) {
             HorizontalLayout layout = (HorizontalLayout) mainLayout.getComponent(i);
@@ -91,6 +97,28 @@ public class Tab12 extends VerticalLayout {
         }
 
         return answer;
+    }
+
+    public void setEditData(BaselineQ12 answer) {
+        questionDBUniqueIdField.setValue(String.valueOf(answer.getBaselineQ12Id()));
+        for (int i = 0; i < mainLayout.getComponentCount(); i++) {
+            HorizontalLayout layout = (HorizontalLayout) mainLayout.getComponent(i);
+            ComboBox comboBox = (ComboBox) layout.getComponent(1);
+            String prefix = (i + 1) + "";
+            comboBox.setValue(getYesNoObject("SN", callGetter(answer, "m"+prefix)));
+        }
+    }
+
+    private int callGetter(Object obj, String fieldName){
+        PropertyDescriptor pd;
+        try {
+            pd = new PropertyDescriptor(fieldName, obj.getClass());
+            Method getter = pd.getReadMethod();
+            return Integer.parseInt(getter.invoke(obj).toString());
+
+        } catch (Exception e) {
+            return 0;
+        }
     }
 
     private void callSetter(Object obj, String fieldName, Object value){

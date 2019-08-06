@@ -320,8 +320,15 @@ public class Tab2 extends VerticalLayout {
         if(yesNoCombo24.getValue() != null) answer.setM4(getId((Answer)yesNoCombo24.getValue()));
         if(sanitaryCombo.getValue() != null) answer.setM5(getId((Answer)sanitaryCombo.getValue()));
         if(contraceptiveCombo.getValue() != null) answer.setM7(getId((Answer)contraceptiveCombo.getValue()));
-        if(diagnosedCombo.getValue() != null) answer.setM9(getId((Answer)diagnosedCombo.getValue()));
-        if(yesNoCombo210.getValue() != null) answer.setM10(Integer.parseInt(yesNoCombo210.getValue().toString()));
+        if(diagnosedCombo.getValue() != null) {
+            answer.setM9(getId((Answer)diagnosedCombo.getValue()));
+            if(getId((Answer)diagnosedCombo.getValue()) == 1){
+                if(yesNoCombo210.getValue() != null) answer.setM10(Integer.parseInt(yesNoCombo210.getValue().toString()));
+            }
+            else{
+                answer.setM10(8888);
+            }
+        }
         return answer;
     }
 
@@ -334,7 +341,7 @@ public class Tab2 extends VerticalLayout {
             ComboBoxMultiselect sideEffects = (ComboBoxMultiselect) layout.getComponent(3);
             TextField reason = (TextField) layout.getComponent(4);
             if((method.getValue() != null && !method.getValue().isEmpty()) || (timePeriod.getValue() != null && !timePeriod.getValue().isEmpty())
-                    || sideEffects.getValue() != null|| (reason.getValue() != null && !reason.getValue().isEmpty())) {
+                    || (sideEffects.getValue() != null && !sideEffects.getValue().isEmpty())|| (reason.getValue() != null && !reason.getValue().isEmpty())) {
                 BaselineQ28 answer = new BaselineQ28();
                 answer.setSurveyId(surveyId);
                 if (method.getValue() != null) answer.setM1(method.getValue());
@@ -397,16 +404,17 @@ public class Tab2 extends VerticalLayout {
         diagnosedCombo.setValue(getYesNoObject("SN",answer.getM9()));
         if(answer.getM10() != 0) yesNoCombo210.setValue(answer.getM10());
 
-        if(answer26.getD1() != 0)setPadValue(answer26.getD1(),0);
-        if(answer26.getD2() != 0)setPadValue(answer26.getD2(),1);
-        if(answer26.getD3() != 0)setPadValue(answer26.getD3(),2);
-        if(answer26.getD4() != 0)setPadValue(answer26.getD4(),3);
-        if(answer26.getD5() != 0)setPadValue(answer26.getD5(),4);
-        if(answer26.getD6() != 0)setPadValue(answer26.getD6(),5);
-        if(answer26.getD7() != 0)setPadValue(answer26.getD7(),6);
-        if(answer26.getD8() != 0)setPadValue(answer26.getD8(),7);
-        if(answer26.getD9() != 0)setPadValue(answer26.getD9(),8);
-
+        if(answer26 != null) {
+            if (answer26.getD1() != 0) setPadValue(answer26.getD1(), 0);
+            if (answer26.getD2() != 0) setPadValue(answer26.getD2(), 1);
+            if (answer26.getD3() != 0) setPadValue(answer26.getD3(), 2);
+            if (answer26.getD4() != 0) setPadValue(answer26.getD4(), 3);
+            if (answer26.getD5() != 0) setPadValue(answer26.getD5(), 4);
+            if (answer26.getD6() != 0) setPadValue(answer26.getD6(), 5);
+            if (answer26.getD7() != 0) setPadValue(answer26.getD7(), 6);
+            if (answer26.getD8() != 0) setPadValue(answer26.getD8(), 7);
+            if (answer26.getD9() != 0) setPadValue(answer26.getD9(), 8);
+        }
         for(int i = 0;i<answer28.size();i++){
 
             HorizontalLayout layout = (HorizontalLayout) q28Layout.getComponent(i+1);
