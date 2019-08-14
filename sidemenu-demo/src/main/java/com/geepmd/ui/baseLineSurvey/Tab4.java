@@ -200,9 +200,9 @@ public class Tab4 extends VerticalLayout {
 
         BaselineQ4 answer = new BaselineQ4();
         answer.setSurveyId(motherId);
-        if(questionDBUniqueIdField.getValue() != null && !questionDBUniqueIdField.getValue().isEmpty()){
+        /*if(questionDBUniqueIdField.getValue() != null && !questionDBUniqueIdField.getValue().isEmpty()){
             answer.setBaselineQ4Id(Integer.parseInt(questionDBUniqueIdField.getValue()));
-        }
+        }*/
         if(pregnancyPlannedCombo.getValue() != null) {
             answer.setM1(getId((Answer)pregnancyPlannedCombo.getValue()));
             if(getId((Answer)pregnancyPlannedCombo.getValue()) == 1){

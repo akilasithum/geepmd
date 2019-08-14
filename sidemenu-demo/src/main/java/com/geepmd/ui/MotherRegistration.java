@@ -3,6 +3,7 @@ package com.geepmd.ui;
 import com.geepmd.dbConnection.DBConnection;
 import com.geepmd.entity.MotherDetails;
 import com.geepmd.utils.SinhalaMap;
+import com.geepmd.utils.SurveyUtils;
 import com.vaadin.navigator.View;
 import com.vaadin.navigator.ViewChangeListener;
 import com.vaadin.shared.ui.MarginInfo;
@@ -53,7 +54,7 @@ public class MotherRegistration extends VerticalLayout implements View {
             questionMap = SinhalaMap.getMotherData();
         }
         motherDetailsGrid = new Grid<>();
-        connection = (DBConnection) UI.getCurrent().getSession().getAttribute("dbConnection");
+        connection = DBConnection.getInstance();
         createMainLayout();
     }
 
@@ -114,10 +115,15 @@ public class MotherRegistration extends VerticalLayout implements View {
         String motherName = mNameFld.getValue();
         String motherAge = mAgeFld.getValue();
         String nic = mNicNo.getValue();
+        String serialNo = mSerialNo.getValue();
         boolean ageValidated = validateAge(motherAge);
         boolean nicValidated = validateNIC(nic);
         if(ageValidated && nicValidated) {
-            if (motherName != null && !motherName.isEmpty()) {
+            if (motherName != null && !motherName.isEmpty() && serialNo != null && !serialNo.isEmpty()) {
+                if(connection.isMotherIdAvailable(serialNo)){
+                    Notification.show("Mother serial number already exists.", Notification.Type.WARNING_MESSAGE);
+                    return;
+                }
                 MotherDetails mother = new MotherDetails();
                 mother.setMotherSerialNumber(mSerialNo.getValue());
                 mother.setMotherName(motherName);
@@ -132,7 +138,9 @@ public class MotherRegistration extends VerticalLayout implements View {
                 mother.setPhmDivision(medicalArea.getValue());
                 mother.setGnDivision(villageArea.getValue());
                 mother.setAntenatalClinic(antenatalClinicFld.getValue());
-                int motherId = connection.saveObjectHBM(mother);
+                Session session = connection.getSession();
+                int motherId = connection.saveObjectHBM(mother,session);
+                connection.closeSession(session);
                 if (motherId != 0) {
                     Notification.show("Mother's serial number is " + motherName);
                     mother.setMotherRegNo(motherId);
@@ -143,7 +151,7 @@ public class MotherRegistration extends VerticalLayout implements View {
                     Notification.show("Something went wrong", Notification.Type.WARNING_MESSAGE);
                 }
             } else {
-                Notification.show("Please enter mother name", Notification.Type.WARNING_MESSAGE);
+                Notification.show("Please fill all required fields", Notification.Type.WARNING_MESSAGE);
             }
         }
     }
@@ -199,7 +207,7 @@ public class MotherRegistration extends VerticalLayout implements View {
         motherDetailsGrid.addColumn(MotherDetails::getMotherSerialNumber).setCaption(questionMap.get("13"));
         motherDetailsGrid.addColumn(MotherDetails::getMotherName).setCaption(questionMap.get("1"));
         motherDetailsGrid.addColumn(MotherDetails::getAge).setCaption(questionMap.get("2"));
-        motherDetailsGrid.addColumn(MotherDetails::getDate).setCaption(questionMap.get("3"));
+        motherDetailsGrid.addColumn(bean-> SurveyUtils.getDateStringFromDate(bean.getDate())).setCaption(questionMap.get("3"));
         motherDetailsGrid.addColumn(MotherDetails::getExaminerRegNo).setCaption(questionMap.get("4"));
         motherDetailsGrid.addColumn(MotherDetails::getNicNo).setCaption(questionMap.get("5"));
         motherDetailsGrid.addColumn(MotherDetails::getMotherDocumentRegNo).setCaption(questionMap.get("6"));

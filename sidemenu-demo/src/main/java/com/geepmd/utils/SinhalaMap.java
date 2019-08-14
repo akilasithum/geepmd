@@ -60,10 +60,10 @@ public class SinhalaMap {
         map.put("3.25",Arrays.asList("1.Vaginal delivery","2.Forceps delivery","3.Vacuum delivery","4.Emergency cesarean section ",
                 "5.Elective cesarean section","6.Not applicable","7.spontaneous expulsion","8.tablets inserted","9.surgery done"));
         map.put("3.27",Arrays.asList("1.Heart disease","2.Respiratory diseases","3.Congenital anomaly",
-                "4.Admitted to a specialized unit (reason unknown)","5.Neonatal death","Other complications",
-                "6.No complications"));
+                "4.Admitted to a specialized unit (reason unknown)","5.Neonatal death","6.Other complications",
+                "7.No complications"));
         map.put("3.28",Arrays.asList("1.Any hospital admission within first 42 days postpartum due to a cause related to pregnancy.",
-                "2.PPH","3.Sepsis","4.Heart Disease","5.Post-partum depression","6.Breast conditions"));
+                "2.PPH","3.Sepsis","4.Heart Disease","5.Post-partum depression","6.Breast conditions","7.No complications"));
         return map;
     }
 

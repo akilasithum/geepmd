@@ -245,9 +245,9 @@ public class Tab1 extends VerticalLayout {
 
         BaselineQ1 answer = new BaselineQ1();
         answer.setSurveyId(motherId);
-        if(questionDBUniqueIdField.getValue() != null && !questionDBUniqueIdField.getValue().isEmpty()){
+        /*if(questionDBUniqueIdField.getValue() != null && !questionDBUniqueIdField.getValue().isEmpty()){
             answer.setBaselineQ1Id(Integer.parseInt(questionDBUniqueIdField.getValue()));
-        }
+        }*/
         if(motherBDayFld.getValue() != null)answer.setM1(Date.from(motherBDayFld.getValue().
                 atStartOfDay(ZoneId.systemDefault()).toInstant()));
         if(fatherBDayFld.getValue() != null)answer.setF1(Date.from(fatherBDayFld.getValue().

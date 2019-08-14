@@ -92,9 +92,9 @@ public class Tab7 extends VerticalLayout {
     public BaselineQ7 getAnswers(int motherId) {
 
         BaselineQ7 answer = new BaselineQ7();
-        if(questionDBUniqueIdField.getValue() != null && !questionDBUniqueIdField.getValue().isEmpty()){
+        /*if(questionDBUniqueIdField.getValue() != null && !questionDBUniqueIdField.getValue().isEmpty()){
             answer.setBaselineQ7Id(Integer.parseInt(questionDBUniqueIdField.getValue()));
-        }
+        }*/
         answer.setSurveyId(motherId);
         for(int i = 0;i< questionLayout.getComponentCount();i++){
 

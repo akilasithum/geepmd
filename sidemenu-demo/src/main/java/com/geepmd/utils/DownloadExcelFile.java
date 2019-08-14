@@ -1,21 +1,19 @@
-package com.geepmd.ui;
+package com.geepmd.utils;
 
 import com.geepmd.dbConnection.DBConnection;
 import com.geepmd.entity.*;
-import com.geepmd.entity.CommonDetails;
-import com.geepmd.utils.ExcelDownloadService;
-import com.geepmd.utils.ExcelDownloadServiceImpl;
-import com.geepmd.utils.SurveyUtils;
-import com.vaadin.icons.VaadinIcons;
-import com.vaadin.navigator.View;
-import com.vaadin.navigator.ViewChangeListener;
-import com.vaadin.server.*;
-import com.vaadin.ui.*;
+import com.vaadin.server.FileDownloader;
+import com.vaadin.server.FileResource;
+import com.vaadin.ui.Button;
+import com.vaadin.ui.Image;
+import com.vaadin.ui.Notification;
 import org.apache.poi.ss.usermodel.*;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.hibernate.Session;
 
-import java.io.*;
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
 import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -23,127 +21,36 @@ import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
-public class DownloadExcel extends VerticalLayout implements View {
+public class DownloadExcelFile implements Runnable{
 
-    private Button generateExcelBtn;
+    ExcelDownloadService.ExcelDownloadServiceListener excelDownloadServiceListener;
     int columnCount = 0;
     int valColumnCount = 0;
     Row headerRow;
     CellStyle headerCellStyle;
     DBConnection connection;
-    Image logo;
     Map<Integer,String> letterIntMap;
-    private Button downloadBtn;
 
-
-    public void enter(ViewChangeListener.ViewChangeEvent viewChangeEvent) {
-        Object userName = UI.getCurrent().getSession().getAttribute("userName");
-        if (userName == null || userName.toString().isEmpty()) {
-            getUI().getNavigator().navigateTo("Login");
-        }
+    public DownloadExcelFile(ExcelDownloadService.ExcelDownloadServiceListener excelDownloadServiceListener) {
+        this.excelDownloadServiceListener = excelDownloadServiceListener;
     }
 
-    public DownloadExcel(){
-        connection = DBConnection.getInstance();
-        letterIntMap = SurveyUtils.getLetterIntMap();
-        createLayout();
-    }
-
-    private void createLayout(){
-
-        generateExcelBtn = new Button("Generate Excel File");
-        generateExcelBtn.setIcon(VaadinIcons.DOWNLOAD);
-        addComponent(generateExcelBtn);
-        logo = new Image();
-        logo.setSource(new ThemeResource("images/tenor.png"));
-        addComponent(logo);
-        logo.setVisible(false);
-        generateExcelBtn.addClickListener(event -> {
-            downloadExcel();
-        });
-    }
-
-    private void downloadExcel(){
-            generateExcelBtn.setEnabled(false);
-            ExcelDownloadService excelDownloadService = new ExcelDownloadServiceImpl();
-            excelDownloadService.createExcelFile(new ExcelDownloadService.ExcelDownloadServiceListener() {
-                @Override
-                public void onComplete(String path) {
-                    if (path != null && !path.equals("")) {
-                        try {
-                            File file = new File(path);
-                            String fileName = "BaseLineSurvey";
-                            StreamResource resource = getExistingFile(fileName+".xlsx", path);
-                            //UI.getCurrent().access(() -> {
-                            getUI().getPage().open(resource, "_blank", false);
-
-                            /*FileResource fir = new FileResource(file);
-                            FileDownloader fileDownloader = new FileDownloader(fir);
-                            FileOutputStream out = new FileOutputStream(file);
-                            out.close();
-                            downloadBtn = new Button("Download");
-                            fileDownloader.extend(downloadBtn);
-
-                            Window window = new Window();
-                            window.setSizeFull();
-                            window.setWidth("200px");
-                            window.setHeight("100px");
-                            VerticalLayout windowContent = new VerticalLayout();
-                            windowContent.addComponent(new Label("Your file is ready to download"));
-                            windowContent.addComponent(downloadBtn);
-                            windowContent.setMargin(true);
-                            window.setContent(windowContent);
-                            window.center();
-                            getUI().addWindow(window);*/
-
-                           // });
-                            file.deleteOnExit();
-                        } catch (Exception e) {
-                            Notification.show("Something went worng", Notification.Type.WARNING_MESSAGE);
-                        }
-                    }
-                    generateExcelBtn.setEnabled(true);
-                    getUI().getNavigator().navigateTo("DownloadExcel");
-                }
-                @Override
-                public void onFail() {
-                    generateExcelBtn.setEnabled(true);
-                }
-            });
-        }
-
-    public StreamResource getExistingFile(String destinationFileName, String sourceFilePath) {
-        if (sourceFilePath == null || sourceFilePath.equals("")) return null;
-        File file = new File(sourceFilePath);
-        String filename = file.getName();
-        String fileType = filename.substring(filename.lastIndexOf(".") + 1);
-        StreamResource resource = new StreamResource(new StreamResource.StreamSource() {
-            private static final long serialVersionUID = 1L;
-            @Override
-            public InputStream getStream() {
-                try {
-                    return new FileInputStream(new File(sourceFilePath));
-                } catch (FileNotFoundException e) {
-                    return null;
-                }
-            }
-        }, (destinationFileName));
-        resource.setMIMEType("application/" + fileType);
-        resource.getStream().setParameter("Content-Disposition", "attachment; filename=" + (destinationFileName));
-        return resource;
+    @Override
+    public void run() {
+        download();
     }
 
     private void download(){
-        logo.setVisible(true);
         Workbook workbook = new XSSFWorkbook();
         Sheet sheet = workbook.createSheet("Baseline survey");
         createHeaderRow(workbook,sheet);
-        FileOutputStream fileOut = null;
+        connection = DBConnection.getInstance();
+        letterIntMap = SurveyUtils.getLetterIntMap();
         Session session = connection.getSession();
         List<CommonDetails> commonList = (List<CommonDetails>)connection.getAllValues(session,"com.geepmd.entity.CommonDetails",
                 "surveyId");
         if(commonList == null || commonList.size() == 0){
-            downloadFile(workbook);
+            Notification.show("No survey available for download", Notification.Type.WARNING_MESSAGE);
             return;
         }
         List<BaselineQ1> q1List = (List<BaselineQ1>)connection.getAllValues(session,"com.geepmd.entity.BaselineQ1","baselineQ1Id");
@@ -452,11 +359,20 @@ public class DownloadExcel extends VerticalLayout implements View {
             rowCount++;
         }
 
-        downloadFile(workbook);
-        logo.setVisible(false);
+        //downloadFile(workbook);
+        File tempFile = null;
+        try {
+            tempFile = File.createTempFile("tmp", ".xlsx");
+
+        FileOutputStream fileOut = new FileOutputStream(tempFile);
+        workbook.write(fileOut);
+        excelDownloadServiceListener.onComplete(tempFile.getPath());
+        } catch (Exception e) {
+            excelDownloadServiceListener.onFail();
+        }
     }
 
-    private void downloadFile(Workbook workbook) {
+    /*private void downloadFile(Workbook workbook) {
         try {
             File file = new File("baseline_survey.xlsx");
             FileResource fir = new FileResource(file);
@@ -469,7 +385,7 @@ public class DownloadExcel extends VerticalLayout implements View {
         }catch (Exception e){
             e.printStackTrace();
         }
-    }
+    }*/
 
     private void createObjCells(Object obj,String methodPrefix,int startIndex,int endIndex,Row row){
         try {
@@ -491,7 +407,7 @@ public class DownloadExcel extends VerticalLayout implements View {
                 }
                 else {
                     if(name != null && !name.equalsIgnoreCase("null"))
-                    row.createCell(valColumnCount).setCellValue(name);
+                        row.createCell(valColumnCount).setCellValue(name);
                 }
                 valColumnCount++;
             }
@@ -548,7 +464,7 @@ public class DownloadExcel extends VerticalLayout implements View {
                 if(name != null && !name.equalsIgnoreCase("null"))
                     row.createCell(valColumnCount).setCellValue(name);
             }
-                valColumnCount++;
+            valColumnCount++;
         } catch (Exception e) {
             e.printStackTrace();
         }

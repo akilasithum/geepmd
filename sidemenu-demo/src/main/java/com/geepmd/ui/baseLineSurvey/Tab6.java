@@ -320,9 +320,9 @@ public class Tab6 extends VerticalLayout {
     public BaselineQ6 getAnswers(int motherId) {
 
         BaselineQ6 answer = new BaselineQ6();
-        if(questionDBUniqueIdField.getValue() != null && !questionDBUniqueIdField.getValue().isEmpty()){
+        /*if(questionDBUniqueIdField.getValue() != null && !questionDBUniqueIdField.getValue().isEmpty()){
             answer.setBaselineQ6Id(Integer.parseInt(questionDBUniqueIdField.getValue()));
-        }
+        }*/
         answer.setSurveyId(motherId);
         for(int i = 0;i<firstQAnswerLayout.getComponentCount();i++){
             HorizontalLayout layout = (HorizontalLayout)firstQAnswerLayout.getComponent(i);
@@ -435,10 +435,10 @@ public class Tab6 extends VerticalLayout {
         }
         q63Combo.setValue(getAnswerObj(answer.getM3(),answerMap.get("6.3")));
         anemiaCombo.setValue(getAnswerSetFromString(answer.getM4(),answerMap.get("6.4")));
-        if(answer.getM5() != 0)monthsCombo65.setValue(String.valueOf(answer.getM5()));
+        if(answer.getM5() != 0 && answer.getM5() != 8888)monthsCombo65.setValue(String.valueOf(answer.getM5()));
 
         String marriageYear = answer.getM6();
-        if(marriageYear != null && !marriageYear.isEmpty()){
+        if(marriageYear != null && !marriageYear.isEmpty() && !marriageYear.equalsIgnoreCase("8888")){
             String[] arr = marriageYear.split(" ");
             if(arr[0] != "0years") yearCombo.setValue(arr[0].substring(0,arr[0].length()-3));
             if(arr[1] != "0months") monthCombo.setValue(arr[1].substring(0,arr[1].length()-6));

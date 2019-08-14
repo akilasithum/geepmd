@@ -5,12 +5,12 @@
     <session-factory>
         <!-- JDBC Database connection settings -->
         <property name="connection.driver_class">com.mysql.cj.jdbc.Driver</property>
-        <property name="hibernate.connection.password">T6dXcs4e</property>
-        <!--<property name="hibernate.connection.password"></property>-->
+        <!--<property name="hibernate.connection.password">T6dXcs4e</property>-->
+        <property name="hibernate.connection.password"></property>
         <property name="hibernate.connection.url">jdbc:mysql://localhost:3306/geepmd</property>
-        <property name="hibernate.connection.username">remote</property>
+        <property name="hibernate.connection.username">root</property>
         <!-- JDBC connection pool settings ... using built-in test pool -->
-        <property name="connection.pool_size">1</property>
+        <property name="connection.pool_size">50</property>
         <!-- Select our SQL dialect -->
         <property name="dialect">org.hibernate.dialect.MySQL5Dialect</property>
         <!-- Echo the SQL to stdout -->
@@ -19,7 +19,7 @@
         <property name="current_session_context_class">thread</property>
         <!-- dbcp connection pool configuration -->
         <property name="hibernate.dbcp.initialSize">5</property>
-        <property name="hibernate.dbcp.maxTotal">20</property>
+        <property name="hibernate.dbcp.maxTotal">100</property>
         <property name="hibernate.dbcp.maxIdle">10</property>
         <property name="hibernate.dbcp.minIdle">5</property>
         <property name="hibernate.dbcp.maxWaitMillis">-1</property>

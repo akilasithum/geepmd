@@ -129,9 +129,9 @@ public class Tab9 extends VerticalLayout{
     public BaselineQ9 getQ9Answers(int surveyId) {
         BaselineQ9 answer = new BaselineQ9();
         answer.setSurveyId(surveyId);
-        if(questionDBUniqueIdField.getValue() != null && !questionDBUniqueIdField.getValue().isEmpty()){
+        /*if(questionDBUniqueIdField.getValue() != null && !questionDBUniqueIdField.getValue().isEmpty()){
             answer.setBaselineQ9Id(Integer.parseInt(questionDBUniqueIdField.getValue()));
-        }
+        }*/
         for(int i = 0;i<firstSetLayout.getComponentCount();i++){
             HorizontalLayout layout = (HorizontalLayout)((HorizontalLayout)firstSetLayout.getComponent(i)).getComponent(1);
             ComboBox hourCombo = (ComboBox) layout.getComponent(0);

@@ -301,9 +301,9 @@ public class Tab3 extends VerticalLayout {
     public BaselineQ3 getAnswer(int motherId){
         BaselineQ3 answer = new BaselineQ3();
         answer.setSurveyId(motherId);
-        if(questionDBUniqueIdField.getValue() != null && !questionDBUniqueIdField.getValue().isEmpty()){
+        /*if(questionDBUniqueIdField.getValue() != null && !questionDBUniqueIdField.getValue().isEmpty()){
             answer.setBaselineQ3Id(Integer.parseInt(questionDBUniqueIdField.getValue()));
-        }
+        }*/
         if(conceivedTimeCombo.getValue() != null) answer.setM1(Integer.parseInt(conceivedTimeCombo.getValue().toString()));
         if(breastFeedCombo != null && breastFeedCombo.getValue() != null) answer.setM3(getId((Answer)breastFeedCombo.getValue()));
         if(breastFeedStopMonths != null && breastFeedStopMonths.getValue() != null) answer.setM4(breastFeedStopMonths.getValue());

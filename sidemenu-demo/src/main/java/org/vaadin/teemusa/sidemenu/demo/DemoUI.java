@@ -27,7 +27,7 @@ import com.vaadin.ui.VerticalLayout;
 @Theme("demo")
 @Title("GEEPMD - RAPCO")
 @Viewport("user-scalable=no,initial-scale=1.0")
-public class DemoUI extends UI implements SessionDestroyListener{
+public class DemoUI extends UI {
 
 	private String previousPage;
 
@@ -84,12 +84,6 @@ public class DemoUI extends UI implements SessionDestroyListener{
 		});
 	}
 
-	@Override
-	public void sessionDestroy(SessionDestroyEvent event) {
-		DBConnection connection = (DBConnection) UI.getCurrent().getSession().getAttribute("dbConnection");
-		connection.closeSession();
-	}
-
 
 	public void navigateToDashboard(){
 		previousPage = "Login";
@@ -107,8 +101,6 @@ public class DemoUI extends UI implements SessionDestroyListener{
 					public void onClose(ConfirmDialog dialog) {
 						if (dialog.isConfirmed()) {
 							getSession().setAttribute("userName","");
-							DBConnection connection = (DBConnection) UI.getCurrent().getSession().getAttribute("dbConnection");
-							connection.closeSession();
 							getUI().getNavigator().navigateTo("Login");
 							hideMenu();
 						}

@@ -189,9 +189,9 @@ public class Tab8 extends VerticalLayout {
     public BaselineQ8 getQ8Answers(int surveyId) {
         BaselineQ8 answer = new BaselineQ8();
         answer.setSurveyId(surveyId);
-        if(questionDBUniqueIdField.getValue() != null && !questionDBUniqueIdField.getValue().isEmpty()){
+        /*if(questionDBUniqueIdField.getValue() != null && !questionDBUniqueIdField.getValue().isEmpty()){
             answer.setBaselineQ8Id(Integer.parseInt(questionDBUniqueIdField.getValue()));
-        }
+        }*/
         if(noOfMembers.getValue() != null) answer.setM1(Integer.parseInt(noOfMembers.getValue().toString()));
         if(houseLeaderFld.getValue() != null) answer.setM2(houseLeaderFld.getValue());
         if(medicalPref.getValue() != null) answer.setM3(getId((Answer)medicalPref.getValue()));
@@ -253,14 +253,17 @@ public class Tab8 extends VerticalLayout {
             }
         }
 
-        for (int i=0;i<answer84.size();i++){
-            HorizontalLayout layout = (HorizontalLayout)q84Layout.getComponent(i+2);
-            TextField relationship = (TextField) layout.getComponent(1);
-            ComboBox age = (ComboBox) layout.getComponent(2);
-            BaselineQ84 baselineQ84 = answer84.get(i);
-            relationship.setValue(baselineQ84.getM2());
-            age.setValue(String.valueOf(baselineQ84.getM3()));
+        if(answer.getM1() != 0){
+            for (int i=0;i<answer84.size();i++){
+                HorizontalLayout layout = (HorizontalLayout)q84Layout.getComponent(i+2);
+                TextField relationship = (TextField) layout.getComponent(1);
+                ComboBox age = (ComboBox) layout.getComponent(2);
+                BaselineQ84 baselineQ84 = answer84.get(i);
+                relationship.setValue(baselineQ84.getM2());
+                age.setValue(String.valueOf(baselineQ84.getM3()));
+            }
         }
+
     }
 
     private int getId(Answer answer){

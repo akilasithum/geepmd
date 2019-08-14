@@ -236,9 +236,9 @@ public class Tab5 extends VerticalLayout {
     public BaselineQ5 getAnswer(int motherId){
         BaselineQ5 answer = new BaselineQ5();
         answer.setSurveyId(motherId);
-        if(questionDBUniqueIdField.getValue() != null && !questionDBUniqueIdField.getValue().isEmpty()){
+        /*if(questionDBUniqueIdField.getValue() != null && !questionDBUniqueIdField.getValue().isEmpty()){
             answer.setBaselineQ5Id(Integer.parseInt(questionDBUniqueIdField.getValue()));
-        }
+        }*/
         if(q52Layout.isVisible()) {
             if (q52ComboBox.getValue() != null) answer.setM2(getId((Answer) q52ComboBox.getValue()));
         }

@@ -85,9 +85,9 @@ public class Tab12 extends VerticalLayout {
 
     public BaselineQ12 getAnswerQ12(int surveyId) {
         BaselineQ12 answer = new BaselineQ12();
-        if(questionDBUniqueIdField.getValue() != null && !questionDBUniqueIdField.getValue().isEmpty()){
+        /*if(questionDBUniqueIdField.getValue() != null && !questionDBUniqueIdField.getValue().isEmpty()){
             answer.setBaselineQ12Id(Integer.parseInt(questionDBUniqueIdField.getValue()));
-        }
+        }*/
         answer.setSurveyId(surveyId);
         for (int i = 0; i < mainLayout.getComponentCount(); i++) {
             HorizontalLayout layout = (HorizontalLayout) mainLayout.getComponent(i);

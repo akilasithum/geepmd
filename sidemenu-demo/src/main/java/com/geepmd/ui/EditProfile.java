@@ -6,6 +6,7 @@ import com.vaadin.navigator.View;
 import com.vaadin.navigator.ViewChangeListener;
 import com.vaadin.shared.ui.MarginInfo;
 import com.vaadin.ui.*;
+import org.hibernate.Session;
 
 import java.util.Arrays;
 
@@ -28,7 +29,7 @@ public class EditProfile extends VerticalLayout implements View {
     }
 
     public EditProfile(){
-        connection = (DBConnection) UI.getCurrent().getSession().getAttribute("dbConnection");
+        connection = DBConnection.getInstance();
         createMainLayout();
     }
 
@@ -84,7 +85,8 @@ public class EditProfile extends VerticalLayout implements View {
                 return;
             }
         }
-        connection.saveOrUpdateHBM(user);
+        Session session = connection.getSession();
+        connection.saveOrUpdateHBM(user,session);
         Notification.show("Profile updated.");
     }
 }

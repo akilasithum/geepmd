@@ -11,32 +11,32 @@
         <property name="surveyId" type="java.lang.Integer">
             <column name="surveyId" />
         </property>
-        <property name="d1" type="java.lang.Integer">
-            <column name="d1" />
+        <property name="d1" type="java.lang.String">
+            <column name="d1" length="30"/>
         </property>
-        <property name="d2" type="java.lang.Integer">
-            <column name="d2" />
+        <property name="d2" type="java.lang.String">
+            <column name="d2" length="30"/>
         </property>
-        <property name="d3" type="java.lang.Integer">
-            <column name="d3" />
+        <property name="d3" type="java.lang.String">
+            <column name="d3" length="30"/>
         </property>
-        <property name="d4" type="java.lang.Integer">
-            <column name="d4" />
+        <property name="d4" type="java.lang.String">
+            <column name="d4" length="30" />
         </property>
-        <property name="d5" type="java.lang.Integer">
-            <column name="d5" />
+        <property name="d5" type="java.lang.String">
+            <column name="d5" length="30"/>
         </property>
-        <property name="d6" type="java.lang.Integer">
-            <column name="d6" />
+        <property name="d6" type="java.lang.String">
+            <column name="d6" length="30"/>
         </property>
-        <property name="d7" type="java.lang.Integer">
-            <column name="d7" />
+        <property name="d7" type="java.lang.String">
+            <column name="d7" length="30" />
         </property>
-        <property name="d8" type="java.lang.Integer">
-            <column name="d8" />
+        <property name="d8" type="java.lang.String">
+            <column name="d8" length="30"/>
         </property>
-        <property name="d9" type="java.lang.Integer">
-            <column name="d9" />
+        <property name="d9" type="java.lang.String">
+            <column name="d9" length="30"/>
         </property>
     </class>
 </hibernate-mapping>

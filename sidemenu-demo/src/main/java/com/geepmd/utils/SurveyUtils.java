@@ -4,6 +4,7 @@ import com.vaadin.ui.Component;
 import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.Label;
 
+import java.text.SimpleDateFormat;
 import java.util.*;
 
 public class SurveyUtils {
@@ -144,7 +145,7 @@ public class SurveyUtils {
 
     public static Set<Answer> getAnswerSetFromString(String str,List<String> answers){
         Set<Answer> anserSet = new HashSet<>();
-        if(str != null && !str.isEmpty() && !str.trim().equals("")) {
+        if(str != null && !str.isEmpty() && !str.trim().equals("") && !str.equals("8888")) {
 
             String[] arr = str.split(",");
             for(String answer : Arrays.asList(arr)){
@@ -161,5 +162,11 @@ public class SurveyUtils {
         else {
             return anserSet;
         }
+    }
+
+    public static String getDateStringFromDate(Date date){
+        if(date != null)
+            return new SimpleDateFormat("dd-MM-yyyy").format(date);
+        else return null;
     }
 }
