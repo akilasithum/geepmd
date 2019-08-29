@@ -9,6 +9,8 @@ import com.geepmd.utils.SurveyUtils;
 import com.vaadin.icons.VaadinIcons;
 import com.vaadin.ui.*;
 
+import java.util.Collection;
+import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 
@@ -196,10 +198,12 @@ public class Tab9 extends VerticalLayout{
             }
         }
         privateTransportCombo.setValue(getYesNoObject("SN",answer.getM51()));
-        if(answer.getM51() != 1){
-            ctbCombo.setValue(getAnswerObj(answer.getM52(),answerMap.get("9.5.1")));
-            privateBusCombo.setValue(getAnswerObj(answer.getM52(),answerMap.get("9.5.1")));
-            threeWheelCombo.setValue(getAnswerObj(answer.getM52(),answerMap.get("9.5.1")));
+        if(answer.getM51() == 1){
+           // List<String> answerList = answerMap.get("9.5.1");
+            //Collections.reverse(answerList);
+            ctbCombo.setValue(getAnswerObj(answerReverse(answer.getM52()),answerMap.get("9.5.1")));
+            privateBusCombo.setValue(getAnswerObj(answerReverse(answer.getM53()),answerMap.get("9.5.1")));
+            threeWheelCombo.setValue(getAnswerObj(answerReverse(answer.getM54()),answerMap.get("9.5.1")));
         }
 
     }

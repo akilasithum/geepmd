@@ -18,6 +18,7 @@ public class BaselineQ12 {
     private int m12;
     private int m13;
     private int m14;
+    private String specialNotes;
 
     public int getBaselineQ12Id() {
         return baselineQ12Id;
@@ -145,5 +146,13 @@ public class BaselineQ12 {
 
     public void setM14(int m14) {
         this.m14 = m14;
+    }
+
+    public String getSpecialNotes() {
+        return specialNotes;
+    }
+
+    public void setSpecialNotes(String specialNotes) {
+        this.specialNotes = specialNotes;
     }
 }

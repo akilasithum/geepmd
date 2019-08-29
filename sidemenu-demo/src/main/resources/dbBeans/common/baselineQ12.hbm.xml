@@ -53,5 +53,8 @@
         <property name="m14" type="java.lang.Integer">
             <column name="m14" />
         </property>
+        <property name="specialNotes" type="java.lang.String">
+            <column name="specialNotes" length="500"/>
+        </property>
     </class>
 </hibernate-mapping>

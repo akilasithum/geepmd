@@ -355,7 +355,11 @@ public class DownloadExcelFile implements Runnable{
             }
 
             BaselineQ12 baselineQ12 = q12Map.get(common.getSurveyId());
-            if(baselineQ12 != null) createObjCells(baselineQ12,"getM",1,14,row);
+            if(baselineQ12 != null) {
+                createObjCells(baselineQ12,"getM",1,14,row);
+                Cell specialNotes = row.createCell(valColumnCount);
+                specialNotes.setCellValue(baselineQ12.getSpecialNotes());
+            }
             rowCount++;
         }
 
@@ -482,6 +486,7 @@ public class DownloadExcelFile implements Runnable{
 
         headerCellStyle = workbook.createCellStyle();
         headerCellStyle.setFont(headerFont);
+        headerCellStyle.setWrapText(true);
 
         headerRow = sheet.createRow(0);
 
@@ -589,6 +594,9 @@ public class DownloadExcelFile implements Runnable{
         createCells("k11.36",1,2);
         createCells("k11.37",1,2);
         createCells("L12",1,14);
+        Cell specialNotes = headerRow.createCell(columnCount);
+        specialNotes.setCellValue("Special Notes");
+        specialNotes.setCellStyle(headerCellStyle);
     }
 
     private void createCells(String headerPrefix,int startIndex,int count){

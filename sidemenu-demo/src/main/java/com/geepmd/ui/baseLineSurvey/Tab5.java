@@ -213,7 +213,7 @@ public class Tab5 extends VerticalLayout {
             }
             else{
                 dependentLayout.setEnabled(true);
-                if(qNumber.equalsIgnoreCase("c")){
+                if(qNumber.equalsIgnoreCase("c") || qNumber.equalsIgnoreCase("b")){
                     q52Layout.setVisible(true);
                 }
                 if(qNumber.equalsIgnoreCase("d")){

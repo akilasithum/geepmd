@@ -22,6 +22,7 @@ public class Tab12 extends VerticalLayout {
     Survey survey;
     VerticalLayout mainLayout;
     TextField questionDBUniqueIdField;
+    TextArea specialNotesTextArea;
 
     public Tab12(String language, Survey survey){
         this.language = language;
@@ -65,6 +66,21 @@ public class Tab12 extends VerticalLayout {
         mainLayout.addComponent(getQ12Questions(q12Map.get("12.12")));
         mainLayout.addComponent(getQ12Questions(q12Map.get("12.13")));
         mainLayout.addComponent(getQ12Questions(q12Map.get("12.14")));
+        specialNotesTextArea = new TextArea("Special Notes - 0/500");
+        specialNotesTextArea.setSizeFull();
+        specialNotesTextArea.addValueChangeListener(event -> {specialNotesLimit(event.getValue());});
+        mainLayout.addComponent(specialNotesTextArea);
+
+    }
+
+    private void specialNotesLimit(String val){
+        int count = val.length();
+        if(count <= 500){
+            specialNotesTextArea.setCaption("Special Notes - " + count +"/500");
+        }
+        else{
+            specialNotesTextArea.setValue(val.substring(0,500));
+        }
 
     }
 
@@ -89,24 +105,27 @@ public class Tab12 extends VerticalLayout {
             answer.setBaselineQ12Id(Integer.parseInt(questionDBUniqueIdField.getValue()));
         }*/
         answer.setSurveyId(surveyId);
-        for (int i = 0; i < mainLayout.getComponentCount(); i++) {
+        for (int i = 0; i < mainLayout.getComponentCount()-1; i++) {
             HorizontalLayout layout = (HorizontalLayout) mainLayout.getComponent(i);
             ComboBox comboBox = (ComboBox) layout.getComponent(1);
             String prefix = (i + 1) + "";
             if (comboBox.getValue() != null) callSetter(answer, "m" + prefix, getId((Answer) comboBox.getValue()));
         }
-
+        if(specialNotesTextArea.getValue() != null){
+            answer.setSpecialNotes(specialNotesTextArea.getValue());
+        }
         return answer;
     }
 
     public void setEditData(BaselineQ12 answer) {
         questionDBUniqueIdField.setValue(String.valueOf(answer.getBaselineQ12Id()));
-        for (int i = 0; i < mainLayout.getComponentCount(); i++) {
+        for (int i = 0; i < mainLayout.getComponentCount()-1; i++) {
             HorizontalLayout layout = (HorizontalLayout) mainLayout.getComponent(i);
             ComboBox comboBox = (ComboBox) layout.getComponent(1);
             String prefix = (i + 1) + "";
             comboBox.setValue(getYesNoObject("SN", callGetter(answer, "m"+prefix)));
         }
+        if(answer.getSpecialNotes() != null )specialNotesTextArea.setValue(answer.getSpecialNotes());
     }
 
     private int callGetter(Object obj, String fieldName){

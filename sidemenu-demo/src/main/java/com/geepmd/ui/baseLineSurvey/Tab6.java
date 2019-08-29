@@ -266,7 +266,7 @@ public class Tab6 extends VerticalLayout {
         documentaryCombo.setSizeFull();
 
         ComboBox yearCombo = new ComboBox();
-        yearCombo.setItems(getStringList(2000,2019));
+        yearCombo.setItems(getStringList(1990,2019));
         yearCombo.setTextInputAllowed(false);
         yearCombo.setSizeFull();
 

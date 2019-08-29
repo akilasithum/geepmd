@@ -252,7 +252,7 @@ public class Tab3 extends VerticalLayout {
                 return true;
             }
             else
-            return val >= 1.5 && val < 6.0;
+            return val >= 0.5 && val < 6.0;
         }
         catch (Exception e){
                 return false;

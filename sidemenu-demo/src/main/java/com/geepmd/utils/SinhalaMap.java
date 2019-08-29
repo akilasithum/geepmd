@@ -479,7 +479,7 @@ public class SinhalaMap {
         map.put("i","i .Evidence of dysmorphism");
         map.put("j","j. Clubbing");
         map.put("k","k. Ankle oedema");
-        map.put("h","h. Acanthosis nigricans ");
+        map.put("l","l. Acanthosis nigricans ");
         return map;
     }
 

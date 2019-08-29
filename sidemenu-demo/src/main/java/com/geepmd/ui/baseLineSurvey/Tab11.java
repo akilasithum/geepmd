@@ -76,7 +76,7 @@ public class Tab11 extends VerticalLayout {
         q1Layout.addComponent(addHorizontalLayout(q1Map.get("i")));
         q1Layout.addComponent(addHorizontalLayout(q1Map.get("j")));
         q1Layout.addComponent(addHorizontalLayout(q1Map.get("k")));
-        q1Layout.addComponent(addHorizontalLayout(q1Map.get("h")));
+        q1Layout.addComponent(addHorizontalLayout(q1Map.get("l")));
 
         Label precordialHeader = new Label(q11Map.get("11.2"));
         addComponent(precordialHeader);
@@ -277,7 +277,7 @@ public class Tab11 extends VerticalLayout {
             }
             else{
                 TextField textField = (TextField) layout.getComponent(1);
-                textField.setValue( String.valueOf(callGetter(answer, "m1"+prefix)));
+                textField.setValue( String.valueOf(callGetter(answer, "m2"+prefix)));
             }
         }
         leftOption1Label.setValue(answer.getM2821());
