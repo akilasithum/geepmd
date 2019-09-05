@@ -108,6 +108,28 @@ public class Tab5 extends VerticalLayout {
         headerTextLayout.setExpandRatio(priorConceptionLayout,2);
         headerTextLayout.setExpandRatio(afterConceptionLayout,2);
         addComponent(headerTextLayout);
+
+        HorizontalLayout noToAllLayout = new HorizontalLayout();
+        noToAllLayout.setSizeFull();
+
+        CheckBox notToAllPriorConceptionCheckBox = new CheckBox(fields.get("5.1"));
+        notToAllPriorConceptionCheckBox.setStyleName("checkBoxMargin");
+        notToAllPriorConceptionCheckBox.addValueChangeListener(event -> {
+            fillAllNo(1);
+        });
+        CheckBox notToAllafterConceptionCheckBox = new CheckBox(fields.get("5.1"));
+        notToAllafterConceptionCheckBox.setStyleName("checkBoxMargin");
+        notToAllafterConceptionCheckBox.addValueChangeListener(event -> {
+            fillAllNo(2);
+        });
+        Label emptyLabel2 = new Label(" ");
+        emptyLabel2.setSizeFull();
+        noToAllLayout.addComponents(emptyLabel2,notToAllPriorConceptionCheckBox,notToAllafterConceptionCheckBox);
+        noToAllLayout.setExpandRatio(emptyLabel2,1);
+        noToAllLayout.setExpandRatio(notToAllPriorConceptionCheckBox,2);
+        noToAllLayout.setExpandRatio(notToAllafterConceptionCheckBox,2);
+        addComponent(noToAllLayout);
+
         q1Layout = new VerticalLayout();
         q1Layout.setSizeFull();
         addComponent(q1Layout);
@@ -146,6 +168,15 @@ public class Tab5 extends VerticalLayout {
             survey.SelectTab(5);
         });
         addComponent(nextBtn);
+    }
+
+    private void fillAllNo(int component){
+        for(int i = 0;i<11;i++){
+            HorizontalLayout horizontalLayout = (HorizontalLayout) q1Layout.getComponent(i);
+            HorizontalLayout beforeLayout = (HorizontalLayout) horizontalLayout.getComponent(component);
+            ComboBox b1Combo = (ComboBox) beforeLayout.getComponent(0);
+            b1Combo.setValue(getYesNoObject("SN",2));
+        }
     }
 
     private HorizontalLayout addQ52and3Questions(ComboBox multi,String questionStr){

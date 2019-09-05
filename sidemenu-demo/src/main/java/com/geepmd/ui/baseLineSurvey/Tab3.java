@@ -108,7 +108,7 @@ public class Tab3 extends VerticalLayout {
                     q32MainLayout.addComponent(layout);
                     layout.addComponent(new Label("G"+i));
                     ComboBox ageCombo = new ComboBox();
-                    ageCombo.setItems(getStringList(13,45));
+                    ageCombo.setItems(getStringList(10,45));
                     ageCombo.setSizeFull();
                     layout.addComponent(ageCombo);
 

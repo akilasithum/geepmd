@@ -59,6 +59,14 @@ public class Tab11 extends VerticalLayout {
         Label examinationHeader = new Label(q11Map.get("11.1"));
         addComponent(examinationHeader);
         examinationHeader.setStyleName("padHeader");
+
+        CheckBox noToAll = new CheckBox(fields.get("11.1"));
+        addComponent(noToAll);
+        noToAll.setStyleName("checkBoxMargin");
+        noToAll.addValueChangeListener(event -> {
+            setNoToAllCombo1(event.getValue());
+        });
+
         q1Layout = new VerticalLayout();
         q1Layout.setSizeFull();
         addComponent(q1Layout);
@@ -81,6 +89,14 @@ public class Tab11 extends VerticalLayout {
         Label precordialHeader = new Label(q11Map.get("11.2"));
         addComponent(precordialHeader);
         precordialHeader.setStyleName("padHeader");
+
+        CheckBox noToAll1 = new CheckBox(fields.get("11.1"));
+        addComponent(noToAll1);
+        noToAll1.setStyleName("checkBoxMargin");
+        noToAll1.addValueChangeListener(event -> {
+            setNoToAllCombo2(event.getValue());
+        });
+
         q2Layout = new VerticalLayout();
         q2Layout.setSizeFull();
         addComponent(q2Layout);
@@ -100,6 +116,14 @@ public class Tab11 extends VerticalLayout {
         Label auscultationHeader = new Label(q11Map.get("11.3"));
         addComponent(auscultationHeader);
         auscultationHeader.setStyleName("padHeader");
+
+        CheckBox noToAll3 = new CheckBox(fields.get("11.1"));
+        addComponent(noToAll3);
+        noToAll3.setStyleName("checkBoxMargin");
+        noToAll3.addValueChangeListener(event -> {
+            setNoToAllCombo3(event.getValue());
+        });
+
         q3Layout = new VerticalLayout();
         q3Layout.setSizeFull();
         addComponent(q3Layout);
@@ -124,6 +148,38 @@ public class Tab11 extends VerticalLayout {
             survey.SelectTab(11);
         });
         addComponent(nextBtn);
+    }
+
+    private void setNoToAllCombo1(boolean isNo){
+        if(isNo){
+            for(int i = 1 ;i<q1Layout.getComponentCount();i++){
+                HorizontalLayout layout = (HorizontalLayout) q1Layout.getComponent(i);
+                ComboBox comboBox = (ComboBox) layout.getComponent(1);
+                comboBox.setValue(getYesNoObject("SN", 2));
+            }
+        }
+    }
+
+    private void setNoToAllCombo2(boolean isNo){
+        if(isNo){
+            for(int i = 0 ;i<7 ;i++){
+                HorizontalLayout layout = (HorizontalLayout) q2Layout.getComponent(i);
+                if(i != 5){
+                    ComboBox comboBox = (ComboBox) layout.getComponent(1);
+                    comboBox.setValue(getYesNoObject("SN", 2));
+                }
+            }
+        }
+    }
+
+    private void setNoToAllCombo3(boolean isNo){
+        if(isNo){
+            for(int i = 0 ;i<3 ;i++) {
+                HorizontalLayout layout = (HorizontalLayout) q3Layout.getComponent(i);
+                ComboBox comboBox = (ComboBox) layout.getComponent(1);
+                comboBox.setValue(getYesNoObject("SN", 2));
+            }
+        }
     }
 
     private HorizontalLayout addHorizontalLayout(String question){
@@ -277,7 +333,7 @@ public class Tab11 extends VerticalLayout {
             }
             else{
                 TextField textField = (TextField) layout.getComponent(1);
-                textField.setValue( String.valueOf(callGetter(answer, "m2"+prefix)));
+                textField.setValue( String.valueOf(callGetterStr(answer, "m2"+prefix)));
             }
         }
         leftOption1Label.setValue(answer.getM2821());
@@ -297,7 +353,7 @@ public class Tab11 extends VerticalLayout {
                 } else if(i == 4 || i == 5) {
                     String prefix = i + "";
                     TextField textField = (TextField) layout.getComponent(1);
-                    textField.setValue( String.valueOf(callGetter(answer, "m3"+prefix)));
+                    textField.setValue( String.valueOf(callGetterStr(answer, "m3"+prefix)));
                 }
                 else{
                     TextField option1 = (TextField) layout.getComponent(1);
@@ -334,6 +390,18 @@ public class Tab11 extends VerticalLayout {
 
         } catch (Exception e) {
             return 0;
+        }
+    }
+
+    private String callGetterStr(Object obj, String fieldName){
+        PropertyDescriptor pd;
+        try {
+            pd = new PropertyDescriptor(fieldName, obj.getClass());
+            Method getter = pd.getReadMethod();
+            return getter.invoke(obj).toString();
+
+        } catch (Exception e) {
+            return "";
         }
     }
 

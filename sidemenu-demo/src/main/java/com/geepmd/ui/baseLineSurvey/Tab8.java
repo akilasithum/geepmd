@@ -103,9 +103,21 @@ public class Tab8 extends VerticalLayout {
                     Label member = new Label((i+1)+"");
                     TextField relationship = new TextField();
                     relationship.setSizeFull();
-                    ComboBox ageCombo = new ComboBox();
+                    TextField ageCombo = new TextField();
                     ageCombo.setSizeFull();
-                    ageCombo.setItems(getStringList(1,100));
+                    ageCombo.addValueChangeListener(event1 -> {
+                        if (event1.getValue() != null) {
+                            if (!isInteger(event1.getValue())) {
+                                Notification.show("Value should be between 1 and 120");
+                                ageCombo.clear();
+                            }
+                            else if (Integer.parseInt(event1.getValue()) < 1 || Integer.parseInt(event1.getValue()) > 120) {
+                                Notification.show("Value should be between 1 and 120");
+                                ageCombo.clear();
+                            }
+                        }
+                    });
+                    //ageCombo.setItems(getStringList(1,100));
                     layout.addComponents(member,relationship,ageCombo);
                     layout.setComponentAlignment(member,Alignment.MIDDLE_CENTER);
                     layout.setExpandRatio(member,1);
@@ -156,6 +168,14 @@ public class Tab8 extends VerticalLayout {
         addComponent(nextBtn);
     }
 
+    private boolean isInteger(String val){
+        try{
+            int intVal = Integer.parseInt(val);
+            return true;
+        }catch (Exception e){
+            return false;
+        }
+    }
     public HorizontalLayout get85Combo(List<?> list,String label){
         ComboBox comboBox = new ComboBox();
         comboBox.setSizeFull();
@@ -175,12 +195,12 @@ public class Tab8 extends VerticalLayout {
             HorizontalLayout layout = (HorizontalLayout)q84Layout.getComponent(i);
             Label memberNo = (Label) layout.getComponent(0);
             TextField relationship = (TextField) layout.getComponent(1);
-            ComboBox age = (ComboBox) layout.getComponent(2);
+            TextField age = (TextField) layout.getComponent(2);
             BaselineQ84 answer = new BaselineQ84();
             answer.setSurveyId(surveyId);
             if(memberNo.getValue() != null) answer.setM1(Integer.parseInt(memberNo.getValue()));
             if(relationship.getValue() != null) answer.setM2(relationship.getValue());
-            if(age.getValue() != null) answer.setM3(Integer.parseInt(age.getValue().toString()));
+            if(age.getValue() != null && !age.getValue().isEmpty()) answer.setM3(Integer.parseInt(age.getValue().toString()));
             answerList.add(answer);
         }
         return answerList;
@@ -257,10 +277,10 @@ public class Tab8 extends VerticalLayout {
             for (int i=0;i<answer84.size();i++){
                 HorizontalLayout layout = (HorizontalLayout)q84Layout.getComponent(i+2);
                 TextField relationship = (TextField) layout.getComponent(1);
-                ComboBox age = (ComboBox) layout.getComponent(2);
+                TextField age = (TextField) layout.getComponent(2);
                 BaselineQ84 baselineQ84 = answer84.get(i);
                 relationship.setValue(baselineQ84.getM2());
-                age.setValue(String.valueOf(baselineQ84.getM3()));
+                if(baselineQ84.getM3() != 0)age.setValue(String.valueOf(baselineQ84.getM3()));
             }
         }
 

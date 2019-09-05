@@ -117,15 +117,48 @@ public class Tab9 extends VerticalLayout{
     private HorizontalLayout getTimeMap(){
         HorizontalLayout yearMonthLayout = new HorizontalLayout();
         yearMonthLayout.setSizeFull();
-        ComboBox hourCombo = new ComboBox();
+        TextField hourCombo = new TextField();
         hourCombo.setSizeFull();
-        hourCombo.setItems(getStringList(0,10));
-        ComboBox minuteCombo = new ComboBox();
+        hourCombo.addValueChangeListener(event -> {
+            if (event.getValue() != null) {
+                if (!isInteger(event.getValue())) {
+                    Notification.show("Value should be between 0 and 10");
+                    hourCombo.clear();
+                }
+                else if (Integer.parseInt(event.getValue()) < 0 || Integer.parseInt(event.getValue()) > 10) {
+                    Notification.show("Value should be between 0 and 10");
+                    hourCombo.clear();
+                }
+            }
+        });
+        //hourCombo.setItems(getStringList(0,10));
+        TextField minuteCombo = new TextField();
         minuteCombo.setSizeFull();
-        minuteCombo.setItems(getStringList(0,60));
+        minuteCombo.addValueChangeListener(event -> {
+            if (event.getValue() != null) {
+                if (!isInteger(event.getValue())) {
+                    Notification.show("Value should be between 0 and 59");
+                    minuteCombo.clear();
+                }
+                else if (Integer.parseInt(event.getValue()) < 0 || Integer.parseInt(event.getValue()) > 59) {
+                    Notification.show("Value should be between 0 and 59");
+                    minuteCombo.clear();
+                }
+            }
+        });
+        //minuteCombo.setItems(getStringList(0,60));
         yearMonthLayout.addComponents(hourCombo,minuteCombo);
        // yearMonthLayout.setMargin(new MarginInfo(false,false,false,true));
         return yearMonthLayout;
+    }
+
+    private boolean isInteger(String val){
+        try{
+            int intVal = Integer.parseInt(val);
+            return true;
+        }catch (Exception e){
+            return false;
+        }
     }
 
     public BaselineQ9 getQ9Answers(int surveyId) {
@@ -136,11 +169,11 @@ public class Tab9 extends VerticalLayout{
         }*/
         for(int i = 0;i<firstSetLayout.getComponentCount();i++){
             HorizontalLayout layout = (HorizontalLayout)((HorizontalLayout)firstSetLayout.getComponent(i)).getComponent(1);
-            ComboBox hourCombo = (ComboBox) layout.getComponent(0);
-            ComboBox minuteCombo = (ComboBox) layout.getComponent(1);
+            TextField hourCombo = (TextField) layout.getComponent(0);
+            TextField minuteCombo = (TextField) layout.getComponent(1);
             String time = "";
-            if(hourCombo.getValue() != null) time = String.valueOf(hourCombo.getValue()) + "Hr";
-            time += minuteCombo.getValue() != null ?
+            if(hourCombo.getValue() != null && !hourCombo.getValue().isEmpty()) time = String.valueOf(hourCombo.getValue()) + "Hr";
+            time += (minuteCombo.getValue() != null && !minuteCombo.getValue().isEmpty()) ?
                     (String.valueOf(minuteCombo.getValue()) + "Min") : ("00 Min");
             if(i == 0) answer.setM1(time);
             if(i == 1) answer.setM2(time);
@@ -173,8 +206,8 @@ public class Tab9 extends VerticalLayout{
         questionDBUniqueIdField.setValue(String.valueOf(answer.getBaselineQ9Id()));
         for(int i = 0;i<firstSetLayout.getComponentCount();i++){
             HorizontalLayout layout = (HorizontalLayout)((HorizontalLayout)firstSetLayout.getComponent(i)).getComponent(1);
-            ComboBox hourCombo = (ComboBox) layout.getComponent(0);
-            ComboBox minuteCombo = (ComboBox) layout.getComponent(1);
+            TextField hourCombo = (TextField) layout.getComponent(0);
+            TextField minuteCombo = (TextField) layout.getComponent(1);
             String time = "";
             if(i == 0 && answer.getM1() != null) time = answer.getM1();
             if(i == 1 && answer.getM2() != null) time = answer.getM2();

@@ -4,10 +4,12 @@ import com.geepmd.dbConnection.DBConnection;
 import com.geepmd.entity.MotherDetails;
 import com.geepmd.utils.SinhalaMap;
 import com.geepmd.utils.SurveyUtils;
+import com.vaadin.icons.VaadinIcons;
 import com.vaadin.navigator.View;
 import com.vaadin.navigator.ViewChangeListener;
 import com.vaadin.shared.ui.MarginInfo;
 import com.vaadin.ui.*;
+import com.vaadin.ui.renderers.ComponentRenderer;
 import org.hibernate.Session;
 
 import java.time.LocalDate;
@@ -34,11 +36,13 @@ public class MotherRegistration extends VerticalLayout implements View {
     TextField medicalArea;
     TextField villageArea;
     TextField antenatalClinicFld;
+    TextField idField;
     //TextField dsDivisionFld;
     List<MotherDetails> list;
     ComboBox hourCombo;
     ComboBox minuteCombo;
     ComboBox ampmCombo;
+    MotherDetails editMother;
     public void enter(ViewChangeListener.ViewChangeEvent viewChangeEvent) {
         Object userName = UI.getCurrent().getSession().getAttribute("userName");
         if (userName == null || userName.toString().isEmpty()) {
@@ -59,16 +63,16 @@ public class MotherRegistration extends VerticalLayout implements View {
     }
 
     private void createMainLayout(){
-
         Label header = new Label(questionMap.get("0"));
         header.addStyleName("surveyHeader");
         MarginInfo rightMargin = new MarginInfo(false,true,false,false);;
         addComponent(header);
-
         FormLayout formLayout1 = new FormLayout();
         FormLayout formLayout2 = new FormLayout();
         formLayout1.setMargin(new MarginInfo(false,true,false,false));
         formLayout2.setMargin(new MarginInfo(false,false,false,true));
+        idField = new TextField();
+        idField.setVisible(false);
         mNameFld = new TextField(questionMap.get("1"));
         mNameFld.setRequiredIndicatorVisible(true);
         mSerialNo = new TextField(questionMap.get("13"));
@@ -95,7 +99,7 @@ public class MotherRegistration extends VerticalLayout implements View {
         submitBtn.addClickListener(event -> {insertMotherDetails();});
         clearBtn.addClickListener(event -> {clearForm();});
 
-        formLayout1.addComponents(mSerialNo,mNameFld,mAgeFld,dateFld,examinorId,mNicNo);
+        formLayout1.addComponents(idField,mSerialNo,mNameFld,mAgeFld,dateFld,examinorId,mNicNo);
         formLayout2.addComponents(motherRegNo,startTime,familyMedicalArea,medicalArea,villageArea,antenatalClinicFld);
 
         HorizontalLayout buttonLayout = new HorizontalLayout();
@@ -110,6 +114,26 @@ public class MotherRegistration extends VerticalLayout implements View {
         showGridData();
     }
 
+    private void fillEditDetails(MotherDetails mother){
+        editMother = mother;
+        idField.setValue(String.valueOf(mother.getMotherRegNo()));
+        if(mother.getMotherSerialNumber() != null )mSerialNo.setValue(mother.getMotherSerialNumber());
+        if(mother.getMotherName() != null )mNameFld.setValue(mother.getMotherName());
+        if(mother.getAge() != 0 )mAgeFld.setValue(String.valueOf(mother.getAge()));
+        if(mother.getDate() != null){
+            LocalDate date = mother.getDate().toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
+            dateFld.setValue(date);
+        }
+        if(mother.getExaminerRegNo() != null )examinorId.setValue(mother.getExaminerRegNo());
+        if(mother.getNicNo() != null )mNicNo.setValue(mother.getNicNo());
+        if(mother.getMotherRegNo() != 0 )motherRegNo.setValue(String.valueOf(mother.getMotherDocumentRegNo()));
+        if(mother.getStartTime() != null )startTime.setValue(mother.getStartTime());
+        if(mother.getMohDivision() != null )familyMedicalArea.setValue(mother.getMohDivision());
+        if(mother.getPhmDivision() != null )medicalArea.setValue(mother.getPhmDivision());
+        if(mother.getGnDivision() != null )villageArea.setValue(mother.getGnDivision());
+        if(mother.getAntenatalClinic() != null )antenatalClinicFld.setValue(mother.getAntenatalClinic());
+    }
+
     private void insertMotherDetails(){
 
         String motherName = mNameFld.getValue();
@@ -120,7 +144,7 @@ public class MotherRegistration extends VerticalLayout implements View {
         boolean nicValidated = validateNIC(nic);
         if(ageValidated && nicValidated) {
             if (motherName != null && !motherName.isEmpty() && serialNo != null && !serialNo.isEmpty()) {
-                if(connection.isMotherIdAvailable(serialNo)){
+                if((idField.getValue() == null && idField.getValue().isEmpty()) && connection.isMotherIdAvailable(serialNo)){
                     Notification.show("Mother serial number already exists.", Notification.Type.WARNING_MESSAGE);
                     return;
                 }
@@ -139,17 +163,36 @@ public class MotherRegistration extends VerticalLayout implements View {
                 mother.setGnDivision(villageArea.getValue());
                 mother.setAntenatalClinic(antenatalClinicFld.getValue());
                 Session session = connection.getSession();
-                int motherId = connection.saveObjectHBM(mother,session);
-                connection.closeSession(session);
-                if (motherId != 0) {
-                    Notification.show("Mother's serial number is " + motherName);
-                    mother.setMotherRegNo(motherId);
-                    list.add(mother);
+                int motherId = 0;
+                if(idField.getValue() != null && !idField.getValue().isEmpty()){
+                    mother.setMotherRegNo(Integer.parseInt(idField.getValue()));
+                    connection.saveOrUpdateHBM(mother,session);
+                    int index = list.indexOf(editMother);
+                    list.remove(editMother);
+                    if(index == list.size()){
+                        list.add(mother);
+                    }
+                    else {
+                        list.add(index,mother);
+                    }
                     motherDetailsGrid.setItems(list);
                     clearForm();
-                } else {
-                    Notification.show("Something went wrong", Notification.Type.WARNING_MESSAGE);
+                    Notification.show("Mother details updated successfully");
                 }
+                else{
+                    motherId = connection.saveObjectHBM(mother,session);
+                    if (motherId != 0) {
+                        Notification.show("Mother's serial number is " + motherName);
+                        mother.setMotherRegNo(motherId);
+                        list.add(mother);
+                        motherDetailsGrid.setItems(list);
+                        clearForm();
+                    } else {
+                        Notification.show("Something went wrong", Notification.Type.WARNING_MESSAGE);
+                    }
+                }
+                connection.closeSession(session);
+
             } else {
                 Notification.show("Please fill all required fields", Notification.Type.WARNING_MESSAGE);
             }
@@ -187,6 +230,7 @@ public class MotherRegistration extends VerticalLayout implements View {
 
 
     private void clearForm(){
+        idField.clear();
         mNameFld.clear();
         mAgeFld.clear();
         examinorId.clear();
@@ -197,6 +241,15 @@ public class MotherRegistration extends VerticalLayout implements View {
         medicalArea.clear();
         villageArea.clear();
         antenatalClinicFld.clear();
+        editMother = null;
+    }
+
+    private Button addEditBtn(MotherDetails mother){
+        Button btn = new Button();
+        btn.setSizeFull();
+        btn.setIcon(VaadinIcons.EDIT);
+        btn.addClickListener(event -> {fillEditDetails(mother);});
+        return btn;
     }
 
     private void showGridData(){
@@ -204,6 +257,10 @@ public class MotherRegistration extends VerticalLayout implements View {
         motherDetailsGrid.setSizeFull();
         addComponent(motherDetailsGrid);
 
+        motherDetailsGrid.addColumn(
+        person -> addEditBtn(person),
+                new ComponentRenderer()
+        );
         motherDetailsGrid.addColumn(MotherDetails::getMotherSerialNumber).setCaption(questionMap.get("13"));
         motherDetailsGrid.addColumn(MotherDetails::getMotherName).setCaption(questionMap.get("1"));
         motherDetailsGrid.addColumn(MotherDetails::getAge).setCaption(questionMap.get("2"));

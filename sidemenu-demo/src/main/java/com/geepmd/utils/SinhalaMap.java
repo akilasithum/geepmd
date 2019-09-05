@@ -101,7 +101,7 @@ public class SinhalaMap {
         map.put("6.4",Arrays.asList("1.යකඩ බහුල ආහාර හා ආහාර රටාවේ වෙනස්කම්","2.යකඩ පෙති","3.වෙනත් විටමින් අතිරේක",
                 "4.යකඩ එන්නත් කිරම","5.රුධිර පාරවිලයනය"));
         map.put("6.9",Arrays.asList("1.නැත","2.ඔව් (කොළ් පැහැති පතිරිකාවක්- තැලිසීමියාව නැත)","" +
-                "3.ඔව් (රෝස පැහැති පතිරිකාවක්- තැලිසීමියා වාහක)","4.ඔව් (තැලිසීමියා ඉන්ටරමීඩියා රෝගය / Intermedia))",
+                        "3.ඔව් (රෝස පැහැති පතිරිකාවක්- තැලිසීමියා වාහක)","4.ඔව් (තැලිසීමියා ඉන්ටරමීඩියා රෝගය / Intermedia))",
                 "5.ඔව් (තැලිසීමියා මේජර් රෝගය / major)"));
         return map;
     }
@@ -286,6 +286,7 @@ public class SinhalaMap {
 
     public static Map<String,String> getQ12Map(){
         Map<String,String> map = new HashMap<>();
+        map.put("12","කිසිවක් නැත");
         map.put("12.1","12.1 Chest pain suggestive of sinister cardiac pathology (Ischemia, Pulmonary Embolism, Aortic" +
                 " dissection or valve related pathology) ");
         map.put("12.2","12.2 Difficulty in breathing even at rest/mild exertion (non-asthmatic)");
@@ -342,6 +343,7 @@ public class SinhalaMap {
     }
     public static Map<String,String> getQ5Fields(){
         Map<String,String> map = new HashMap<>();
+        map.put("5.1","කිසිවක් නැත");
         map.put("5.11","දරුවා පිළිසිද ගැනිමට මාස 03 පෙර");
         map.put("5.12","ඔව්/නැත");
         map.put("5.13","වාර ගණන");
@@ -364,6 +366,7 @@ public class SinhalaMap {
 
     public static Map<String,String> getQ6Fields(){
         Map<String,String> map = new HashMap<>();
+        map.put("6.1","කිසිවක් නැත");
         map.put("6.11","a. රුධිර පීඩනය ඉහල යාම");
         map.put("6.12","b. රුධිර කොලෙස්ටරෝල් ප්\u200Dරමාණය  ඉහල යාම");
         map.put("6.13","c. රුධිර සීනි මට්ටම ඉහල යාම");
@@ -401,6 +404,7 @@ public class SinhalaMap {
 
     public static Map<String,String> getQ11Fields() {
         Map<String, String> map = new HashMap<>();
+        map.put("11.1","කිසිවක් නැත");
         map.put("7.11","ක්\u200Dරියාකාරකම");
         map.put("7.31","ස්ථානය");
         map.put("7.32","a.නිවසේදී");
@@ -411,6 +415,7 @@ public class SinhalaMap {
 
     public static Map<String,String> getQ7Fields() {
         Map<String, String> map = new HashMap<>();
+        map.put("7.1","කිසිවක් නැත");
         map.put("a","a. දියවැඩියාව");
         map.put("b","b. ආගාතය / අංශ භාගය");
         map.put("c","c. අධිරුධිර පීඩනය");

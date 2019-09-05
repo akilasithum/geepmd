@@ -47,6 +47,14 @@ public class Tab12 extends VerticalLayout {
         Label label = new Label("Cardiovascular diseases – Screening checklist - History");
         label.setStyleName("padHeader");
         addComponent(label);
+
+        CheckBox noToAll = new CheckBox(q12Map.get("12"));
+        addComponent(noToAll);
+        noToAll.setStyleName("checkBoxMargin");
+        noToAll.addValueChangeListener(event -> {
+            setNoToAllCombo(event.getValue());
+        });
+
         mainLayout = new VerticalLayout();
         mainLayout.setSizeFull();
         mainLayout.setWidth("70%");
@@ -70,7 +78,16 @@ public class Tab12 extends VerticalLayout {
         specialNotesTextArea.setSizeFull();
         specialNotesTextArea.addValueChangeListener(event -> {specialNotesLimit(event.getValue());});
         mainLayout.addComponent(specialNotesTextArea);
+    }
 
+    private void setNoToAllCombo(boolean isNo) {
+        if(isNo) {
+            for (int i = 0; i < mainLayout.getComponentCount() - 1; i++) {
+                HorizontalLayout layout = (HorizontalLayout) mainLayout.getComponent(i);
+                ComboBox comboBox = (ComboBox) layout.getComponent(1);
+                comboBox.setValue(getYesNoObject("SN", 2));
+            }
+        }
     }
 
     private void specialNotesLimit(String val){

@@ -51,6 +51,13 @@ public class Tab7 extends VerticalLayout {
         q1Header.setSizeFull();
         addComponent(q1Header);
 
+        CheckBox noToAll = new CheckBox(fields.get("7.1"));
+        addComponent(noToAll);
+        noToAll.setStyleName("checkBoxMargin");
+        noToAll.addValueChangeListener(event -> {
+            setNoToAllCombo(event.getValue());
+        });
+
         questionLayout = new VerticalLayout();
         questionLayout.setSizeFull();
         questionLayout.setMargin(true);
@@ -73,6 +80,16 @@ public class Tab7 extends VerticalLayout {
             survey.SelectTab(7);
         });
         addComponent(nextBtn);
+    }
+
+    private void setNoToAllCombo(boolean isNo){
+        if(isNo){
+            for(int i = 0;i< questionLayout.getComponentCount();i++){
+                HorizontalLayout layout = (HorizontalLayout)questionLayout.getComponent(i);
+                ComboBox yesNoCombo = (ComboBox) layout.getComponent(1);
+                yesNoCombo.setValue(getYesNoObject("SN",2));
+            }
+        }
     }
 
     private void setYesNoQuestions(VerticalLayout layout,String question){

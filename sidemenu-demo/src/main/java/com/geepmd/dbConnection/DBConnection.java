@@ -170,7 +170,7 @@ public class DBConnection {
             Criteria criteria = session.createCriteria(CommonDetails.class);
             criteria.add(Restrictions.eq("motherId",motherId));
             List list = criteria.list();
-            if(list != null || !list.isEmpty()) return (CommonDetails)list.get(0);
+            if(list != null || !list.isEmpty()) return (CommonDetails)list.get(list.size() - 1);
             else return null;
         } catch (Exception e) {
             return null;

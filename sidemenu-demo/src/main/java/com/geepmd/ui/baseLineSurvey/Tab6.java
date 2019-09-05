@@ -65,6 +65,14 @@ public class Tab6 extends VerticalLayout {
         Label firstQ = new Label(q6Map.get("6.1"));
         firstQ.setSizeFull();
         addComponent(firstQ);
+
+        CheckBox noToAll = new CheckBox(fields.get("6.1"));
+        addComponent(noToAll);
+        noToAll.setStyleName("checkBoxMargin");
+        noToAll.addValueChangeListener(event -> {
+            setNoToAllCombo1(event.getValue());
+        });
+
         firstQAnswerLayout = new VerticalLayout();
         firstQAnswerLayout.setSizeFull();
         firstQAnswerLayout.setMargin(new MarginInfo(false,true));
@@ -74,7 +82,12 @@ public class Tab6 extends VerticalLayout {
 
         Label secondQ = new Label(q6Map.get("6.2"));
         addComponent(secondQ);
-
+        CheckBox noToAll2 = new CheckBox(fields.get("6.1"));
+        addComponent(noToAll2);
+        noToAll2.setStyleName("checkBoxMargin");
+        noToAll2.addValueChangeListener(event -> {
+            setNoToAllCombo2(event.getValue());
+        });
         setQ62Header();
         secondQAnswerLayout = new VerticalLayout();
         secondQAnswerLayout.setSizeFull();
@@ -221,6 +234,37 @@ public class Tab6 extends VerticalLayout {
         addComponent(nextBtn);
     }
 
+    private void setNoToAllCombo1(boolean isNo){
+        if(isNo){
+            for(int i = 0;i<4;i++){
+                HorizontalLayout layout = (HorizontalLayout)firstQAnswerLayout.getComponent(i);
+                ComboBox comboBox = (ComboBox) layout.getComponent(1);
+                if(i == 0){
+                    comboBox.setValue(getYesNoObject("SN",2));
+                }
+                if(i == 1){
+                    comboBox.setValue(getYesNoObject("SN",2));
+                }
+                if(i == 2){
+                    comboBox.setValue(getYesNoObject("SN",2));
+                }
+                if(i == 3){
+                    comboBox.setValue(getYesNoObject("SN",2));
+                }
+            }
+        }
+    }
+
+    private void setNoToAllCombo2(boolean isNo){
+        if(isNo){
+            for(int i = 0 ;i<secondQAnswerLayout.getComponentCount();i++) {
+                HorizontalLayout horizontalLayout = (HorizontalLayout) secondQAnswerLayout.getComponent(i);
+                ComboBox fCombo = (ComboBox) horizontalLayout.getComponent(1);
+                fCombo.setValue(getYesNoObject("SN",2));
+            }
+        }
+    }
+
     private void setQ62Header(){
         HorizontalLayout layout = new HorizontalLayout();
         layout.setSizeFull();
@@ -343,7 +387,7 @@ public class Tab6 extends VerticalLayout {
 
         if(q63Combo.getValue() != null) {
             answer.setM3(getId((Answer)q63Combo.getValue()));
-            if(getId((Answer)q63Combo.getValue()) == 1){
+            if(getId((Answer)q63Combo.getValue()) != 1){
                 if(anemiaCombo.getValue() != null && anemiaCombo.getValue().size() != 0){
                     String val="";
                     for(Answer answer1 : anemiaCombo.getValue()){
@@ -351,7 +395,7 @@ public class Tab6 extends VerticalLayout {
                     }
                     answer.setM4(val.substring(0,val.length()-1));
                 }
-                if(monthsCombo65.getValue() != null) answer.setM3(Integer.parseInt(monthsCombo65.getValue().toString()));
+                if(monthsCombo65.getValue() != null) answer.setM5(Integer.parseInt(monthsCombo65.getValue().toString()));
                 if(yearCombo.getValue() != null || monthCombo.getValue() != null){
                     answer.setM6((yearCombo.getValue() != null ? yearCombo.getValue() : 0) + "years "
                             +(monthCombo.getValue()!= null ? monthCombo.getValue() : 0) +"months");
@@ -440,7 +484,7 @@ public class Tab6 extends VerticalLayout {
         String marriageYear = answer.getM6();
         if(marriageYear != null && !marriageYear.isEmpty() && !marriageYear.equalsIgnoreCase("8888")){
             String[] arr = marriageYear.split(" ");
-            if(arr[0] != "0years") yearCombo.setValue(arr[0].substring(0,arr[0].length()-3));
+            if(arr[0] != "0years") yearCombo.setValue(arr[0].substring(0,arr[0].length()-5));
             if(arr[1] != "0months") monthCombo.setValue(arr[1].substring(0,arr[1].length()-6));
         }
         investigationCombo.setValue(getYesNoObject("SN",answer.getM7()));
