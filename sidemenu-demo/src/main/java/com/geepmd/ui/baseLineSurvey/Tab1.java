@@ -312,6 +312,25 @@ public class Tab1 extends VerticalLayout {
         }
     }
 
+    public void clearFields(){
+        questionDBUniqueIdField.clear();
+        motherBDayFld.clear();
+        fatherBDayFld.clear();
+        ethnicityComboBoxMother.clear();
+        ethnicityComboBoxFather.clear();
+        understandingLevelComboMother.clear();
+        understandingLevelComboFather.clear();
+        religionMotherCombo.clear();
+        religionFatherCombo.clear();
+        schoolGradeMother.clear();
+        schoolGradeFather.clear();
+        afterALMother.clear();
+        sexualEduLMother.clear();
+        maritualStatusCombo.clear();
+        marriedYearCombo.clear();
+        marriedMonthCombo.clear();
+    }
+
     private Answer getAnswerObj(String question, int answer){
         if(answer != 0 && answer != 8888) {
             try {

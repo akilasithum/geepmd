@@ -11,9 +11,7 @@ import com.vaadin.shared.ui.MarginInfo;
 import com.vaadin.ui.*;
 import org.vaadin.addons.ComboBoxMultiselect;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.util.stream.Collectors;
 
 import static com.geepmd.utils.SurveyUtils.*;
@@ -39,6 +37,9 @@ public class Tab6 extends VerticalLayout {
     ComboBox wormCombo;
     Survey survey;
     TextField questionDBUniqueIdField;
+    CheckBox noToAll;
+    CheckBox noToAll2;
+    List<Answer> anemiaAnswerList;
 
     public Tab6(String language,Survey survey){
         this.language = language;
@@ -59,6 +60,7 @@ public class Tab6 extends VerticalLayout {
     }
 
     private void createLayout(){
+        anemiaAnswerList = getAnwerObj(answerMap.get("6.4"));
         questionDBUniqueIdField = new TextField();
         questionDBUniqueIdField.setVisible(false);
         addComponent(questionDBUniqueIdField);
@@ -66,7 +68,7 @@ public class Tab6 extends VerticalLayout {
         firstQ.setSizeFull();
         addComponent(firstQ);
 
-        CheckBox noToAll = new CheckBox(fields.get("6.1"));
+        noToAll = new CheckBox(fields.get("6.1"));
         addComponent(noToAll);
         noToAll.setStyleName("checkBoxMargin");
         noToAll.addValueChangeListener(event -> {
@@ -82,7 +84,7 @@ public class Tab6 extends VerticalLayout {
 
         Label secondQ = new Label(q6Map.get("6.2"));
         addComponent(secondQ);
-        CheckBox noToAll2 = new CheckBox(fields.get("6.1"));
+        noToAll2 = new CheckBox(fields.get("6.1"));
         addComponent(noToAll2);
         noToAll2.setStyleName("checkBoxMargin");
         noToAll2.addValueChangeListener(event -> {
@@ -134,7 +136,7 @@ public class Tab6 extends VerticalLayout {
         addComponent(dependentLayout);
         dependentLayout.setMargin(false);
         anemiaCombo =new ComboBoxMultiselect();
-        anemiaCombo.setItems(getAnwerObj(answerMap.get("6.4")));
+        anemiaCombo.setItems(anemiaAnswerList);
         anemiaCombo.setDescription(getAnswerDesc(answerMap.get("6.4")));
         anemiaCombo.setTextInputAllowed(false);
         dependentLayout.addComponent(setTabData(q6Map.get("6.4"),anemiaCombo));
@@ -478,7 +480,19 @@ public class Tab6 extends VerticalLayout {
             }
         }
         q63Combo.setValue(getAnswerObj(answer.getM3(),answerMap.get("6.3")));
-        anemiaCombo.setValue(getAnswerSetFromString(answer.getM4(),answerMap.get("6.4")));
+
+        Set<Answer> selectedAnswers = new HashSet<>();
+        String str = answer.getM4();
+        if(str != null && !str.isEmpty() && !str.trim().equals("") && !str.equals("8888")){
+            String[] arr = str.split(",");
+            for(String ans : Arrays.asList(arr)){
+                int id = Integer.parseInt(ans);
+                if(id != 0) {
+                    selectedAnswers.add(anemiaAnswerList.get(id-1));
+                }
+            }
+        }
+        anemiaCombo.setValue(selectedAnswers);
         if(answer.getM5() != 0 && answer.getM5() != 8888)monthsCombo65.setValue(String.valueOf(answer.getM5()));
 
         String marriageYear = answer.getM6();
@@ -517,6 +531,43 @@ public class Tab6 extends VerticalLayout {
                     }
                 }
             }
+        }
+    }
+
+    public void clearFields() {
+        questionDBUniqueIdField.clear();
+        for(int i = 0;i<firstQAnswerLayout.getComponentCount();i++){
+            HorizontalLayout layout = (HorizontalLayout)firstQAnswerLayout.getComponent(i);
+            ComboBox comboBox = (ComboBox) layout.getComponent(1);
+            comboBox.clear();
+        }
+        q63Combo.clear();
+        anemiaCombo.clear();
+        monthsCombo65.clear();
+        yearCombo.clear();
+        monthCombo.clear();
+        investigationCombo.clear();
+        thalassemiaCombo.clear();
+        thalassemiaYesCombo.clear();
+        bleedingCombo.clear();
+        blackCombo.clear();
+        wormCombo.clear();
+        noToAll.clear();
+        noToAll2.clear();
+
+        for(int i = 0 ;i<secondQAnswerLayout.getComponentCount();i++) {
+            HorizontalLayout horizontalLayout = (HorizontalLayout) secondQAnswerLayout.getComponent(i);
+            ComboBox fCombo = (ComboBox) horizontalLayout.getComponent(1);
+            HorizontalLayout dependentLayout = (HorizontalLayout) horizontalLayout.getComponent(2);
+            ComboBox writtenCombo = (ComboBox) dependentLayout.getComponent(0);
+            ComboBox yearCombo = (ComboBox) dependentLayout.getComponent(1);
+            ComboBox medicalCombo = (ComboBox) dependentLayout.getComponent(2);
+            ComboBox sectorCombo = (ComboBox) dependentLayout.getComponent(3);
+            fCombo.clear();
+            writtenCombo.clear();
+            yearCombo.clear();
+            medicalCombo.clear();
+            sectorCombo.clear();
         }
     }
 

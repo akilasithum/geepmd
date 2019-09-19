@@ -282,6 +282,22 @@ public class Tab4 extends VerticalLayout {
 
     }
 
+    public void clearFields() {
+        questionDBUniqueIdField.clear();
+        pregnancyPlannedCombo.clear();
+        preConceptionCombo.clear();
+        screenCombo.clear();
+        heartCheckCombo.clear();
+        lmpCombo.clear();
+        folicAcidMonthCombo.clear();
+        mensesDate.clear();
+        pregConfirmCombo.clear();
+        deliveryPreferCombo.clear();
+        delPlaceCombo.clear();
+        folicAcidNowCombo.clear();
+        folicWeekCombo.clear();
+    }
+
     private Date getDateFromStr(String str){
         try {
             return new SimpleDateFormat("yyyy-MM-dd").parse(str);

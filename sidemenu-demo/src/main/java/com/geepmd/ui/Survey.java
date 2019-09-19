@@ -34,6 +34,8 @@ public class Survey extends VerticalLayout implements View {
     Button saveBtn;
     boolean isEdit = false;
     int editSurveyId;
+    HorizontalLayout errorLayout;
+    Window window = new Window("Special Follow Up");
 
     public Survey(){
         createLayout();
@@ -113,9 +115,19 @@ public class Survey extends VerticalLayout implements View {
 
         HorizontalLayout mainHeaderLayout = new HorizontalLayout();
         mainHeaderLayout.setSizeFull();
+
+        errorLayout = new HorizontalLayout();
+        errorLayout.setSizeFull();
+        errorLayout.setWidth("470px");
+        errorLayout.setStyleName("warning");
+        Label specialCareLabel = new Label("This mother needs special Follow Up. Click to see the reason.");
+        errorLayout.addComponent(specialCareLabel);
+        errorLayout.setVisible(false);
+
         mainHeaderLayout.addComponents(motherBtnLayout,btnLayout);
         addComponent(mainHeaderLayout);
-
+        addComponent(errorLayout);
+        setComponentAlignment(errorLayout,Alignment.MIDDLE_CENTER);
 
         addComponent(tabsheet);
         tabsheet.setSizeFull();
@@ -166,6 +178,7 @@ public class Survey extends VerticalLayout implements View {
     }
 
     public void updateDetailsIfAdded(String motherId){
+        clearAllFields();
         CommonDetails common = connection.isMotherDetailsAdded(motherId);
         if(common != null){
             isEdit = true;
@@ -185,6 +198,7 @@ public class Survey extends VerticalLayout implements View {
             BaselineQ11 q11List = (BaselineQ11)connection.getPageValue("com.geepmd.entity.BaselineQ11",surveyId,session);
             BaselineQ12 q12List = (BaselineQ12)connection.getPageValue("com.geepmd.entity.BaselineQ12",surveyId,session);
             BaselineQ26 q26List = (BaselineQ26) connection.getPageValue("com.geepmd.entity.BaselineQ26",surveyId,session);
+            SpecialFollowUp specialFollowUp = (SpecialFollowUp)connection.getSpecialFollowup(motherId,session);
             List<BaselineQ28> q28List = (List<BaselineQ28>) connection.getAllValues("com.geepmd.entity.BaselineQ28",surveyId,session);
             List<BaselineQ32> q32List = (List<BaselineQ32>) connection.getAllValues("com.geepmd.entity.BaselineQ32",surveyId,session);
             List<BaselineQ51> q51List = (List<BaselineQ51>) connection.getAllValues("com.geepmd.entity.BaselineQ51",surveyId,session);
@@ -203,11 +217,57 @@ public class Survey extends VerticalLayout implements View {
             if(q10List != null) tab10.setEditData(q10List);
             if(q11List != null) tab11.setEditData(q11List);
             if(q12List != null) tab12.setEditData(q12List);
+            if(specialFollowUp != null) {
+                tab12.setFollowUpDetails(specialFollowUp);
+                errorLayout.setVisible(true);
+                errorLayout.addLayoutClickListener(event -> {
+                   if(!window.isAttached()){
+                       window.setWidth("600px");
+                       //window.setHeight(200,Unit.PIXELS);
+                       window.center();
+                       window.setModal(true);
+                       VerticalLayout layout = new VerticalLayout();
+                       Label followUpMsg = new Label();
+                       followUpMsg.setSizeFull();
+                       followUpMsg.setValue(specialFollowUp.getFollowUpMessage());
+                       Button okBtn = new Button("Ok");
+                       okBtn.setStyleName("myButton");
+                       okBtn.addClickListener(event1 -> {
+                           window.close();
+                       });
+                       layout.addComponents(followUpMsg,okBtn);
+                       layout.setComponentAlignment(okBtn,Alignment.MIDDLE_CENTER);
+                       window.setContent(layout);
+                       window.setResizable(false);
+                       getUI().addWindow(window);
+                   }
+
+                });
+            }
+            else {
+                errorLayout.setVisible(false);
+            }
           }
           else {
             editSurveyId = 0;
             isEdit = false;
+            errorLayout.setVisible(false);
         }
+    }
+
+    private void clearAllFields(){
+        tab1.clearFields();
+        tab2.clearFields();
+        tab3.clearFields();
+        tab4.clearFields();
+        tab5.clearFields();
+        tab6.clearFields();
+        tab7.clearFields();
+        tab8.clearFields();
+        tab9.clearFields();
+        tab10.clearFields();
+        tab11.clearFields();
+        tab12.clearFields();
     }
 
     public void SelectTab(int index){
@@ -221,13 +281,21 @@ public class Survey extends VerticalLayout implements View {
         }
         String motherId = motherSerialIdComboBox.getValue().toString();
         User user = (User)UI.getCurrent().getSession().getAttribute("userName");
-        CommonDetails common = new CommonDetails();
+
+        CommonDetails common = connection.isMotherDetailsAdded(motherId);
+        int surveyId;
+        if(common != null){
+            editSurveyId = common.getSurveyId();
+            isEdit = true;
+        }
+
+        common = new CommonDetails();
         common.setMotherId(motherId);
         common.setSurveyType("Baseline");
         common.setAddedDate(new Date());
         common.setExaminorId(user.getUserId());
         Session session = connection.getSession();
-        int surveyId;
+
         if(isEdit){
             surveyId = editSurveyId;
             common.setSurveyId(surveyId);
@@ -249,35 +317,137 @@ public class Survey extends VerticalLayout implements View {
             connection.deleteBySurveyId("com.geepmd.entity.BaselineQ9",surveyId,session);
             connection.deleteBySurveyId("com.geepmd.entity.BaselineQ11",surveyId,session);
             connection.deleteBySurveyId("com.geepmd.entity.BaselineQ12",surveyId,session);
+            connection.deleteSpecialFollowUp(motherId,session);
+
         }
         else {
             surveyId = connection.saveObjectHBM(common,session);
         }
 
-        connection.saveOrUpdateHBM(tab1.getAnswers(surveyId),session);
-        connection.saveOrUpdateHBM(tab2.getAnswers(surveyId),session);
-        connection.saveOrUpdateHBM(tab2.get26Answer(surveyId),session);
-        List<BaselineQ28> answer28 = tab2.get28Answers(surveyId);
-        answer28.stream().forEach(obj -> connection.saveOrUpdateHBM(obj,session));
-        connection.saveOrUpdateHBM(tab3.getAnswer(surveyId),session);
-        List<BaselineQ32> answer32 = tab3.getQ32Answers(surveyId);
-        answer32.stream().forEach(obj -> connection.saveOrUpdateHBM(obj,session));
-        connection.saveOrUpdateHBM(tab4.getAnswers(surveyId),session);
-        connection.saveOrUpdateHBM(tab5.getAnswer(surveyId),session);
-        List<BaselineQ51> answer51 = tab5.getAnswer51(surveyId);
-        answer51.stream().forEach(obj -> connection.saveOrUpdateHBM(obj,session));
-        connection.saveOrUpdateHBM(tab6.getAnswers(surveyId),session);
-        List<BaselineQ62> answer62 = tab6.getAnswer62(surveyId);
-        answer62.stream().forEach(obj -> connection.saveOrUpdateHBM(obj,session));
-        connection.saveOrUpdateHBM(tab7.getAnswers(surveyId),session);
-        connection.saveOrUpdateHBM(tab8.getQ8Answers(surveyId),session);
-        List<BaselineQ84> answer84 = tab8.get84Answers(surveyId);
-        answer84.stream().forEach(obj -> connection.saveOrUpdateHBM(obj,session));
-        connection.saveOrUpdateHBM(tab9.getQ9Answers(surveyId),session);
-        List<BaselineQ10> answer10 = tab10.getAnswerQ10(surveyId);
-        answer10.stream().forEach(obj -> connection.saveOrUpdateHBM(obj,session));
-        connection.saveOrUpdateHBM(tab11.getAnswerQ11(surveyId),session);
-        connection.saveOrUpdateHBM(tab12.getAnswerQ12(surveyId),session);
+        try{
+            connection.saveOrUpdateHBM(tab1.getAnswers(surveyId),session);
+        }
+        catch (Exception e){
+            e.printStackTrace();
+        }
+        try{
+            connection.saveOrUpdateHBM(tab2.getAnswers(surveyId),session);
+        }
+        catch (Exception e){
+            e.printStackTrace();
+        }
+        try{
+            connection.saveOrUpdateHBM(tab2.get26Answer(surveyId),session);
+        }
+        catch (Exception e){
+            e.printStackTrace();
+        }
+        try{
+            List<BaselineQ28> answer28 = tab2.get28Answers(surveyId);
+            answer28.stream().forEach(obj -> connection.saveOrUpdateHBM(obj,session));
+        }
+        catch (Exception e){
+            e.printStackTrace();
+        }
+        try{
+            connection.saveOrUpdateHBM(tab3.getAnswer(surveyId),session);
+        }
+        catch (Exception e){
+            e.printStackTrace();
+        }
+        try{
+            List<BaselineQ32> answer32 = tab3.getQ32Answers(surveyId);
+            answer32.stream().forEach(obj -> connection.saveOrUpdateHBM(obj,session));
+        }
+        catch (Exception e){
+            e.printStackTrace();
+        }
+
+        try{
+            connection.saveOrUpdateHBM(tab4.getAnswers(surveyId),session);
+        }
+        catch (Exception e){
+            e.printStackTrace();
+        }
+        try{
+            connection.saveOrUpdateHBM(tab5.getAnswer(surveyId),session);
+        }
+        catch (Exception e){
+            e.printStackTrace();
+        }
+        try{
+            List<BaselineQ51> answer51 = tab5.getAnswer51(surveyId);
+            answer51.stream().forEach(obj -> connection.saveOrUpdateHBM(obj,session));
+        }
+        catch (Exception e){
+            e.printStackTrace();
+        }
+        try{
+            connection.saveOrUpdateHBM(tab6.getAnswers(surveyId),session);
+        }
+        catch (Exception e){
+            e.printStackTrace();
+        }
+        try{
+            List<BaselineQ62> answer62 = tab6.getAnswer62(surveyId);
+            answer62.stream().forEach(obj -> connection.saveOrUpdateHBM(obj,session));
+        }
+        catch (Exception e){
+            e.printStackTrace();
+        }
+        try{
+            connection.saveOrUpdateHBM(tab7.getAnswers(surveyId),session);
+        }
+        catch (Exception e){
+            e.printStackTrace();
+        }
+        try{
+            connection.saveOrUpdateHBM(tab8.getQ8Answers(surveyId),session);
+        }
+        catch (Exception e){
+            e.printStackTrace();
+        }
+        try{
+            List<BaselineQ84> answer84 = tab8.get84Answers(surveyId);
+            answer84.stream().forEach(obj -> connection.saveOrUpdateHBM(obj,session));
+        }
+        catch (Exception e){
+            e.printStackTrace();
+        }
+        try{
+            connection.saveOrUpdateHBM(tab9.getQ9Answers(surveyId),session);
+        }
+        catch (Exception e){
+            e.printStackTrace();
+        }
+        try{
+            List<BaselineQ10> answer10 = tab10.getAnswerQ10(surveyId);
+            answer10.stream().forEach(obj -> connection.saveOrUpdateHBM(obj,session));
+        }
+        catch (Exception e){
+            e.printStackTrace();
+        }
+        try{
+            connection.saveOrUpdateHBM(tab11.getAnswerQ11(surveyId),session);
+        }
+        catch (Exception e){
+            e.printStackTrace();
+        }
+        try{
+            connection.saveOrUpdateHBM(tab12.getAnswerQ12(surveyId),session);
+        }
+        catch (Exception e){
+            e.printStackTrace();
+        }
+        try{
+            SpecialFollowUp followUp = tab12.getSpecialFollowUp(motherId);
+            if(followUp != null){
+                connection.saveOrUpdateHBM(followUp,session);
+            }
+        }
+        catch (Exception e){
+            e.printStackTrace();
+        }
         connection.closeSession(session);
         saveBtn.setEnabled(true);
         saveBtn.setCaption("Save Survey");

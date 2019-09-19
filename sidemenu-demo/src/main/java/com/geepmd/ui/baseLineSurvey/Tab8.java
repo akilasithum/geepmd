@@ -106,7 +106,7 @@ public class Tab8 extends VerticalLayout {
                     TextField ageCombo = new TextField();
                     ageCombo.setSizeFull();
                     ageCombo.addValueChangeListener(event1 -> {
-                        if (event1.getValue() != null) {
+                        if (event1.getValue() != null && !event1.getValue().isEmpty()) {
                             if (!isInteger(event1.getValue())) {
                                 Notification.show("Value should be between 1 and 120");
                                 ageCombo.clear();
@@ -283,7 +283,28 @@ public class Tab8 extends VerticalLayout {
                 if(baselineQ84.getM3() != 0)age.setValue(String.valueOf(baselineQ84.getM3()));
             }
         }
+    }
 
+    public void clearFields() {
+        questionDBUniqueIdField.clear();
+        noOfMembers.clear();
+        houseLeaderFld.clear();
+        medicalPref.clear();
+        for(int i=0;i<q85Layout.getComponentCount();i++) {
+            if (i != 10) {
+                HorizontalLayout layout = (HorizontalLayout) q85Layout.getComponent(i);
+                ComboBox comboBox = (ComboBox) layout.getComponent(1);
+                comboBox.clear();
+            }
+        }
+
+        for (int i=0;i<q84Layout.getComponentCount()-2;i++){
+            HorizontalLayout layout = (HorizontalLayout)q84Layout.getComponent(i+2);
+            TextField relationship = (TextField) layout.getComponent(1);
+            TextField age = (TextField) layout.getComponent(2);
+            relationship.clear();
+            age.clear();
+        }
     }
 
     private int getId(Answer answer){

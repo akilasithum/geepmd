@@ -120,7 +120,7 @@ public class Tab9 extends VerticalLayout{
         TextField hourCombo = new TextField();
         hourCombo.setSizeFull();
         hourCombo.addValueChangeListener(event -> {
-            if (event.getValue() != null) {
+            if (event.getValue() != null && !event.getValue().isEmpty()) {
                 if (!isInteger(event.getValue())) {
                     Notification.show("Value should be between 0 and 10");
                     hourCombo.clear();
@@ -135,7 +135,7 @@ public class Tab9 extends VerticalLayout{
         TextField minuteCombo = new TextField();
         minuteCombo.setSizeFull();
         minuteCombo.addValueChangeListener(event -> {
-            if (event.getValue() != null) {
+            if (event.getValue() != null && !event.getValue().isEmpty()) {
                 if (!isInteger(event.getValue())) {
                     Notification.show("Value should be between 0 and 59");
                     minuteCombo.clear();
@@ -148,7 +148,7 @@ public class Tab9 extends VerticalLayout{
         });
         //minuteCombo.setItems(getStringList(0,60));
         yearMonthLayout.addComponents(hourCombo,minuteCombo);
-       // yearMonthLayout.setMargin(new MarginInfo(false,false,false,true));
+        // yearMonthLayout.setMargin(new MarginInfo(false,false,false,true));
         return yearMonthLayout;
     }
 
@@ -198,7 +198,7 @@ public class Tab9 extends VerticalLayout{
     }
     private int getId(Answer answer,boolean isReverse){
         if(isReverse)
-        return answerReverse(answer.getId());
+            return answerReverse(answer.getId());
         else return answer.getId();
     }
 
@@ -223,7 +223,7 @@ public class Tab9 extends VerticalLayout{
                         minuteCombo.setValue(minute[0]);
 
                 }
-            else{
+                else{
                     String[] minute = time.split("Min");
                     if(!minute[0].trim().equals("00"))
                         minuteCombo.setValue(minute[0]);
@@ -232,13 +232,28 @@ public class Tab9 extends VerticalLayout{
         }
         privateTransportCombo.setValue(getYesNoObject("SN",answer.getM51()));
         if(answer.getM51() == 1){
-           // List<String> answerList = answerMap.get("9.5.1");
+            // List<String> answerList = answerMap.get("9.5.1");
             //Collections.reverse(answerList);
             ctbCombo.setValue(getAnswerObj(answerReverse(answer.getM52()),answerMap.get("9.5.1")));
             privateBusCombo.setValue(getAnswerObj(answerReverse(answer.getM53()),answerMap.get("9.5.1")));
             threeWheelCombo.setValue(getAnswerObj(answerReverse(answer.getM54()),answerMap.get("9.5.1")));
         }
 
+    }
+
+    public void clearFields() {
+        questionDBUniqueIdField.clear();
+        for(int i = 0;i<firstSetLayout.getComponentCount();i++){
+            HorizontalLayout layout = (HorizontalLayout)((HorizontalLayout)firstSetLayout.getComponent(i)).getComponent(1);
+            TextField hourCombo = (TextField) layout.getComponent(0);
+            TextField minuteCombo = (TextField) layout.getComponent(1);
+            hourCombo.clear();
+            minuteCombo.clear();
+        }
+        privateTransportCombo.clear();
+        ctbCombo.clear();
+        privateBusCombo.clear();
+        threeWheelCombo.clear();
     }
 
     private int answerReverse(int answer){

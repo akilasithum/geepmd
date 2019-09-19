@@ -2,6 +2,7 @@ package com.geepmd.dbConnection;
 
 import com.geepmd.entity.CommonDetails;
 import com.geepmd.entity.MotherDetails;
+import com.geepmd.entity.SpecialFollowUp;
 import com.geepmd.entity.User;
 import org.hibernate.Criteria;
 import org.hibernate.Session;
@@ -109,6 +110,20 @@ public class DBConnection {
         }
     }
 
+    public void deleteSpecialFollowUp(String motherId,Session session){
+        try
+        {
+            Criteria criteria = session.createCriteria(SpecialFollowUp.class);
+            criteria.add(Restrictions.eq("motherId", motherId));
+            List list = criteria.list();
+            for(Object obj : list){
+                session.delete(obj);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
     public User getUser(String userName) {
         Session session = HibernateUtil.getSessionFactory().openSession();
         try
@@ -154,6 +169,20 @@ public class DBConnection {
         {
             Criteria criteria = session.createCriteria(Class.forName(className));
             criteria.add(Restrictions.eq("surveyId", surveyId));
+            List list = criteria.list();
+            if(list != null && !list.isEmpty()) return list.get(0);
+            else return null;
+        } catch (Exception e) {
+            session.close();
+            return null;
+        }
+    }
+
+    public Object getSpecialFollowup(String motherId,Session session){
+        try
+        {
+            Criteria criteria = session.createCriteria(SpecialFollowUp.class);
+            criteria.add(Restrictions.eq("motherId", motherId));
             List list = criteria.list();
             if(list != null && !list.isEmpty()) return list.get(0);
             else return null;

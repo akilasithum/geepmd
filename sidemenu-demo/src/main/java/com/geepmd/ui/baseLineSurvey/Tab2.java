@@ -38,6 +38,7 @@ public class Tab2 extends VerticalLayout {
     HorizontalLayout padLargeLayout;
     VerticalLayout q28Layout;
     Survey survey;
+    List<Answer> q28AnswerSet;
 
     public Tab2(String language,Survey survey){
         this.language = language;
@@ -55,6 +56,7 @@ public class Tab2 extends VerticalLayout {
     }
 
     private void createLayout(String language){
+        q28AnswerSet = getAnwerObj(answerMap.get("2.8"));
         Map<String,String> q2Map;
         if(language.equals("EN")){
             q2Map = EnglishMap.getquestion1Map();
@@ -217,7 +219,7 @@ public class Tab2 extends VerticalLayout {
         padLargeLayout = getPadLayout("images/large_pad.png");
 
         padLayout.addComponents(layout1,padSmallLayout,padMediumLayout,padLargeLayout);
-         mainLayout.addComponents(label1,padLayout);
+        mainLayout.addComponents(label1,padLayout);
         mainLayout.setExpandRatio(label1,1);
         mainLayout.setExpandRatio(padLayout,9);
         return mainLayout;
@@ -237,7 +239,7 @@ public class Tab2 extends VerticalLayout {
             label.setSizeFull();
             fieldLayout.addComponent(label);
             label.addValueChangeListener(event -> {
-                if(!isInteger(event.getValue())){
+                if(event.getValue() != null && !event.getValue().isEmpty() && !isInteger(event.getValue())){
                     label.setValue("");
                     Notification.show("Enter numeric value between 1 and 9", Notification.Type.WARNING_MESSAGE);
                 }
@@ -260,9 +262,9 @@ public class Tab2 extends VerticalLayout {
     }
 
     private HorizontalLayout addActivitiesTable(String labelVal){
-        ComboBoxMultiselect<Answer> sideEffects = new ComboBoxMultiselect();
+        ComboBoxMultiselect sideEffects = new ComboBoxMultiselect();
         sideEffects.setSizeFull();
-        sideEffects.setItems(getAnwerObj(answerMap.get("2.8")));
+        sideEffects.setItems(q28AnswerSet);
         sideEffects.setDescription(getAnswerDesc(answerMap.get("2.8")));
         sideEffects.setTextInputAllowed(false);
         TextField method = new TextField();
@@ -375,10 +377,6 @@ public class Tab2 extends VerticalLayout {
             TextField field1 = (TextField)smallPad.getComponent(i);
             TextField field2 = (TextField)mediumPad.getComponent(i);
             TextField field3 = (TextField)largePad.getComponent(i);
-            /*int number = 0;
-            if(field3.getValue() != null && !field3.getValue().isEmpty()) number = 3;
-            else if(field2.getValue() != null && !field2.getValue().isEmpty()) number = 2;
-            else if(field1.getValue() != null && !field1.getValue().isEmpty()) number = 1;*/
 
             String c1 = field1.getValue() != null && !field1.getValue().isEmpty() ? field1.getValue() : "0";
             String c2 = field2.getValue() != null && !field2.getValue().isEmpty() ? field2.getValue() : "0";
@@ -403,7 +401,7 @@ public class Tab2 extends VerticalLayout {
         mesTypeCombo.setValue(getYesNoObject("SN",answer.getM1()));
         if(answer.getM2() != 0) mensDaysCombo.setValue(answer.getM2());
         if(answer.getM3() != 0) daysCombo23.setValue(answer.getM3());
-         yesNoCombo24.setValue(getYesNoObject("SN",answer.getM4()));
+        yesNoCombo24.setValue(getYesNoObject("SN",answer.getM4()));
         sanitaryCombo.setValue(getAnswerObj("2.5",answer.getM5()));
         contraceptiveCombo.setValue(getYesNoObject("SN",answer.getM7()));
         diagnosedCombo.setValue(getYesNoObject("SN",answer.getM9()));
@@ -425,13 +423,24 @@ public class Tab2 extends VerticalLayout {
             HorizontalLayout layout = (HorizontalLayout) q28Layout.getComponent(i+1);
             TextField method = (TextField) layout.getComponent(1);
             TextField timePeriod = (TextField) layout.getComponent(2);
-            ComboBoxMultiselect sideEffects = (ComboBoxMultiselect) layout.getComponent(3);
+            ComboBoxMultiselect<Answer> sideEffects = (ComboBoxMultiselect) layout.getComponent(3);
             TextField reason = (TextField) layout.getComponent(4);
 
             BaselineQ28 baselineQ28 = answer28.get(i);
             method.setValue(baselineQ28.getM1());
             timePeriod.setValue(baselineQ28.getM2());
-            sideEffects.setValue(getAnswerSetFromString(baselineQ28.getM3(),answerMap.get("2.8")));
+            Set<Answer> selectedAnswers = new HashSet<>();
+            String str = baselineQ28.getM3();
+            if(str != null && !str.isEmpty() && !str.trim().equals("") && !str.equals("8888")){
+                String[] arr = str.split(",");
+                for(String ans : Arrays.asList(arr)){
+                    int id = Integer.parseInt(ans);
+                    if(id != 0) {
+                        selectedAnswers.add(q28AnswerSet.get(id-1));
+                    }
+                }
+            }
+            sideEffects.setValue(selectedAnswers);
             reason.setValue(baselineQ28.getM4());
         }
     }
@@ -450,7 +459,45 @@ public class Tab2 extends VerticalLayout {
             if(!val[1].equalsIgnoreCase("0")) field2.setValue(val[1]);
             if(!val[2].equalsIgnoreCase("0")) field3.setValue(val[2]);
         }
+    }
 
+    private void clearPadValues(int index){
+        HorizontalLayout smallPad = (HorizontalLayout)padSmallLayout.getComponent(1);
+        HorizontalLayout mediumPad = (HorizontalLayout)padMediumLayout.getComponent(1);
+        HorizontalLayout largePad = (HorizontalLayout)padLargeLayout.getComponent(1);
+
+        TextField field1 = (TextField)smallPad.getComponent(index);
+        TextField field2 = (TextField)mediumPad.getComponent(index);
+        TextField field3 = (TextField)largePad.getComponent(index);
+        field1.clear();
+        field2.clear();
+        field3.clear();
+    }
+
+    public void clearFields(){
+        questionDBUniqueIdField.clear();
+        mesTypeCombo.clear();
+        mensDaysCombo.clear();
+        daysCombo23.clear();
+        yesNoCombo24.clear();
+        sanitaryCombo.clear();
+        contraceptiveCombo.clear();
+        diagnosedCombo.clear();
+        yesNoCombo210.clear();
+        for (int i = 0;i<9;i++){
+            clearPadValues(i);
+        }
+        for(int i = 1;i<q28Layout.getComponentCount();i++){
+            HorizontalLayout layout = (HorizontalLayout) q28Layout.getComponent(i);
+            TextField method = (TextField) layout.getComponent(1);
+            TextField timePeriod = (TextField) layout.getComponent(2);
+            ComboBoxMultiselect sideEffects = (ComboBoxMultiselect) layout.getComponent(3);
+            TextField reason = (TextField) layout.getComponent(4);
+            method.clear();
+            timePeriod.clear();
+            sideEffects.clear();
+            reason.clear();
+        }
     }
 
     private int getId(Answer answer){
@@ -471,4 +518,6 @@ public class Tab2 extends VerticalLayout {
         }
         else return null;
     }
+
+
 }

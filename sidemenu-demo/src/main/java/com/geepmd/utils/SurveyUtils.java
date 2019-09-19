@@ -101,6 +101,19 @@ public class SurveyUtils {
         return answerList;
     }
 
+    public static Set<Answer> getAnwerObjSet(List<String> answers){
+        Set<Answer> answerList = new HashSet<>();
+        int i = 1;
+        for(String str : answers){
+            Answer answer = new Answer();
+            answer.setId(i);
+            answer.setDescription(str);
+            answerList.add(answer);
+            i++;
+        }
+        return answerList;
+    }
+
     public static String getAnswerDesc(List<String> answers){
         String desc = "";
         for(String str : answers){

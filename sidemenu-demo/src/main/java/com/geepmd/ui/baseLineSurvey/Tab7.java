@@ -23,6 +23,7 @@ public class Tab7 extends VerticalLayout {
     String language;
     VerticalLayout questionLayout;
     Survey survey;
+    CheckBox noToAll;
     TextField questionDBUniqueIdField;
 
     public Tab7(String language, Survey survey){
@@ -51,7 +52,7 @@ public class Tab7 extends VerticalLayout {
         q1Header.setSizeFull();
         addComponent(q1Header);
 
-        CheckBox noToAll = new CheckBox(fields.get("7.1"));
+        noToAll = new CheckBox(fields.get("7.1"));
         addComponent(noToAll);
         noToAll.setStyleName("checkBoxMargin");
         noToAll.addValueChangeListener(event -> {
@@ -150,5 +151,13 @@ public class Tab7 extends VerticalLayout {
         }
     }
 
-
+    public void clearFields() {
+        questionDBUniqueIdField.clear();
+        noToAll.clear();
+        for(int i = 0;i< questionLayout.getComponentCount();i++){
+            HorizontalLayout layout = (HorizontalLayout)questionLayout.getComponent(i);
+            ComboBox yesNoCombo = (ComboBox) layout.getComponent(1);
+            yesNoCombo.clear();
+        }
+    }
 }

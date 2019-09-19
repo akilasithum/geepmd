@@ -34,6 +34,7 @@ public class Tab11 extends VerticalLayout {
     TextField rightOption2Label;
     TextField leftOption2Label;
     TextField questionDBUniqueIdField;
+    CheckBox noToAll;
 
     public Tab11(String language, Survey survey){
         this.language = language;
@@ -60,7 +61,7 @@ public class Tab11 extends VerticalLayout {
         addComponent(examinationHeader);
         examinationHeader.setStyleName("padHeader");
 
-        CheckBox noToAll = new CheckBox(fields.get("11.1"));
+        noToAll = new CheckBox(fields.get("11.1"));
         addComponent(noToAll);
         noToAll.setStyleName("checkBoxMargin");
         noToAll.addValueChangeListener(event -> {
@@ -155,7 +156,7 @@ public class Tab11 extends VerticalLayout {
             for(int i = 1 ;i<q1Layout.getComponentCount();i++){
                 HorizontalLayout layout = (HorizontalLayout) q1Layout.getComponent(i);
                 ComboBox comboBox = (ComboBox) layout.getComponent(1);
-                comboBox.setValue(getYesNoObject("SN", 2));
+                comboBox.setValue(getYesNoObject("EN", 2));
             }
         }
     }
@@ -166,7 +167,7 @@ public class Tab11 extends VerticalLayout {
                 HorizontalLayout layout = (HorizontalLayout) q2Layout.getComponent(i);
                 if(i != 5){
                     ComboBox comboBox = (ComboBox) layout.getComponent(1);
-                    comboBox.setValue(getYesNoObject("SN", 2));
+                    comboBox.setValue(getYesNoObject("EN", 2));
                 }
             }
         }
@@ -177,7 +178,7 @@ public class Tab11 extends VerticalLayout {
             for(int i = 0 ;i<3 ;i++) {
                 HorizontalLayout layout = (HorizontalLayout) q3Layout.getComponent(i);
                 ComboBox comboBox = (ComboBox) layout.getComponent(1);
-                comboBox.setValue(getYesNoObject("SN", 2));
+                comboBox.setValue(getYesNoObject("EN", 2));
             }
         }
     }
@@ -322,14 +323,14 @@ public class Tab11 extends VerticalLayout {
             ComboBox comboBox = (ComboBox) layout.getComponent(1);
             String prefix = (i+1)+"";
 
-            comboBox.setValue(getYesNoObject("SN", callGetter(answer, "m1"+prefix)));
+            comboBox.setValue(getYesNoObject("EN", callGetter(answer, "m1"+prefix)));
         }
         for(int i = 0 ;i<7 ;i++){
             HorizontalLayout layout = (HorizontalLayout) q2Layout.getComponent(i);
             String prefix = (i+1)+"";
             if(i != 5){
                 ComboBox comboBox = (ComboBox) layout.getComponent(1);
-                comboBox.setValue(getYesNoObject("SN", callGetter(answer, "m2"+prefix)));
+                comboBox.setValue(getYesNoObject("EN", callGetter(answer, "m2"+prefix)));
             }
             else{
                 TextField textField = (TextField) layout.getComponent(1);
@@ -349,7 +350,7 @@ public class Tab11 extends VerticalLayout {
                     String prefix = (i + 1) + "";
                     ComboBox comboBox = (ComboBox) layout.getComponent(1);
 
-                    comboBox.setValue(getYesNoObject("SN", callGetter(answer, "m3"+prefix)));
+                    comboBox.setValue(getYesNoObject("EN", callGetter(answer, "m3"+prefix)));
                 } else if(i == 4 || i == 5) {
                     String prefix = i + "";
                     TextField textField = (TextField) layout.getComponent(1);
@@ -365,6 +366,58 @@ public class Tab11 extends VerticalLayout {
                     if(i == 7){
                         option1.setValue(answer.getM371());
                         option2.setValue(answer.getM372());
+                    }
+                }
+            }
+        }
+    }
+
+    public void clearFields() {
+        questionDBUniqueIdField.clear();
+        noToAll.clear();
+        for(int i = 0 ;i<q1Layout.getComponentCount();i++){
+            HorizontalLayout layout = (HorizontalLayout) q1Layout.getComponent(i);
+            ComboBox comboBox = (ComboBox) layout.getComponent(1);
+            comboBox.clear();
+        }
+        for(int i = 0 ;i<7 ;i++){
+            HorizontalLayout layout = (HorizontalLayout) q2Layout.getComponent(i);
+            if(i != 5){
+                ComboBox comboBox = (ComboBox) layout.getComponent(1);
+                comboBox.clear();
+            }
+            else{
+                TextField textField = (TextField) layout.getComponent(1);
+                textField.clear();
+            }
+        }
+        leftOption1Label.clear();
+        leftOption2Label.clear();
+        rightOption1Label.clear();
+        rightOption2Label.clear();
+
+        for(int i = 0 ;i<8 ;i++) {
+            if (i != 3) {
+                HorizontalLayout layout = (HorizontalLayout) q3Layout.getComponent(i);
+
+                if (i == 0 || i == 1 || i == 2) {
+                    ComboBox comboBox = (ComboBox) layout.getComponent(1);
+
+                    comboBox.clear();
+                } else if(i == 4 || i == 5) {
+                    TextField textField = (TextField) layout.getComponent(1);
+                    textField.clear();
+                }
+                else{
+                    TextField option1 = (TextField) layout.getComponent(1);
+                    TextField option2 = (TextField) layout.getComponent(2);
+                    if(i == 6){
+                        option1.clear();
+                        option2.clear();
+                    }
+                    if(i == 7){
+                        option1.clear();
+                        option2.clear();
                     }
                 }
             }

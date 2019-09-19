@@ -2,18 +2,13 @@ package com.geepmd.utils;
 
 import com.geepmd.dbConnection.DBConnection;
 import com.geepmd.entity.*;
-import com.vaadin.server.FileDownloader;
-import com.vaadin.server.FileResource;
-import com.vaadin.ui.Button;
-import com.vaadin.ui.Image;
 import com.vaadin.ui.Notification;
 import org.apache.poi.ss.usermodel.*;
-import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.hibernate.Session;
+import org.apache.poi.xssf.streaming.SXSSFWorkbook;
 
 import java.io.File;
 import java.io.FileOutputStream;
-import java.io.IOException;
 import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -41,7 +36,7 @@ public class DownloadExcelFile implements Runnable{
     }
 
     private void download(){
-        Workbook workbook = new XSSFWorkbook();
+        SXSSFWorkbook workbook = new SXSSFWorkbook(100);
         Sheet sheet = workbook.createSheet("Baseline survey");
         createHeaderRow(workbook,sheet);
         connection = DBConnection.getInstance();
@@ -370,6 +365,8 @@ public class DownloadExcelFile implements Runnable{
 
         FileOutputStream fileOut = new FileOutputStream(tempFile);
         workbook.write(fileOut);
+        fileOut.close();
+        workbook.dispose();
         excelDownloadServiceListener.onComplete(tempFile.getPath());
         } catch (Exception e) {
             excelDownloadServiceListener.onFail();

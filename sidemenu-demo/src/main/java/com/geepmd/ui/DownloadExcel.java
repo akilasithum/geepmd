@@ -17,10 +17,7 @@ import org.hibernate.Session;
 
 import java.io.*;
 import java.lang.reflect.Method;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.util.stream.Collectors;
 
 public class DownloadExcel extends VerticalLayout implements View {
@@ -34,12 +31,16 @@ public class DownloadExcel extends VerticalLayout implements View {
     Image logo;
     Map<Integer,String> letterIntMap;
     private Button downloadBtn;
+    User user;
 
 
     public void enter(ViewChangeListener.ViewChangeEvent viewChangeEvent) {
         Object userName = UI.getCurrent().getSession().getAttribute("userName");
         if (userName == null || userName.toString().isEmpty()) {
             getUI().getNavigator().navigateTo("Login");
+        }
+        else{
+            user = (User)userName;
         }
     }
 
@@ -59,7 +60,13 @@ public class DownloadExcel extends VerticalLayout implements View {
         addComponent(logo);
         logo.setVisible(false);
         generateExcelBtn.addClickListener(event -> {
-            downloadExcel();
+            List<String> validUsers = Arrays.asList("akila","Ayesh","agampodi");
+            if(user != null && validUsers.contains(user.getUserName())){
+                downloadExcel();
+            }
+            else {
+                Notification.show("You don't have permissionn to download the excel file", Notification.Type.ERROR_MESSAGE);
+            }
         });
     }
 
@@ -74,29 +81,7 @@ public class DownloadExcel extends VerticalLayout implements View {
                             File file = new File(path);
                             String fileName = "BaseLineSurvey";
                             StreamResource resource = getExistingFile(fileName+".xlsx", path);
-                            //UI.getCurrent().access(() -> {
                             getUI().getPage().open(resource, "_blank", false);
-
-                            /*FileResource fir = new FileResource(file);
-                            FileDownloader fileDownloader = new FileDownloader(fir);
-                            FileOutputStream out = new FileOutputStream(file);
-                            out.close();
-                            downloadBtn = new Button("Download");
-                            fileDownloader.extend(downloadBtn);
-
-                            Window window = new Window();
-                            window.setSizeFull();
-                            window.setWidth("200px");
-                            window.setHeight("100px");
-                            VerticalLayout windowContent = new VerticalLayout();
-                            windowContent.addComponent(new Label("Your file is ready to download"));
-                            windowContent.addComponent(downloadBtn);
-                            windowContent.setMargin(true);
-                            window.setContent(windowContent);
-                            window.center();
-                            getUI().addWindow(window);*/
-
-                           // });
                             file.deleteOnExit();
                         } catch (Exception e) {
                             Notification.show("Something went worng", Notification.Type.WARNING_MESSAGE);

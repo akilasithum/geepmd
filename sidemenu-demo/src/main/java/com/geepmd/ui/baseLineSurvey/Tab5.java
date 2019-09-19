@@ -30,6 +30,8 @@ public class Tab5 extends VerticalLayout {
     HorizontalLayout q52Layout;
     HorizontalLayout q53Layout;
     TextField questionDBUniqueIdField;
+    CheckBox notToAllPriorConceptionCheckBox;
+    CheckBox notToAllafterConceptionCheckBox;
 
     public Tab5(String language,Survey survey){
         this.language = language;
@@ -112,12 +114,12 @@ public class Tab5 extends VerticalLayout {
         HorizontalLayout noToAllLayout = new HorizontalLayout();
         noToAllLayout.setSizeFull();
 
-        CheckBox notToAllPriorConceptionCheckBox = new CheckBox(fields.get("5.1"));
+        notToAllPriorConceptionCheckBox = new CheckBox(fields.get("5.1"));
         notToAllPriorConceptionCheckBox.setStyleName("checkBoxMargin");
         notToAllPriorConceptionCheckBox.addValueChangeListener(event -> {
             fillAllNo(1);
         });
-        CheckBox notToAllafterConceptionCheckBox = new CheckBox(fields.get("5.1"));
+        notToAllafterConceptionCheckBox = new CheckBox(fields.get("5.1"));
         notToAllafterConceptionCheckBox.setStyleName("checkBoxMargin");
         notToAllafterConceptionCheckBox.addValueChangeListener(event -> {
             fillAllNo(2);
@@ -377,6 +379,37 @@ public class Tab5 extends VerticalLayout {
                     }
                 }
             }
+        }
+    }
+
+    public void clearFields() {
+        questionDBUniqueIdField.clear();
+        q52ComboBox.clear();
+        q53ComboBox.clear();
+        notToAllafterConceptionCheckBox.clear();
+        notToAllPriorConceptionCheckBox.clear();
+        for(int i = 0;i<q1Layout.getComponentCount();i++){
+            HorizontalLayout horizontalLayout = (HorizontalLayout) q1Layout.getComponent(i);
+            HorizontalLayout beforeLayout = (HorizontalLayout) horizontalLayout.getComponent(1);
+            HorizontalLayout beforeDependentLayout = (HorizontalLayout) beforeLayout.getComponent(1);
+            HorizontalLayout afterLayout = (HorizontalLayout) horizontalLayout.getComponent(2);
+            HorizontalLayout afterDependentLayout = (HorizontalLayout) afterLayout.getComponent(1);
+            ComboBox b1Combo = (ComboBox) beforeLayout.getComponent(0);
+            ComboBox b2Combo = (ComboBox) beforeDependentLayout.getComponent(0);
+            ComboBox b3Combo = (ComboBox) beforeDependentLayout.getComponent(1);
+            ComboBox b4Combo = (ComboBox) beforeDependentLayout.getComponent(2);
+            ComboBox a1Combo = (ComboBox) afterLayout.getComponent(0);
+            ComboBox a2Combo = (ComboBox) afterDependentLayout.getComponent(0);
+            ComboBox a3Combo = (ComboBox) afterDependentLayout.getComponent(1);
+            ComboBox a4Combo = (ComboBox) afterDependentLayout.getComponent(2);
+            b1Combo.clear();
+            b2Combo.clear();
+            b3Combo.clear();
+            b4Combo.clear();
+            a1Combo.clear();
+            a2Combo.clear();
+            a3Combo.clear();
+            a4Combo.clear();
         }
     }
 

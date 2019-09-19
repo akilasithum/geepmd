@@ -2,6 +2,7 @@ package com.geepmd.ui.baseLineSurvey;
 
 import com.geepmd.entity.BaselineQ11;
 import com.geepmd.entity.BaselineQ12;
+import com.geepmd.entity.SpecialFollowUp;
 import com.geepmd.ui.Survey;
 import com.geepmd.utils.Answer;
 import com.geepmd.utils.EnglishMap;
@@ -23,6 +24,9 @@ public class Tab12 extends VerticalLayout {
     VerticalLayout mainLayout;
     TextField questionDBUniqueIdField;
     TextArea specialNotesTextArea;
+    CheckBox noToAll;
+    ComboBox specialFollowUpCombo;
+    TextArea specialFollowUpTextArea;
 
     public Tab12(String language, Survey survey){
         this.language = language;
@@ -48,7 +52,7 @@ public class Tab12 extends VerticalLayout {
         label.setStyleName("padHeader");
         addComponent(label);
 
-        CheckBox noToAll = new CheckBox(q12Map.get("12"));
+        noToAll = new CheckBox(q12Map.get("12"));
         addComponent(noToAll);
         noToAll.setStyleName("checkBoxMargin");
         noToAll.addValueChangeListener(event -> {
@@ -78,6 +82,23 @@ public class Tab12 extends VerticalLayout {
         specialNotesTextArea.setSizeFull();
         specialNotesTextArea.addValueChangeListener(event -> {specialNotesLimit(event.getValue());});
         mainLayout.addComponent(specialNotesTextArea);
+        specialFollowUpCombo = new ComboBox("Need of special follow up?");
+        specialFollowUpCombo.setItems(getYesNoAnswer("EN"));
+        specialFollowUpTextArea = new TextArea("If yes reason for special follow up?");
+        specialFollowUpTextArea.setSizeFull();
+        specialFollowUpTextArea.setVisible(false);
+        mainLayout.addComponents(specialFollowUpCombo,specialFollowUpTextArea);
+        specialFollowUpCombo.addValueChangeListener(event -> {
+            Answer answer = (Answer) event.getValue();
+            if(answer == null || answer.getId() == 2 ){
+                specialFollowUpTextArea.setVisible(false);
+                specialFollowUpTextArea.clear();
+            }
+            else{
+                specialFollowUpTextArea.setVisible(true);
+            }
+        });
+
     }
 
     private void setNoToAllCombo(boolean isNo) {
@@ -85,7 +106,7 @@ public class Tab12 extends VerticalLayout {
             for (int i = 0; i < mainLayout.getComponentCount() - 1; i++) {
                 HorizontalLayout layout = (HorizontalLayout) mainLayout.getComponent(i);
                 ComboBox comboBox = (ComboBox) layout.getComponent(1);
-                comboBox.setValue(getYesNoObject("SN", 2));
+                comboBox.setValue(getYesNoObject("EN", 2));
             }
         }
     }
@@ -118,11 +139,8 @@ public class Tab12 extends VerticalLayout {
 
     public BaselineQ12 getAnswerQ12(int surveyId) {
         BaselineQ12 answer = new BaselineQ12();
-        /*if(questionDBUniqueIdField.getValue() != null && !questionDBUniqueIdField.getValue().isEmpty()){
-            answer.setBaselineQ12Id(Integer.parseInt(questionDBUniqueIdField.getValue()));
-        }*/
         answer.setSurveyId(surveyId);
-        for (int i = 0; i < mainLayout.getComponentCount()-1; i++) {
+        for (int i = 0; i < mainLayout.getComponentCount()-3; i++) {
             HorizontalLayout layout = (HorizontalLayout) mainLayout.getComponent(i);
             ComboBox comboBox = (ComboBox) layout.getComponent(1);
             String prefix = (i + 1) + "";
@@ -134,15 +152,45 @@ public class Tab12 extends VerticalLayout {
         return answer;
     }
 
+    public SpecialFollowUp getSpecialFollowUp(String motherId){
+        SpecialFollowUp specialFollowUp = new SpecialFollowUp();
+        if(specialFollowUpTextArea.getValue() != null && !specialFollowUpTextArea.getValue().isEmpty()){
+            specialFollowUp.setMotherId(motherId);
+            specialFollowUp.setFollowUpMessage(specialFollowUpTextArea.getValue());
+            return specialFollowUp;
+        }
+        return null;
+    }
+
     public void setEditData(BaselineQ12 answer) {
         questionDBUniqueIdField.setValue(String.valueOf(answer.getBaselineQ12Id()));
-        for (int i = 0; i < mainLayout.getComponentCount()-1; i++) {
+        for (int i = 0; i < mainLayout.getComponentCount()-3; i++) {
             HorizontalLayout layout = (HorizontalLayout) mainLayout.getComponent(i);
             ComboBox comboBox = (ComboBox) layout.getComponent(1);
             String prefix = (i + 1) + "";
-            comboBox.setValue(getYesNoObject("SN", callGetter(answer, "m"+prefix)));
+            comboBox.setValue(getYesNoObject("EN", callGetter(answer, "m"+prefix)));
         }
         if(answer.getSpecialNotes() != null )specialNotesTextArea.setValue(answer.getSpecialNotes());
+    }
+
+    public void setFollowUpDetails(SpecialFollowUp followUp){
+        if(followUp != null){
+            specialFollowUpCombo.setValue(getYesNoObject("EN",1));
+            specialFollowUpTextArea.setValue(followUp.getFollowUpMessage());
+        }
+    }
+
+    public void clearFields() {
+        questionDBUniqueIdField.clear();
+        noToAll.clear();
+        for (int i = 0; i < mainLayout.getComponentCount()-3; i++) {
+            HorizontalLayout layout = (HorizontalLayout) mainLayout.getComponent(i);
+            ComboBox comboBox = (ComboBox) layout.getComponent(1);
+            comboBox.clear();
+        }
+        specialNotesTextArea.clear();
+        specialFollowUpCombo.clear();
+        specialFollowUpTextArea.clear();
     }
 
     private int callGetter(Object obj, String fieldName){
