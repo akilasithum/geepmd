@@ -38,5 +38,11 @@
         <property name="phmDivision" type="java.lang.String">
             <column name="phmDivision"  length="50"/>
         </property>
+        <property name="gnDivision" type="java.lang.String">
+            <column name="gnDivision"  length="50"/>
+        </property>
+        <property name="antenatalClinic" type="java.lang.String">
+            <column name="antenatalClinic"  length="50"/>
+        </property>
     </class>
 </hibernate-mapping>
