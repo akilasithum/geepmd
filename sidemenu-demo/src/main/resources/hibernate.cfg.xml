@@ -45,6 +45,17 @@
         <mapping resource="dbBeans/common/baselineQ10.hbm.xml"></mapping>
         <mapping resource="dbBeans/common/baselineQ12.hbm.xml"></mapping>
         <mapping resource="dbBeans/common/specialFollowUp.hbm.xml"></mapping>
+        <mapping resource="dbBeans/common/firstFollowUpQ1.hbm.xml"></mapping>
+        <mapping resource="dbBeans/common/firstFollowupQ13.hbm.xml"></mapping>
+        <mapping resource="dbBeans/common/firstFollowupQ125.hbm.xml"></mapping>
+        <mapping resource="dbBeans/common/firstFollowUpQ126.hbm.xml"></mapping>
+        <mapping resource="dbBeans/common/firstFollowupQ21.hbm.xml"></mapping>
+        <mapping resource="dbBeans/common/firstFollowupQ2.hbm.xml"></mapping>
+        <mapping resource="dbBeans/common/firstFollowupQ3.hbm.xml"></mapping>
+        <mapping resource="dbBeans/common/firstFollowupCommonDetails.hbm.xml"></mapping>
+        <mapping resource="dbBeans/common/socialCapitalQ1.hbm.xml"></mapping>
+        <mapping resource="dbBeans/common/socialCapitalQ2.hbm.xml"></mapping>
+        <mapping resource="dbBeans/common/SocialCapitalCommonDetails.hbm.xml"></mapping>
     </session-factory>
 </hibernate-configuration>
 

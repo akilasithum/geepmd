@@ -1,0 +1,54 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+        "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping>
+    <class name="com.geepmd.entity.FirstFollowupQ2" table="first_followup_q2" catalog="">
+        <id name="firstFollowupQ2Id" type="java.lang.Integer">
+            <column name="firstFollowupQ2Id" />
+            <generator class="identity" />
+        </id>
+        <property name="surveyId" type="java.lang.Integer">
+            <column name="surveyId" />
+        </property>
+        <property name="m2" type="java.lang.Integer">
+            <column name="m2"/>
+        </property>
+        <property name="m3" type="java.lang.Integer">
+            <column name="m3" />
+        </property>
+        <property name="m4" type="java.lang.Integer">
+            <column name="m4" />
+        </property>
+        <property name="m5" type="java.lang.Integer">
+            <column name="m5" />
+        </property>
+        <property name="m6" type="java.lang.Integer">
+            <column name="m6" />
+        </property>
+        <property name="m7" type="java.lang.Integer">
+            <column name="m7"/>
+        </property>
+        <property name="m8" type="java.lang.Integer">
+            <column name="m8" />
+        </property>
+        <property name="m9" type="java.lang.Integer">
+            <column name="m9" />
+        </property>
+        <property name="m10" type="java.lang.Integer">
+            <column name="m10" />
+        </property>
+        <property name="m11" type="java.lang.Integer">
+            <column name="m11" />
+        </property>
+        <property name="m12" type="java.lang.Integer">
+            <column name="m12"/>
+        </property>
+        <property name="m13" type="java.lang.Integer">
+            <column name="m13" />
+        </property>
+        <property name="m14" type="java.lang.Integer">
+            <column name="m14" />
+        </property>
+    </class>
+</hibernate-mapping>

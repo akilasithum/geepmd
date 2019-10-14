@@ -289,14 +289,6 @@ public class Tab3 extends VerticalLayout {
         return list;
     }
 
-    private String getStringFromSet(Set<Answer> set) {
-        String val = "";
-        for (Answer answer : set) {
-            val += answer.getId() + ",";
-        }
-        return val.substring(0, val.length() - 1);
-    }
-
     public BaselineQ3 getAnswer(int motherId) {
         BaselineQ3 answer = new BaselineQ3();
         answer.setSurveyId(motherId);

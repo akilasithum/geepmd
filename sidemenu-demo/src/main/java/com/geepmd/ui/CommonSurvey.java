@@ -2,6 +2,7 @@ package com.geepmd.ui;
 
 import com.geepmd.dbConnection.DBConnection;
 import com.geepmd.entity.MotherDetails;
+import com.geepmd.entity.SpecialFollowUp;
 import com.geepmd.ui.baseLineSurvey.Tab1;
 import com.geepmd.ui.baseLineSurvey.Tab2;
 import com.vaadin.navigator.View;
@@ -119,13 +120,43 @@ public abstract class CommonSurvey extends VerticalLayout implements View {
 
         addComponent(tabsheet);
         tabsheet.setSizeFull();
-        tabsheet.setStyleName("tabStyle");
 
         tabsheet.setEnabled(false);
 
     }
 
+    public void showSpecialFollowUpDetails(SpecialFollowUp specialFollowUp){
+        errorLayout.setVisible(true);
+        errorLayout.addLayoutClickListener(event -> {
+            if(!window.isAttached()){
+                window.setWidth("600px");
+                window.center();
+                window.setModal(true);
+                VerticalLayout layout = new VerticalLayout();
+                Label followUpMsg = new Label();
+                followUpMsg.setSizeFull();
+                followUpMsg.setValue(specialFollowUp.getFollowUpMessage());
+                Button okBtn = new Button("Ok");
+                okBtn.setStyleName("myButton");
+                okBtn.addClickListener(event1 -> {
+                    window.close();
+                });
+                layout.addComponents(followUpMsg,okBtn);
+                layout.setComponentAlignment(okBtn,Alignment.MIDDLE_CENTER);
+                window.setContent(layout);
+                window.setResizable(false);
+                getUI().addWindow(window);
+            }
+
+        });
+    }
+
+    public void SelectTab(int index){
+        tabsheet.setSelectedTab(index);
+    }
+
     public abstract void updateDetailsIfAdded(String motherId);
 
     public abstract void insertData();
+
 }

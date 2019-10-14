@@ -179,7 +179,7 @@ public class Survey extends VerticalLayout implements View {
 
     public void updateDetailsIfAdded(String motherId){
         clearAllFields();
-        CommonDetails common = connection.isMotherDetailsAdded(motherId);
+        CommonDetails common = (CommonDetails)connection.isMotherDetailsAdded("com.geepmd.entity.CommonDetails",motherId);
         if(common != null){
             isEdit = true;
             int surveyId = common.getSurveyId();
@@ -282,7 +282,7 @@ public class Survey extends VerticalLayout implements View {
         String motherId = motherSerialIdComboBox.getValue().toString();
         User user = (User)UI.getCurrent().getSession().getAttribute("userName");
 
-        CommonDetails common = connection.isMotherDetailsAdded(motherId);
+        CommonDetails common = (CommonDetails)connection.isMotherDetailsAdded("com.geepmd.entity.CommonDetails",motherId);
         int surveyId;
         if(common != null){
             editSurveyId = common.getSurveyId();

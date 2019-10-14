@@ -178,6 +178,20 @@ public class DBConnection {
         }
     }
 
+    public Object getMotherDetailsByMotherID(String motherId,Session session){
+        try
+        {
+            Criteria criteria = session.createCriteria(MotherDetails.class);
+            criteria.add(Restrictions.eq("motherSerialNumber", motherId));
+            List list = criteria.list();
+            if(list != null && !list.isEmpty()) return list.get(0);
+            else return null;
+        } catch (Exception e) {
+            session.close();
+            return null;
+        }
+    }
+
     public Object getSpecialFollowup(String motherId,Session session){
         try
         {
@@ -192,14 +206,14 @@ public class DBConnection {
         }
     }
 
-    public CommonDetails isMotherDetailsAdded(String motherId){
+    public Object isMotherDetailsAdded(String className,String motherId){
         Session session = getSession();
         try
         {
-            Criteria criteria = session.createCriteria(CommonDetails.class);
+            Criteria criteria = session.createCriteria(Class.forName(className));
             criteria.add(Restrictions.eq("motherId",motherId));
             List list = criteria.list();
-            if(list != null || !list.isEmpty()) return (CommonDetails)list.get(list.size() - 1);
+            if(list != null || !list.isEmpty()) return list.get(list.size() - 1);
             else return null;
         } catch (Exception e) {
             return null;

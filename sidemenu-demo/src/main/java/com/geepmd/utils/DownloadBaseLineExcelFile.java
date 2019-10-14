@@ -16,7 +16,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
-public class DownloadExcelFile implements Runnable{
+public class DownloadBaseLineExcelFile implements Runnable{
 
     ExcelDownloadService.ExcelDownloadServiceListener excelDownloadServiceListener;
     int columnCount = 0;
@@ -26,7 +26,7 @@ public class DownloadExcelFile implements Runnable{
     DBConnection connection;
     Map<Integer,String> letterIntMap;
 
-    public DownloadExcelFile(ExcelDownloadService.ExcelDownloadServiceListener excelDownloadServiceListener) {
+    public DownloadBaseLineExcelFile(ExcelDownloadService.ExcelDownloadServiceListener excelDownloadServiceListener) {
         this.excelDownloadServiceListener = excelDownloadServiceListener;
     }
 
@@ -372,21 +372,6 @@ public class DownloadExcelFile implements Runnable{
             excelDownloadServiceListener.onFail();
         }
     }
-
-    /*private void downloadFile(Workbook workbook) {
-        try {
-            File file = new File("baseline_survey.xlsx");
-            FileResource fir = new FileResource(file);
-            FileDownloader fileDownloader = new FileDownloader(fir);
-            FileOutputStream out = new FileOutputStream(file);
-            workbook.write(out);
-            out.close();
-            workbook.close();
-            fileDownloader.extend(downloadBtn);
-        }catch (Exception e){
-            e.printStackTrace();
-        }
-    }*/
 
     private void createObjCells(Object obj,String methodPrefix,int startIndex,int endIndex,Row row){
         try {

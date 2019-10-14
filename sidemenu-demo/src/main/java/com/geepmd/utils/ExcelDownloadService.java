@@ -2,7 +2,7 @@ package com.geepmd.utils;
 
 public interface ExcelDownloadService {
 
-    public void createExcelFile(ExcelDownloadServiceListener excelDownloadServiceListener);
+    public void createExcelFile(ExcelDownloadServiceListener excelDownloadServiceListener,String type);
 
     public interface ExcelDownloadServiceListener {
         /**

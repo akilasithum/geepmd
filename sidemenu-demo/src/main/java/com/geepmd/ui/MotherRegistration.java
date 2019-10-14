@@ -216,7 +216,7 @@ public class MotherRegistration extends VerticalLayout implements View {
         }
     }
 
-    private boolean validateNIC(String nic){
+    public static boolean validateNIC(String nic){
         if(nic != null && (nic.length() == 10 || nic.length() == 12)){
 
             return true;
@@ -273,7 +273,7 @@ public class MotherRegistration extends VerticalLayout implements View {
         motherDetailsGrid.addColumn(MotherDetails::getPhmDivision).setCaption(questionMap.get("9"));
         motherDetailsGrid.addColumn(MotherDetails::getGnDivision).setCaption(questionMap.get("10"));
         motherDetailsGrid.addColumn(MotherDetails::getAntenatalClinic).setCaption(questionMap.get("11"));
-
+        motherDetailsGrid.addColumn(MotherDetails::getEdd).setCaption(questionMap.get("14"));
         list = connection.getMotherDetails();
         motherDetailsGrid.setItems(list);
     }

@@ -51,6 +51,7 @@ public class DemoUI extends UI {
 		navigator.addView("MotherRegistration", MotherRegistration.class);
 		navigator.addView("BaselineSurvey", Survey.class);
 		navigator.addView("FirstFollowUp", FirstFollowUpSurvey.class);
+		navigator.addView("SocialCapital", SocialCapitalSurvey.class);
 		navigator.addView("Login", LoginPage.class);
 		navigator.addView("DownloadExcel", DownloadExcel.class);
 		navigator.addView("EditProfile",EditProfile.class);
@@ -74,6 +75,10 @@ public class DemoUI extends UI {
 
 		sideMenu.addMenuItem("First Follow Up Questionnaire", VaadinIcons.FILE_PRESENTATION, () -> {
 			navigator.navigateTo("FirstFollowUp");
+		});
+
+		sideMenu.addMenuItem("Social Capital Questionnaire", VaadinIcons.FILE_PICTURE, () -> {
+			navigator.navigateTo("SocialCapital");
 		});
 
 		sideMenu.addMenuItem("Download Excel", VaadinIcons.DOWNLOAD, () -> {

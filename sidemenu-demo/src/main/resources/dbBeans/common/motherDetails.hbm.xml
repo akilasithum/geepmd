@@ -44,5 +44,8 @@
         <property name="antenatalClinic" type="java.lang.String">
             <column name="antenatalClinic"  length="50"/>
         </property>
+        <property name="edd" type="java.lang.String">
+            <column name="edd"  length="50"/>
+        </property>
     </class>
 </hibernate-mapping>

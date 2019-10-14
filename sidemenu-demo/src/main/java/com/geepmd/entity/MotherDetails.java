@@ -17,6 +17,7 @@ public class MotherDetails {
     private String phmDivision;
     private String gnDivision;
     private String antenatalClinic;
+    private String edd;
 
     public int getMotherRegNo() {
         return motherRegNo;
@@ -122,4 +123,11 @@ public class MotherDetails {
         this.antenatalClinic = antenatalClinic;
     }
 
+    public String getEdd() {
+        return edd;
+    }
+
+    public void setEdd(String edd) {
+        this.edd = edd;
+    }
 }

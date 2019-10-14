@@ -1,0 +1,24 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+        "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping>
+    <class name="com.geepmd.entity.FirstFollowUpQ13" table="first_followup_q13" catalog="">
+        <id name="firstFollowUpQ13Id" type="java.lang.Integer">
+            <column name="firstFollowUpQ13Id" />
+            <generator class="identity" />
+        </id>
+        <property name="surveyId" type="java.lang.Integer">
+            <column name="surveyId"  />
+        </property>
+        <property name="question" type="java.lang.String">
+            <column name="question"  />
+        </property>
+        <property name="medical" type="java.lang.Integer">
+            <column name="medical"  />
+        </property>
+        <property name="times" type="java.lang.Integer">
+            <column name="times" />
+        </property>
+    </class>
+</hibernate-mapping>

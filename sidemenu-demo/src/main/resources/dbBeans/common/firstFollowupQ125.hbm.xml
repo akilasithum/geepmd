@@ -1,0 +1,27 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+        "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping>
+    <class name="com.geepmd.entity.FirstFollowUpQ125" table="first_followup_q125" catalog="">
+        <id name="firstFollowUpQ125Id" type="java.lang.Integer">
+            <column name="firstFollowUpQ125Id" />
+            <generator class="identity" />
+        </id>
+        <property name="surveyId" type="java.lang.Integer">
+            <column name="surveyId"  />
+        </property>
+        <property name="dateFld" type="java.lang.String">
+            <column name="dateFld"  length="50"/>
+        </property>
+        <property name="breakfast" type="java.lang.String">
+            <column name="breakfast"  />
+        </property>
+        <property name="lunch" type="java.lang.String">
+            <column name="lunch"  />
+        </property>
+        <property name="dinner" type="java.lang.String">
+            <column name="dinner"  />
+        </property>
+    </class>
+</hibernate-mapping>

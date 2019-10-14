@@ -1,0 +1,51 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+        "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping>
+    <class name="com.geepmd.entity.FirstFollowUpQ126" table="first_followup_q126" catalog="">
+        <id name="firstFollowUpQ126Id" type="java.lang.Integer">
+            <column name="firstFollowUpQ126Id" />
+            <generator class="identity" />
+        </id>
+        <property name="surveyId" type="java.lang.Integer">
+            <column name="surveyId" />
+        </property>
+        <property name="ma" type="java.lang.Integer">
+            <column name="ma" />
+        </property>
+        <property name="mb" type="java.lang.Integer">
+            <column name="mb"/>
+        </property>
+        <property name="mc" type="java.lang.Integer">
+            <column name="mc" />
+        </property>
+        <property name="md" type="java.lang.Integer">
+            <column name="md" />
+        </property>
+        <property name="me" type="java.lang.Integer">
+            <column name="me" />
+        </property>
+        <property name="mf" type="java.lang.Integer">
+            <column name="mf" />
+        </property>
+        <property name="mg" type="java.lang.Integer">
+            <column name="mg"/>
+        </property>
+        <property name="mh" type="java.lang.Integer">
+            <column name="mh" />
+        </property>
+        <property name="mi" type="java.lang.Integer">
+            <column name="mi" />
+        </property>
+        <property name="mj" type="java.lang.Integer">
+            <column name="mj" />
+        </property>
+        <property name="mk" type="java.lang.Integer">
+            <column name="mk" />
+        </property>
+        <property name="ml" type="java.lang.Integer">
+        <column name="ml" />
+        </property>
+    </class>
+</hibernate-mapping>

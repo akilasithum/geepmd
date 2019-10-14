@@ -1,9 +1,9 @@
 package com.geepmd.utils;
 
-import com.vaadin.ui.Component;
-import com.vaadin.ui.HorizontalLayout;
-import com.vaadin.ui.Label;
+import com.vaadin.ui.*;
 
+import java.beans.PropertyDescriptor;
+import java.lang.reflect.Method;
 import java.text.SimpleDateFormat;
 import java.util.*;
 
@@ -181,5 +181,81 @@ public class SurveyUtils {
         if(date != null)
             return new SimpleDateFormat("dd-MM-yyyy").format(date);
         else return null;
+    }
+
+    public static HorizontalLayout addQuestionWithAnswerObjCombo(List<String> answerList, String question){
+        HorizontalLayout layout = new HorizontalLayout();
+        layout.setSizeFull();
+        Label label = new Label(question);
+        label.setSizeFull();
+        ComboBox comboBox = new ComboBox();
+        comboBox.setSizeFull();
+        comboBox.setTextInputAllowed(false);
+        comboBox.setItems(getAnwerObj(answerList));
+        comboBox.setDescription(getAnswerDesc(answerList));
+        layout.addComponents(label,comboBox);
+        layout.setExpandRatio(label,8);
+        layout.setExpandRatio(comboBox,2);
+        return layout;
+    }
+
+    public static String getStringFromSet(Set<Answer> set) {
+        String val = "";
+        for (Answer answer : set) {
+            val += answer.getId() + ",";
+        }
+        return val.isEmpty() ? "" : val.substring(0, val.length() - 1);
+    }
+
+    public static int callGetter(Object obj, String fieldName){
+        PropertyDescriptor pd;
+        try {
+            pd = new PropertyDescriptor(fieldName, obj.getClass());
+            Method getter = pd.getReadMethod();
+            return Integer.parseInt(getter.invoke(obj).toString());
+
+        } catch (Exception e) {
+            return 0;
+        }
+    }
+
+    public static String callGetterStr(Object obj, String fieldName){
+        PropertyDescriptor pd;
+        try {
+            pd = new PropertyDescriptor(fieldName, obj.getClass());
+            Method getter = pd.getReadMethod();
+            return getter.invoke(obj).toString();
+
+        } catch (Exception e) {
+            return "";
+        }
+    }
+
+    public static Answer getAnswerObj(List<String> qList, int answer){
+        if(answer != 0 && answer != 8888) {
+            try {
+                Answer answerObj = new Answer();
+                answerObj.setId(answer);
+                answerObj.setDescription(qList.get(answer-1));
+                return answerObj;
+            }catch (Exception e){
+                return null;
+            }
+        }
+        else return null;
+    }
+
+    public static Set<Answer> getMultipleAnswerSet(String str,List<Answer> answerList){
+        Set<Answer> selectedAnswers = new HashSet<>();
+        if(str != null && !str.isEmpty() && !str.trim().equals("") && !str.equals("8888")){
+            String[] arr = str.split(",");
+            for(String ans : Arrays.asList(arr)){
+                int id = Integer.parseInt(ans);
+                if(id != 0) {
+                    selectedAnswers.add(answerList.get(id-1));
+                }
+            }
+        }
+        return selectedAnswers;
     }
 }

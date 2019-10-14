@@ -23,6 +23,7 @@ import java.util.stream.Collectors;
 public class DownloadExcel extends VerticalLayout implements View {
 
     private Button generateExcelBtn;
+    private ComboBox excelTypeCombo;
     int columnCount = 0;
     int valColumnCount = 0;
     Row headerRow;
@@ -52,25 +53,34 @@ public class DownloadExcel extends VerticalLayout implements View {
 
     private void createLayout(){
 
+        excelTypeCombo = new ComboBox("Survey Type");
+        excelTypeCombo.setItems(Arrays.asList("Baseline Questionnaire","First Follow Up Questionnaire","Social Capital Questionnaire","Mother Details"));
+        excelTypeCombo.setWidth("275px");
         generateExcelBtn = new Button("Generate Excel File");
         generateExcelBtn.setIcon(VaadinIcons.DOWNLOAD);
+        addComponent(excelTypeCombo);
         addComponent(generateExcelBtn);
         logo = new Image();
         logo.setSource(new ThemeResource("images/tenor.png"));
         addComponent(logo);
         logo.setVisible(false);
         generateExcelBtn.addClickListener(event -> {
-            List<String> validUsers = Arrays.asList("akila","Ayesh","agampodi");
-            if(user != null && validUsers.contains(user.getUserName())){
-                downloadExcel();
+            if(excelTypeCombo.getValue() != null){
+                List<String> validUsers = Arrays.asList("akila","Ayesh","agampodi");
+                if(user != null && validUsers.contains(user.getUserName())){
+                    downloadExcel(String.valueOf(excelTypeCombo.getValue()));
+                }
+                else {
+                    Notification.show("You don't have permission to download the excel file", Notification.Type.ERROR_MESSAGE);
+                }
             }
-            else {
-                Notification.show("You don't have permissionn to download the excel file", Notification.Type.ERROR_MESSAGE);
+            else{
+                Notification.show("Please choose excel type to download", Notification.Type.WARNING_MESSAGE);
             }
         });
     }
 
-    private void downloadExcel(){
+    private void downloadExcel(String type){
             generateExcelBtn.setEnabled(false);
             ExcelDownloadService excelDownloadService = new ExcelDownloadServiceImpl();
             excelDownloadService.createExcelFile(new ExcelDownloadService.ExcelDownloadServiceListener() {
@@ -79,8 +89,7 @@ public class DownloadExcel extends VerticalLayout implements View {
                     if (path != null && !path.equals("")) {
                         try {
                             File file = new File(path);
-                            String fileName = "BaseLineSurvey";
-                            StreamResource resource = getExistingFile(fileName+".xlsx", path);
+                            StreamResource resource = getExistingFile(type.replace(" ","_")+".xlsx", path);
                             getUI().getPage().open(resource, "_blank", false);
                             file.deleteOnExit();
                         } catch (Exception e) {
@@ -94,7 +103,7 @@ public class DownloadExcel extends VerticalLayout implements View {
                 public void onFail() {
                     generateExcelBtn.setEnabled(true);
                 }
-            });
+            },type);
         }
 
     public StreamResource getExistingFile(String destinationFileName, String sourceFilePath) {
