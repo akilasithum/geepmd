@@ -64,6 +64,21 @@ public class DBConnection {
         }
     }
 
+    public List<MotherDetails> getMotherDetails(String motherID){
+        Session session = HibernateUtil.getSessionFactory().openSession();
+        try
+        {
+            Criteria criteria = session.createCriteria(MotherDetails.class);
+            criteria.add(Restrictions.like("motherSerialNumber", motherID));
+            List retList =  criteria.list();
+            session.close();
+            return retList;
+        } catch (Exception e) {
+            session.close();
+            return null;
+        }
+    }
+
     public Session getSession(){
         return HibernateUtil.getSessionFactory().openSession();
     }
@@ -150,6 +165,19 @@ public class DBConnection {
             return null;
         }
     }
+
+   /* public List<?> getBaseLine(Session session,String className,String order){
+        try
+        {
+            Criteria criteria = session.createCriteria(Class.forName(className));
+            criteria.add(Restrictions.eq("motherId", "1784"));
+            criteria.addOrder(Order.asc(order));
+            List list = criteria.list();
+            return list;
+        } catch (Exception e) {
+            return null;
+        }
+    }*/
 
     public List<?> getAllValues(String className,int surveyId,Session session){
         try

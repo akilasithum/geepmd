@@ -448,7 +448,7 @@ public class SinhalaMap {
         map.put("7.3","7.3. මට අසනීපයක් වූ අවස්ථාවක මා රැුකබලා ගැනීමට කවුරුන් හෝ සිටියි.");
         map.put("7.4","7.4. අවශ්\u200Dයතාවක් ඇතිවුවහොත් මා සමඟ නගරයට යාමට කවුරුන් හෝ සිටීයි.");
         map.put("7.5","7.5. යම් කරදරයක්/දුක්ඛ දායක තත්වයකදී සිතට සහනයක් ලැබෙන අයුරින් මා සමඟ කථාබස් කිරීමට කව්රුන් හෝ සිටියි");
-        map.put("7.5","7.6. මා හට යම් කාරනාවක් සම්බන්ධව උපදෙස් හා දැනුම ලබා ගැනීමට අවශ්\u200Dය වූ විට ඒ සදහා කිසිවකු සිටියි");
+        map.put("7.6","7.6. මා හට යම් කාරනාවක් සම්බන්ධව උපදෙස් හා දැනුම ලබා ගැනීමට අවශ්\u200Dය වූ විට ඒ සදහා කිසිවකු සිටියි");
         return map;
     }
 
@@ -479,6 +479,34 @@ public class SinhalaMap {
         map.put("7.8","7.8. මරණාධාර සමිති.");
         map.put("7.10","7.10. ණය දෙන සමිති.");
         map.put("7.11","7.11. වෙනත්");
+        return map;
+    }
+
+    public static Map<Integer,String> getBioChemicalQ1() {
+        Map<Integer, String> map = new HashMap<>();
+        map.put(1, "HB");
+        map.put(2, "FBS");
+        map.put(3, "OGTT 2nd hr");
+        map.put(4, "PPBS");
+        map.put(5, "AST");
+        map.put(6, "ALT");
+        map.put(7, "gamma GT");
+        map.put(8, "TG");
+        map.put(9, "HDL");
+        map.put(10, "T Chol");
+        map.put(11, "LDL");
+        map.put(12, "VLDL");
+        map.put(13, "BU");
+        map.put(14, "SCR");
+        return map;
+    }
+
+    public static Map<Integer,String> getBioChemicalQ2() {
+        Map<Integer, String> map = new HashMap<>();
+        map.put(1, "HB");
+        map.put(2, "FBS");
+        map.put(3, "OGTT 2nd hr");
+        map.put(4, "Serum Cortisol");
         return map;
     }
 
@@ -748,6 +776,34 @@ public class SinhalaMap {
         map.put("2","ගෘහස්ථ සම්බන්ධතා - පවුලේ සාමාජිකයින් සමඟ");
         map.put("3","ඔබගේ වටපිටාව පිළිබදව පහත ප\u200D්\u200Dරශ්න වලට පිළිතුරු සපයන්න");
         map.put("4","සමාජීය සත්කාර");
+        return map;
+    }
+
+    public static Map<Integer,String> getSBioChemicalTab1UnitMap() {
+        Map<Integer, String> map = new HashMap<>();
+        map.put(1, "g/dL");
+        map.put(2, "mg/dL");
+        map.put(3, "mg/dL");
+        map.put(4, "mg/dL");
+        map.put(5, "u/L");
+        map.put(6, "u/L");
+        map.put(7, "u/L");
+        map.put(8, "mg/dL");
+        map.put(9, "mg/dL");
+        map.put(10, "mg/dL");
+        map.put(11, "mg/dL");
+        map.put(12, "mg/dL");
+        map.put(13, "mmol/L");
+        map.put(14, "μmol/dL");
+        return map;
+    }
+
+    public static Map<Integer,String> getSBioChemicalTab2UnitMap() {
+        Map<Integer, String> map = new HashMap<>();
+        map.put(1, "g/dL");
+        map.put(2, "mg/dL");
+        map.put(3, "mg/dL");
+        map.put(4, "mg/dL");
         return map;
     }
 }

@@ -103,7 +103,7 @@ public class Tab12 extends VerticalLayout {
 
     private void setNoToAllCombo(boolean isNo) {
         if(isNo) {
-            for (int i = 0; i < mainLayout.getComponentCount() - 1; i++) {
+            for (int i = 0; i < mainLayout.getComponentCount() - 3; i++) {
                 HorizontalLayout layout = (HorizontalLayout) mainLayout.getComponent(i);
                 ComboBox comboBox = (ComboBox) layout.getComponent(1);
                 comboBox.setValue(getYesNoObject("EN", 2));

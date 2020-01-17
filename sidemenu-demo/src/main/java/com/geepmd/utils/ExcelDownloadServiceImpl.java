@@ -23,6 +23,10 @@ public class ExcelDownloadServiceImpl implements ExcelDownloadService {
                 DownloadMotherDetails instrumentFile1 = new DownloadMotherDetails(excelDownloadServiceListener);
                 thread = new Thread(instrumentFile1);
                 break;
+            case  "Bio Chemical Profile":
+                DownloadBioChemicalExcelFile downloadBioChemicalExcelFile = new DownloadBioChemicalExcelFile(excelDownloadServiceListener);
+                thread = new Thread(downloadBioChemicalExcelFile);
+                break;
         }
         thread.run();
 

@@ -55,6 +55,7 @@ public class DemoUI extends UI {
 		navigator.addView("Login", LoginPage.class);
 		navigator.addView("DownloadExcel", DownloadExcel.class);
 		navigator.addView("EditProfile",EditProfile.class);
+		navigator.addView("BioChemicalProfile",BioChemicalProfileSurvey.class);
 
 		navigator.navigateTo("Login");
 		sideMenu.showHideMenu(false);
@@ -79,6 +80,10 @@ public class DemoUI extends UI {
 
 		sideMenu.addMenuItem("Social Capital Questionnaire", VaadinIcons.FILE_PICTURE, () -> {
 			navigator.navigateTo("SocialCapital");
+		});
+
+		sideMenu.addMenuItem("Bio Chemical Profile", VaadinIcons.FILE_CODE, () -> {
+			navigator.navigateTo("BioChemicalProfile");
 		});
 
 		sideMenu.addMenuItem("Download Excel", VaadinIcons.DOWNLOAD, () -> {

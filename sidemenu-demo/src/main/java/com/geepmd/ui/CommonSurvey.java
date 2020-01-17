@@ -48,30 +48,31 @@ public abstract class CommonSurvey extends VerticalLayout implements View {
 
         List<MotherDetails> motherDetails = connection.getMotherDetails();
         List<String> motherIdsList = new ArrayList<>();
-        List<String> mothersNameList = new ArrayList<>();
+        //List<String> mothersNameList = new ArrayList<>();
         Map<String,String> idNameMap = new HashMap<>();
         Map<String,String> nameIdMap = new HashMap<>();
         for(MotherDetails mother : motherDetails){
             motherIdsList.add(mother.getMotherSerialNumber());
-            mothersNameList.add(mother.getMotherName());
+            //mothersNameList.add(mother.getMotherName());
             idNameMap.put(mother.getMotherSerialNumber(),mother.getMotherName());
             nameIdMap.put(mother.getMotherName(),mother.getMotherSerialNumber());
         }
 
-        ComboBox motherNameComboBox = new ComboBox("Select Mother Name");
-        motherNameComboBox.setItems(mothersNameList);
+        TextField motherNameComboBox = new TextField("Mother Name");
+        //motherNameComboBox.setItems(mothersNameList);
+        motherNameComboBox.setEnabled(false);
         motherSerialIdComboBox = new ComboBox("Select Mother serial ID");
         motherSerialIdComboBox.setItems(motherIdsList);
         HorizontalLayout motherBtnLayout = new HorizontalLayout();
         motherBtnLayout.addComponents(motherSerialIdComboBox,motherNameComboBox);
 
-        motherNameComboBox.addValueChangeListener(event -> {
+        /*motherNameComboBox.addValueChangeListener(event -> {
             if(event.getValue() != null && !String.valueOf(event.getValue()).isEmpty()){
                 motherSerialIdComboBox.setValue(nameIdMap.get(event.getValue()));
                 tabsheet.setEnabled(true);
                 updateDetailsIfAdded(nameIdMap.get(event.getValue()));
             }
-        });
+        });*/
 
         motherSerialIdComboBox.addValueChangeListener(event -> {
             if(event.getValue() != null){

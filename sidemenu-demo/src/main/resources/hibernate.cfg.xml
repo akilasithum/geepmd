@@ -5,9 +5,9 @@
     <session-factory>
         <!-- JDBC Database connection settings -->
         <property name="connection.driver_class">com.mysql.cj.jdbc.Driver</property>
-        <property name="hibernate.connection.password">T6dXcs4e</property>
-        <!--<property name="hibernate.connection.password"></property>-->
-        <property name="hibernate.connection.url">jdbc:mysql://localhost:3306/geepmd</property>
+        <!--<property name="hibernate.connection.password">T6dXcs4e</property>-->
+        <property name="hibernate.connection.password"></property>
+        <property name="hibernate.connection.url">jdbc:mysql://localhost:3306/geepmdactual</property>
         <property name="hibernate.connection.username">root</property>
         <!-- JDBC connection pool settings ... using built-in test pool -->
         <property name="connection.pool_size">50</property>
@@ -56,6 +56,10 @@
         <mapping resource="dbBeans/common/socialCapitalQ1.hbm.xml"></mapping>
         <mapping resource="dbBeans/common/socialCapitalQ2.hbm.xml"></mapping>
         <mapping resource="dbBeans/common/SocialCapitalCommonDetails.hbm.xml"></mapping>
+        <mapping resource="dbBeans/common/bioChemicalQ1.hbm.xml"></mapping>
+        <mapping resource="dbBeans/common/bioChemicalQ2.hbm.xml"></mapping>
+        <mapping resource="dbBeans/common/bioChemicalQ3.hbm.xml"></mapping>
+        <mapping resource="dbBeans/common/bioChemicalCommon.hbm.xml"></mapping>
     </session-factory>
 </hibernate-configuration>
 

@@ -1,0 +1,18 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+        "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping>
+    <class name="com.geepmd.entity.BioChemicalQ3" table="bio_chemical_q3" catalog="">
+        <id name="bioChemicalQ3Id" type="java.lang.Integer">
+            <column name="bioChemicalQ3Id" />
+            <generator class="identity" />
+        </id>
+        <property name="surveyId" type="java.lang.Integer">
+            <column name="surveyId" />
+        </property>
+        <property name="m1" type="java.lang.String">
+            <column name="m1" />
+        </property>
+    </class>
+</hibernate-mapping>

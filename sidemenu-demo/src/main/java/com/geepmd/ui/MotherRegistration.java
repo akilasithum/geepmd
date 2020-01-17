@@ -105,12 +105,26 @@ public class MotherRegistration extends VerticalLayout implements View {
         HorizontalLayout buttonLayout = new HorizontalLayout();
         buttonLayout.addComponents(submitBtn,clearBtn);
 
+        TextField searchText = new TextField();
+        searchText.setDescription("Search by Mother ID");
+        Button searchBtn = new Button("Search");
+        HorizontalLayout searchLayout = new HorizontalLayout();
+        searchLayout.addComponents(searchText,searchBtn);
+        searchBtn.addClickListener(event -> {
+           String searchVal = searchText.getValue();
+           if(searchVal != null && !searchVal.isEmpty()){
+               List<MotherDetails> filteredList = connection.getMotherDetails(searchVal);
+               motherDetailsGrid.setItems(filteredList);
+           }
+        });
+
         HorizontalLayout formMainLayout = new HorizontalLayout();
         formMainLayout.addComponents(formLayout1,formLayout2);
         formMainLayout.setMargin(rightMargin);
 
         addComponent(formMainLayout);
         addComponent(buttonLayout);
+        addComponent(searchLayout);
         showGridData();
     }
 

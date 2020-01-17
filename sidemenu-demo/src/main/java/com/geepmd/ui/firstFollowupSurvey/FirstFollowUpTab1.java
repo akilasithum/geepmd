@@ -532,22 +532,26 @@ public class FirstFollowUpTab1 extends VerticalLayout {
                 String answerVal = "";
                 if(!prefix.equals("24")){
                     comboBox = (ComboBox) horizontalLayout.getComponent(1);
-                }
-                if(prefix.equals("11")) answerVal = answer.getM11();
-                if(prefix.equals("13")) answerVal = answer.getM13();
-                if(prefix.equals("16")) answerVal = answer.getM16();
-                if(answerVal != null && !answerVal.isEmpty()){
-                    if(answerVal.contains("==")){
-                        String[] valArr = answerVal.split("==");
-                        textField.setValue(valArr[1]);
-                        int answerId = Integer.parseInt(valArr[0]);
-                        comboBox.setValue(getAnswerObj(answerId,answerMap.get(11)));
+                    if(prefix.equals("11")) answerVal = answer.getM11();
+                    if(prefix.equals("13")) answerVal = answer.getM13();
+                    if(prefix.equals("16")) answerVal = answer.getM16();
+                    if(answerVal != null && !answerVal.isEmpty()){
+                        if(answerVal.contains("==")){
+                            String[] valArr = answerVal.split("==");
+                            textField.setValue(valArr[1]);
+                            int answerId = Integer.parseInt(valArr[0]);
+                            if(prefix.equals("11"))comboBox.setValue(getAnswerObj(answerId,answerMap.get(11)));
+                            if(prefix.equals("13"))comboBox.setValue(getAnswerObj(answerId,answerMap.get(13)));
+                            if(prefix.equals("16"))comboBox.setValue(getAnswerObj(answerId,answerMap.get(16)));
+                        }
+                        else{
+                            if(prefix.equals("11"))comboBox.setValue(getAnswerObj(Integer.parseInt(answer.getM11()),answerMap.get(11)));
+                            if(prefix.equals("13"))comboBox.setValue(getAnswerObj(Integer.parseInt(answer.getM13()),answerMap.get(13)));
+                            if(prefix.equals("16"))comboBox.setValue(getAnswerObj(Integer.parseInt(answer.getM16()),answerMap.get(16)));
+                        }
                     }
-                    else{
-                        comboBox.setValue(getAnswerObj(Integer.parseInt(answer.getM11()),answerMap.get(11)));
-                    }
                 }
-                if(prefix.equals("24")){
+                else{
                     ComboBoxMultiselect multiComboBox = (ComboBoxMultiselect) horizontalLayout.getComponent(1);
                     answerVal = answer.getM24();
                     if(answerVal != null && !answerVal.isEmpty()){
@@ -561,6 +565,7 @@ public class FirstFollowUpTab1 extends VerticalLayout {
                         }
                     }
                 }
+
             }
         }
     }

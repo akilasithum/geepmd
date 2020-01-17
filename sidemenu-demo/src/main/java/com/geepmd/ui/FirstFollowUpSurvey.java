@@ -101,6 +101,7 @@ public class FirstFollowUpSurvey extends CommonSurvey{
             mohFld.setValue(mother.getMohDivision());
             pregRegNo.setValue(mother.getMotherDocumentRegNo());
             examinorNoFld.setValue(mother.getExaminerRegNo());
+            eddNoFld.setValue(mother.getEdd()!= null ? mother.getEdd() : "");
             startTime.setValue(mother.getStartTime());
 
             layout.addComponents(nicNoFld, mohFld, pregRegNo, eddNoFld, examinorNoFld, startTime);

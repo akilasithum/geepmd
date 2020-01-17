@@ -54,7 +54,8 @@ public class DownloadExcel extends VerticalLayout implements View {
     private void createLayout(){
 
         excelTypeCombo = new ComboBox("Survey Type");
-        excelTypeCombo.setItems(Arrays.asList("Baseline Questionnaire","First Follow Up Questionnaire","Social Capital Questionnaire","Mother Details"));
+        excelTypeCombo.setItems(Arrays.asList("Baseline Questionnaire","First Follow Up Questionnaire","Social Capital Questionnaire",
+                "Bio Chemical Profile","Mother Details"));
         excelTypeCombo.setWidth("275px");
         generateExcelBtn = new Button("Generate Excel File");
         generateExcelBtn.setIcon(VaadinIcons.DOWNLOAD);

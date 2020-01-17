@@ -45,6 +45,14 @@ $darkgreen: darken($green, 30%);
 		width: 1300px !important;
 	}
 
+	.valo-menu-responsive[width-range~="0-1500px"] .bioChemicalMainLayout{
+		width: 100%;
+	}
+
+	.bioChemicalMainLayout{
+		width: 60% !important;
+	}
+
 	.tabStyle{
 		width: 100%;
 	}
