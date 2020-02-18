@@ -5,9 +5,9 @@
     <session-factory>
         <!-- JDBC Database connection settings -->
         <property name="connection.driver_class">com.mysql.cj.jdbc.Driver</property>
-        <!--<property name="hibernate.connection.password">T6dXcs4e</property>-->
-        <property name="hibernate.connection.password"></property>
-        <property name="hibernate.connection.url">jdbc:mysql://localhost:3306/geepmdactual</property>
+        <property name="hibernate.connection.password">T6dXcs4e</property>
+        <!--<property name="hibernate.connection.password"></property>-->
+        <property name="hibernate.connection.url">jdbc:mysql://localhost:3306/geepmd?serverTimezone=UTC</property>
         <property name="hibernate.connection.username">root</property>
         <!-- JDBC connection pool settings ... using built-in test pool -->
         <property name="connection.pool_size">50</property>

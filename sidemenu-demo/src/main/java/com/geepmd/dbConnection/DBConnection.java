@@ -166,7 +166,7 @@ public class DBConnection {
         }
     }
 
-   /* public List<?> getBaseLine(Session session,String className,String order){
+    public List<?> getBaseLine(Session session,String className,String order){
         try
         {
             Criteria criteria = session.createCriteria(Class.forName(className));
@@ -177,7 +177,7 @@ public class DBConnection {
         } catch (Exception e) {
             return null;
         }
-    }*/
+    }
 
     public List<?> getAllValues(String className,int surveyId,Session session){
         try

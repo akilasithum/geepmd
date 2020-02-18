@@ -9,10 +9,10 @@ import org.hibernate.Session;
 
 import java.io.File;
 import java.io.FileOutputStream;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.text.SimpleDateFormat;
+import java.time.LocalDate;
+import java.time.ZoneId;
+import java.util.*;
 import java.util.stream.Collectors;
 
 public class DownloadFirstFollowUpExcel extends DownloadFile {
@@ -91,8 +91,17 @@ public class DownloadFirstFollowUpExcel extends DownloadFile {
 
             Cell cell2 = row.createCell(1);
             cell2.setCellValue(common.getMotherId());
-            valColumnCount = 2;
+
             FirstFollowUpQ1 firstFollowUpQ1 = q1Map.get(common.getSurveyId());
+            if(firstFollowUpQ1.getSurveyDate() != null){
+                Cell cell3 = row.createCell(2);
+                cell3.setCellValue(firstFollowUpQ1.getSurveyDate());
+            }
+            else{
+                Cell cell3 = row.createCell(2);
+                cell3.setCellValue(getDateStr(common.getAddedDate()));
+            }
+            valColumnCount = 3;
             createObjCells(firstFollowUpQ1,"getM",1,2,row);
             List<FirstFollowUpQ13> firstFollowUpQ13s = q13Map.get(common.getSurveyId());
 
@@ -151,6 +160,11 @@ public class DownloadFirstFollowUpExcel extends DownloadFile {
         }
     }
 
+    private String getDateStr(Date date){
+        SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
+        return format.format(date);
+    }
+
     private void createHeaderRow(Workbook workbook, Sheet sheet) {
         Font headerFont = workbook.createFont();
         headerFont.setBold(true);
@@ -168,7 +182,12 @@ public class DownloadFirstFollowUpExcel extends DownloadFile {
         Cell cell2 = headerRow.createCell(1);
         cell2.setCellValue("motherId");
         cell2.setCellStyle(headerCellStyle);
-        columnCount = 2;
+
+        Cell cell3 = headerRow.createCell(2);
+        cell3.setCellValue("Survey Date");
+        cell3.setCellStyle(headerCellStyle);
+
+        columnCount = 3;
         createCells("1",1,2);
         createCells("1.3",11,letterIntMap,2);
         createCells("1",4,24);

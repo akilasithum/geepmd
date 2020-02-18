@@ -215,21 +215,27 @@ public class DownloadBaseLineExcelFile implements Runnable{
             createObjCells(baselineQ3,"getM",1,1,row);
 
             if(baselineQ32List == null || baselineQ32List.size() == 0){
-                createEmptyCells(24);
+                createEmptyCells(32);
             }
             else if(baselineQ32List.size() == 1){
                 createObjCells(baselineQ32List.get(0),"getM",1,8,row);
-                createEmptyCells(16);
+                createEmptyCells(24);
             }
             else if(baselineQ32List.size() == 2){
                 createObjCells(baselineQ32List.get(0),"getM",1,8,row);
                 createObjCells(baselineQ32List.get(1),"getM",1,8,row);
-                createEmptyCells(8);
+                createEmptyCells(16);
             }
             else if(baselineQ32List.size() == 3){
                 createObjCells(baselineQ32List.get(0),"getM",1,8,row);
                 createObjCells(baselineQ32List.get(1),"getM",1,8,row);
                 createObjCells(baselineQ32List.get(2),"getM",1,8,row);
+            }
+            else if(baselineQ32List.size() == 4){
+                createObjCells(baselineQ32List.get(0),"getM",1,8,row);
+                createObjCells(baselineQ32List.get(1),"getM",1,8,row);
+                createObjCells(baselineQ32List.get(2),"getM",1,8,row);
+                createObjCells(baselineQ32List.get(3),"getM",1,8,row);
             }
             createObjCells(baselineQ3,"getM",3,7,row);
             BaselineQ4 baselineQ4 = q4Map.get(common.getSurveyId());

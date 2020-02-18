@@ -7,6 +7,8 @@ import com.geepmd.ui.firstFollowupSurvey.FirstFollowUpTab3;
 import com.vaadin.ui.*;
 import org.hibernate.Session;
 
+import java.time.LocalDate;
+import java.time.ZoneId;
 import java.util.Date;
 import java.util.List;
 
@@ -62,6 +64,8 @@ public class FirstFollowUpSurvey extends CommonSurvey{
             List<FirstFollowupQ21> q21List = (List<FirstFollowupQ21>) connection.getAllValues("com.geepmd.entity.FirstFollowupQ21",surveyId,session);
             FirstFollowupQ3 q3Answer = (FirstFollowupQ3)connection.getPageValue("com.geepmd.entity.FirstFollowupQ3",surveyId,session);
 
+            //LocalDate motherBday = surveyDate.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
+            if(q1List.getSurveyDate() == null)q1List.setSurveyDate(String.valueOf(common.getAddedDate()));
             if(q1List != null) tab1.setEditData(q1List);
             if(q13List != null) tab1.setEditData13(q13List);
             if(q125List != null) tab1.setEditData125(q125List);

@@ -1,5 +1,6 @@
 package com.geepmd.entity;
 
+
 public class FirstFollowUpQ1 {
 
     private int firstFollowUpQ1Id;
@@ -27,6 +28,7 @@ public class FirstFollowUpQ1 {
     private String m22;
     private int m23;
     private String m24;
+    private String surveyDate;
 
     public int getFirstFollowUpQ1Id() {
         return firstFollowUpQ1Id;
@@ -226,5 +228,13 @@ public class FirstFollowUpQ1 {
 
     public void setM24(String m24) {
         this.m24 = m24;
+    }
+
+    public String getSurveyDate() {
+        return surveyDate;
+    }
+
+    public void setSurveyDate(String surveyDate) {
+        this.surveyDate = surveyDate;
     }
 }

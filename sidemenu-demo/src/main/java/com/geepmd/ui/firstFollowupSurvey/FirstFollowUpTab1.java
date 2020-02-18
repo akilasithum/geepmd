@@ -12,10 +12,11 @@ import com.vaadin.shared.ui.MarginInfo;
 import com.vaadin.ui.*;
 import org.vaadin.addons.ComboBoxMultiselect;
 import java.beans.PropertyDescriptor;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-import java.util.Map;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.time.LocalDate;
+import java.time.ZoneId;
+import java.util.*;
 import java.util.stream.Collectors;
 
 import static com.geepmd.utils.SurveyUtils.*;
@@ -36,6 +37,7 @@ public class FirstFollowUpTab1 extends VerticalLayout {
     List<Answer> q12AnswerList;
     List<Answer> q22AnswerList;
     List<Answer> q24AnswerList;
+    DateField followUpDate;
 
     public FirstFollowUpTab1(String language, FirstFollowUpSurvey survey){
         this.language = language;
@@ -55,8 +57,10 @@ public class FirstFollowUpTab1 extends VerticalLayout {
     }
 
     private void createLayout(){
+        followUpDate = new DateField("Survey Date");
         q1Layout = new VerticalLayout();
         q1Layout.setSizeFull();
+        addComponent(followUpDate);
         addComponent(q1Layout);
         q1Layout.setMargin(false);
         ComboBox q11Combo = getComboBoxForDependentLayout(null,q11Map.get(1),q1Layout);
@@ -255,6 +259,8 @@ public class FirstFollowUpTab1 extends VerticalLayout {
     public FirstFollowUpQ1 getAnswers(int surveyId) {
 
         FirstFollowUpQ1 answer = new FirstFollowUpQ1();
+        answer.setSurveyDate(getDateStr(followUpDate.getValue()));
+
         answer.setSurveyId(surveyId);
         for(int i = 0;i<q1Layout.getComponentCount();i++){
             Component component = q1Layout.getComponent(i);
@@ -471,6 +477,13 @@ public class FirstFollowUpTab1 extends VerticalLayout {
 
     public void setEditData(FirstFollowUpQ1 answer) {
 
+        if(answer.getSurveyDate() != null && !answer.getSurveyDate().trim().isEmpty()) {
+            Date surveyDate = getDateFromStr(answer.getSurveyDate());
+            if (surveyDate != null) {
+                LocalDate motherBday = surveyDate.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
+                followUpDate.setValue(motherBday);
+            }
+        }
         for(int i = 0;i<q1Layout.getComponentCount();i++){
             Component component = q1Layout.getComponent(i);
             if(component instanceof HorizontalLayout){
@@ -838,5 +851,22 @@ public class FirstFollowUpTab1 extends VerticalLayout {
            }
         });
         return layout;
+    }
+
+    private String getDateStr(LocalDate date){
+        if(date == null){
+            return null;
+        }
+        Date dateVal = Date.from(date.atStartOfDay(ZoneId.systemDefault()).toInstant());
+        SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
+        return format.format(dateVal);
+    }
+
+    private Date getDateFromStr(String str){
+        try {
+            return new SimpleDateFormat("yyyy-MM-dd").parse(str);
+        } catch (ParseException e) {
+            return null;
+        }
     }
 }

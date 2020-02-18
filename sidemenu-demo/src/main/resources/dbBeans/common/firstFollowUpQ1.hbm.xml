@@ -80,5 +80,8 @@
         <property name="m24" type="java.lang.String">
             <column name="m24" />
         </property>
+        <property name="surveyDate" type="java.lang.String">
+            <column name="surveyDate" />
+        </property>
     </class>
 </hibernate-mapping>
