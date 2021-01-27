@@ -215,28 +215,72 @@ public class DownloadBaseLineExcelFile implements Runnable{
             createObjCells(baselineQ3,"getM",1,1,row);
 
             if(baselineQ32List == null || baselineQ32List.size() == 0){
-                createEmptyCells(32);
+                createEmptyCells(64);
             }
             else if(baselineQ32List.size() == 1){
                 createObjCells(baselineQ32List.get(0),"getM",1,8,row);
-                createEmptyCells(24);
+                createEmptyCells(56);
             }
             else if(baselineQ32List.size() == 2){
                 createObjCells(baselineQ32List.get(0),"getM",1,8,row);
                 createObjCells(baselineQ32List.get(1),"getM",1,8,row);
-                createEmptyCells(16);
+                createEmptyCells(48);
             }
             else if(baselineQ32List.size() == 3){
                 createObjCells(baselineQ32List.get(0),"getM",1,8,row);
                 createObjCells(baselineQ32List.get(1),"getM",1,8,row);
                 createObjCells(baselineQ32List.get(2),"getM",1,8,row);
+                createEmptyCells(40);
             }
             else if(baselineQ32List.size() == 4){
                 createObjCells(baselineQ32List.get(0),"getM",1,8,row);
                 createObjCells(baselineQ32List.get(1),"getM",1,8,row);
                 createObjCells(baselineQ32List.get(2),"getM",1,8,row);
                 createObjCells(baselineQ32List.get(3),"getM",1,8,row);
+                createEmptyCells(32);
             }
+            else if(baselineQ32List.size() == 5){
+                createObjCells(baselineQ32List.get(0),"getM",1,8,row);
+                createObjCells(baselineQ32List.get(1),"getM",1,8,row);
+                createObjCells(baselineQ32List.get(2),"getM",1,8,row);
+                createObjCells(baselineQ32List.get(3),"getM",1,8,row);
+                createObjCells(baselineQ32List.get(4),"getM",1,8,row);
+                createEmptyCells(24);
+            }
+
+            else if(baselineQ32List.size() == 6){
+                createObjCells(baselineQ32List.get(0),"getM",1,8,row);
+                createObjCells(baselineQ32List.get(1),"getM",1,8,row);
+                createObjCells(baselineQ32List.get(2),"getM",1,8,row);
+                createObjCells(baselineQ32List.get(3),"getM",1,8,row);
+                createObjCells(baselineQ32List.get(4),"getM",1,8,row);
+                createObjCells(baselineQ32List.get(5),"getM",1,8,row);
+                createEmptyCells(16);
+            }
+            else if(baselineQ32List.size() == 7){
+                createObjCells(baselineQ32List.get(0),"getM",1,8,row);
+                createObjCells(baselineQ32List.get(1),"getM",1,8,row);
+                createObjCells(baselineQ32List.get(2),"getM",1,8,row);
+                createObjCells(baselineQ32List.get(3),"getM",1,8,row);
+                createObjCells(baselineQ32List.get(4),"getM",1,8,row);
+                createObjCells(baselineQ32List.get(5),"getM",1,8,row);
+                createObjCells(baselineQ32List.get(6),"getM",1,8,row);
+                createEmptyCells(8);
+            }
+            else if(baselineQ32List.size() == 8){
+                createObjCells(baselineQ32List.get(0),"getM",1,8,row);
+                createObjCells(baselineQ32List.get(1),"getM",1,8,row);
+                createObjCells(baselineQ32List.get(2),"getM",1,8,row);
+                createObjCells(baselineQ32List.get(3),"getM",1,8,row);
+                createObjCells(baselineQ32List.get(4),"getM",1,8,row);
+                createObjCells(baselineQ32List.get(5),"getM",1,8,row);
+                createObjCells(baselineQ32List.get(6),"getM",1,8,row);
+                createObjCells(baselineQ32List.get(7),"getM",1,8,row);
+            }
+            else{
+                createEmptyCells(64);
+            }
+
             createObjCells(baselineQ3,"getM",3,7,row);
             BaselineQ4 baselineQ4 = q4Map.get(common.getSurveyId());
             createObjCells(baselineQ4,"getM",1,12,row);
@@ -501,6 +545,11 @@ public class DownloadBaseLineExcelFile implements Runnable{
         createCells("C3.2.1",1,8);
         createCells("C3.2.2",1,8);
         createCells("C3.2.3",1,8);
+        createCells("C3.2.4",1,8);
+        createCells("C3.2.5",1,8);
+        createCells("C3.2.6",1,8);
+        createCells("C3.2.7",1,8);
+        createCells("C3.2.8",1,8);
         createCells("C3",3,7);
         createCells("D4",1,12);
         createCells("E5.1.a",1,8);

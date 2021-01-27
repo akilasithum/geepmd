@@ -4,11 +4,9 @@ import com.geepmd.entity.FirstFollowupQ3;
 import com.geepmd.ui.FirstFollowUpSurvey;
 import com.geepmd.utils.Answer;
 import com.geepmd.utils.SinhalaMap;
+import com.vaadin.icons.VaadinIcons;
 import com.vaadin.shared.ui.MarginInfo;
-import com.vaadin.ui.ComboBox;
-import com.vaadin.ui.HorizontalLayout;
-import com.vaadin.ui.Label;
-import com.vaadin.ui.VerticalLayout;
+import com.vaadin.ui.*;
 
 import java.util.Arrays;
 import java.util.Map;
@@ -46,6 +44,14 @@ public class FirstFollowUpTab3 extends VerticalLayout {
         qLayout.addComponent(addHorizontalLayout(questionMap.get(2)));
         qLayout.addComponent(addHorizontalLayout(questionMap.get(3)));
         addComponent(qLayout);
+
+        Button nextBtn = new Button("Next");
+        nextBtn.setIcon(VaadinIcons.ARROW_FORWARD);
+        nextBtn.setStyleName("bottomBackBtn");
+        nextBtn.addClickListener(event -> {
+            survey.SelectTab(3);
+        });
+        addComponent(nextBtn);
     }
 
     private HorizontalLayout addHorizontalLayout(String question){

@@ -30,9 +30,14 @@ public class DownloadFirstFollowUpExcel extends DownloadFile {
         Session session = connection.getSession();
         List<FirstFollowUpCommonDetails> commonList = (List<FirstFollowUpCommonDetails>)connection.getAllValues(session,
                 "com.geepmd.entity.FirstFollowUpCommonDetails", "surveyId");
+        List<MotherDetails> motherDetails = connection.getMotherDetails();
         if(commonList == null || commonList.size() == 0){
             Notification.show("No survey available for download", Notification.Type.WARNING_MESSAGE);
             return;
+        }
+        Map<String,MotherDetails> motherDetailsMap = new HashMap<>();
+        for(MotherDetails mother : motherDetails){
+            motherDetailsMap.put(mother.getMotherSerialNumber(),mother);
         }
         List<FirstFollowUpQ1> q1List = (List<FirstFollowUpQ1>)connection.getAllValues(session,"com.geepmd.entity.FirstFollowUpQ1","firstFollowUpQ1Id");
         Map<Integer,FirstFollowUpQ1> q1Map = q1List.stream().collect(Collectors.toMap(x -> x.getSurveyId(), x -> x));
@@ -40,6 +45,10 @@ public class DownloadFirstFollowUpExcel extends DownloadFile {
         Map<Integer,FirstFollowupQ2> q2Map = q2List.stream().collect(Collectors.toMap(x -> x.getSurveyId(), x -> x));
         List<FirstFollowupQ3> q3List = (List<FirstFollowupQ3>)connection.getAllValues(session,"com.geepmd.entity.FirstFollowupQ3","firstFollowupQ3Id");
         Map<Integer,FirstFollowupQ3> q3Map = q3List.stream().collect(Collectors.toMap(x -> x.getSurveyId(), x -> x));
+        List<FirstFollowUpQ4> q4List = (List<FirstFollowUpQ4>)connection.getAllValues(session,"com.geepmd.entity.FirstFollowUpQ4","firstFollowUpQ4Id");
+        Map<Integer,FirstFollowUpQ4> q4Map = q4List.stream().collect(Collectors.toMap(x -> x.getSurveyId(), x -> x));
+        List<FirstFollowUpQ46> q46List = (List<FirstFollowUpQ46>)connection.getAllValues(session,"com.geepmd.entity.FirstFollowUpQ46","firstFollowUpQ46Id");
+        Map<Integer,FirstFollowUpQ46> q46Map = q46List.stream().collect(Collectors.toMap(x -> x.getSurveyId(), x -> x));
 
         List<FirstFollowUpQ13> q13List = (List<FirstFollowUpQ13>)connection.getAllValues(session,"com.geepmd.entity.FirstFollowUpQ13","firstFollowUpQ13Id");
         Map<Integer,List<FirstFollowUpQ13>> q13Map = new HashMap<>();
@@ -101,7 +110,19 @@ public class DownloadFirstFollowUpExcel extends DownloadFile {
                 Cell cell3 = row.createCell(2);
                 cell3.setCellValue(getDateStr(common.getAddedDate()));
             }
-            valColumnCount = 3;
+
+            MotherDetails mother = motherDetailsMap.get(common.getMotherId());
+
+            Cell cell4 = row.createCell(3);
+            cell4.setCellValue(mother.getNicNo());
+
+            Cell cell5 = row.createCell(4);
+            cell5.setCellValue(mother.getMotherDocumentRegNo());
+
+            Cell cell6 = row.createCell(5);
+            cell6.setCellValue(mother.getEdd());
+
+            valColumnCount = 6;
             createObjCells(firstFollowUpQ1,"getM",1,2,row);
             List<FirstFollowUpQ13> firstFollowUpQ13s = q13Map.get(common.getSurveyId());
 
@@ -144,6 +165,37 @@ public class DownloadFirstFollowUpExcel extends DownloadFile {
             createObjCells(firstFollowupQ2,"getM",2,14,row);
             FirstFollowupQ3 firstFollowupQ3 = q3Map.get(common.getSurveyId());
             createObjCells(firstFollowupQ3,"getM",1,3,row);
+
+            FirstFollowUpQ4 firstFollowUpQ4 = q4Map.get(common.getSurveyId());
+            createObjCells(firstFollowUpQ4,"getM11",1,3,row);
+            createObjCells(firstFollowUpQ4,"getM12",1,5,row);
+            createObjCells(firstFollowUpQ4,"getM2",1,5,row);
+            createObjCells(firstFollowUpQ4,"getM3",1,3,row);
+            createObjCells(firstFollowUpQ4,"getM4",1,1,row);
+            createObjCells(firstFollowUpQ4,"getM5",1,10,row);
+
+            FirstFollowUpQ46 firstFollowUpQ46 = q46Map.get(common.getSurveyId());
+            createObjCells(firstFollowUpQ46,"getM1",row);
+            createObjCells(firstFollowUpQ46,"getM1",1,5,row);
+            createObjCells(firstFollowUpQ46,"getM2",row);
+            createObjCells(firstFollowUpQ46,"getM21",row);
+            createObjCells(firstFollowUpQ46,"getM22",1,2,row);
+            createObjCells(firstFollowUpQ46,"getM23",row);
+            createObjCells(firstFollowUpQ46,"getM3",row);
+            createObjCells(firstFollowUpQ46,"getM31",row);
+            createObjCells(firstFollowUpQ46,"getM32",1,2,row);
+            createObjCells(firstFollowUpQ46,"getM33",1,2,row);
+            createObjCells(firstFollowUpQ46,"getM34",1,3,row);
+            createObjCells(firstFollowUpQ46,"getM35",row);
+            createObjCells(firstFollowUpQ46,"getM4",row);
+            createObjCells(firstFollowUpQ46,"getM4",1,7,row);
+            createObjCells(firstFollowUpQ46,"getM5",row);
+            createObjCells(firstFollowUpQ46,"getM51",row);
+            createObjCells(firstFollowUpQ46,"getM",6,8,row);
+            createObjCells(firstFollowUpQ46,"getM8",1,3,row);
+            createObjCells(firstFollowUpQ46,"getM9",row);
+            createObjCells(firstFollowUpQ46,"getM9",1,2,row);
+            createObjCells(firstFollowUpQ46,"getM10",row);
             rowCount++;
         }
         File tempFile = null;
@@ -187,7 +239,19 @@ public class DownloadFirstFollowUpExcel extends DownloadFile {
         cell3.setCellValue("Survey Date");
         cell3.setCellStyle(headerCellStyle);
 
-        columnCount = 3;
+        Cell cell4 = headerRow.createCell(3);
+        cell4.setCellValue("NIC No");
+        cell4.setCellStyle(headerCellStyle);
+
+        Cell cell5 = headerRow.createCell(4);
+        cell5.setCellValue("Mother Document Reg No");
+        cell5.setCellStyle(headerCellStyle);
+
+        Cell cell6 = headerRow.createCell(5);
+        cell6.setCellValue("EDD(USS)");
+        cell6.setCellStyle(headerCellStyle);
+
+        columnCount = 6;
         createCells("1",1,2);
         createCells("1.3",11,letterIntMap,2);
         createCells("1",4,24);
@@ -201,5 +265,32 @@ public class DownloadFirstFollowUpExcel extends DownloadFile {
         createCells("2.1",10,letterIntMap,4);
         createCells("2",2,14);
         createCells("3",1,3);
+        createCells("4.1.1",1,3);
+        createCells("4.1.2",1,5);
+        createCells("4.2",1,5);
+        createCells("4.3",1,3);
+        createCells("4.4",1,1);
+        createCells("4.5",1,10);
+        createCells("4.6",1,1);
+        createCells("4.6.1",1,5);
+        createCells("4.6",2,2);
+        createCells("4.6.2",1,1);
+        createCells("4.6.2.2",1,2);
+        createCells("4.6.2",3,3);
+        createCells("4.6",3,3);
+        createCells("4.6.3",1,1);
+        createCells("4.6.3.2",1,2);
+        createCells("4.6.3.3",1,2);
+        createCells("4.6.3.4",1,3);
+        createCells("4.6.3",5,5);
+        createCells("4.6",4,4);
+        createCells("4.6.4",1,7);
+        createCells("4.6",5,5);
+        createCells("4.6.5",1,1);
+        createCells("4.6",6,8);
+        createCells("4.6.8",1,3);
+        createCells("4.6",9,9);
+        createCells("4.6.9",1,2);
+        createCells("4.6",10,10);
     }
 }

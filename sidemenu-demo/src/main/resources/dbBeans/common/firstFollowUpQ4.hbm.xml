@@ -1,0 +1,96 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+        "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping>
+    <class name="com.geepmd.entity.FirstFollowUpQ4" table="first_followup_q4" catalog="">
+        <id name="firstFollowUpQ4Id" type="java.lang.Integer">
+            <column name="firstFollowUpQ4Id" />
+            <generator class="identity" />
+        </id>
+        <property name="surveyId" type="java.lang.Integer">
+            <column name="surveyId" />
+        </property>
+        <property name="m111" type="java.lang.String">
+            <column name="m111" />
+        </property>
+        <property name="m112" type="java.lang.Integer">
+            <column name="m112" />
+        </property>
+        <property name="m113" type="java.lang.Integer">
+            <column name="m113" />
+        </property>
+        <property name="m121" type="java.lang.String">
+            <column name="m121" />
+        </property>
+        <property name="m122" type="java.lang.String">
+            <column name="m122" />
+        </property>
+        <property name="m123" type="java.lang.String">
+            <column name="m123" />
+        </property>
+        <property name="m124" type="java.lang.String">
+            <column name="m124" />
+        </property>
+        <property name="m125" type="java.lang.Integer">
+            <column name="m125" />
+        </property>
+        <property name="m21" type="java.lang.Integer">
+            <column name="m21" />
+        </property>
+        <property name="m22" type="java.lang.Integer">
+            <column name="m22" />
+        </property>
+        <property name="m23" type="java.lang.Integer">
+            <column name="m23" />
+        </property>
+        <property name="m24" type="java.lang.Integer">
+            <column name="m24" />
+        </property>
+        <property name="m25" type="java.lang.Integer">
+            <column name="m25" />
+        </property>
+        <property name="m31" type="java.lang.Integer">
+            <column name="m31" />
+        </property>
+        <property name="m32" type="java.lang.Integer">
+            <column name="m32" />
+        </property>
+        <property name="m33" type="java.lang.Integer">
+            <column name="m33" />
+        </property>
+        <property name="m41" type="java.lang.String">
+            <column name="m41" />
+        </property>
+        <property name="m51" type="java.lang.Integer">
+            <column name="m51" />
+        </property>
+        <property name="m52" type="java.lang.Integer">
+            <column name="m52" />
+        </property>
+        <property name="m53" type="java.lang.Integer">
+            <column name="m53" />
+        </property>
+        <property name="m54" type="java.lang.Integer">
+            <column name="m54" />
+        </property>
+        <property name="m55" type="java.lang.Integer">
+            <column name="m55" />
+        </property>
+        <property name="m56" type="java.lang.Integer">
+            <column name="m56" />
+        </property>
+        <property name="m57" type="java.lang.Integer">
+            <column name="m57" />
+        </property>
+        <property name="m58" type="java.lang.Integer">
+            <column name="m58" />
+        </property>
+        <property name="m59" type="java.lang.Integer">
+            <column name="m59" />
+        </property>
+        <property name="m510" type="java.lang.Integer">
+            <column name="m510" />
+        </property>
+    </class>
+</hibernate-mapping>

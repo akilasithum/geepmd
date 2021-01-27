@@ -618,9 +618,11 @@ public class FirstFollowUpTab1 extends VerticalLayout {
             else {
                 answer = map.get("day before yesterday");
             }
-            breakfastFld.setValue(answer.getBreakfast());
-            lunchFld.setValue(answer.getLunch());
-            dinnerFld.setValue(answer.getDinner());
+            if(answer != null){
+                breakfastFld.setValue(answer.getBreakfast());
+                lunchFld.setValue(answer.getLunch());
+                dinnerFld.setValue(answer.getDinner());
+            }
         }
     }
 

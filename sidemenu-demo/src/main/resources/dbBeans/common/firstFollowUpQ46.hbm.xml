@@ -1,0 +1,138 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+        "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping>
+    <class name="com.geepmd.entity.FirstFollowUpQ46" table="first_followup_q46" catalog="">
+        <id name="firstFollowUpQ46Id" type="java.lang.Integer">
+            <column name="firstFollowUpQ46Id" />
+            <generator class="identity" />
+        </id>
+        <property name="surveyId" type="java.lang.Integer">
+            <column name="surveyId" />
+        </property>
+        <property name="m1" type="java.lang.Integer">
+            <column name="m1" />
+        </property>
+        <property name="m11" type="java.lang.String">
+            <column name="m11" />
+        </property>
+        <property name="m12" type="java.lang.String">
+            <column name="m12" />
+        </property>
+        <property name="m13" type="java.lang.String">
+            <column name="m13" />
+        </property>
+        <property name="m14" type="java.lang.String">
+            <column name="m14" />
+        </property>
+        <property name="m15" type="java.lang.Integer">
+            <column name="m15" />
+        </property>
+        <property name="m2" type="java.lang.Integer">
+            <column name="m2" />
+        </property>
+        <property name="m21" type="java.lang.String">
+            <column name="m21" />
+        </property>
+        <property name="m221" type="java.lang.String">
+            <column name="m221" />
+        </property>
+        <property name="m222" type="java.lang.String">
+            <column name="m222" />
+        </property>
+        <property name="m23" type="java.lang.String">
+            <column name="m23" />
+        </property>
+        <property name="m3" type="java.lang.Integer">
+            <column name="m3" />
+        </property>
+        <property name="m31" type="java.lang.String">
+            <column name="m31" />
+        </property>
+        <property name="m321" type="java.lang.String">
+            <column name="m321" />
+        </property>
+        <property name="m322" type="java.lang.String">
+            <column name="m322" />
+        </property>
+        <property name="m331" type="java.lang.String">
+            <column name="m331" />
+        </property>
+        <property name="m332" type="java.lang.String">
+            <column name="m332" />
+        </property>
+        <property name="m341" type="java.lang.String">
+            <column name="m341" />
+        </property>
+        <property name="m342" type="java.lang.String">
+            <column name="m342" />
+        </property>
+        <property name="m343" type="java.lang.String">
+            <column name="m343" />
+        </property>
+        <property name="m35" type="java.lang.String">
+            <column name="m35" />
+        </property>
+        <property name="m4" type="java.lang.Integer">
+            <column name="m4" />
+        </property>
+        <property name="m41" type="java.lang.String">
+            <column name="m41" />
+        </property>
+        <property name="m42" type="java.lang.String">
+            <column name="m42" />
+        </property>
+        <property name="m43" type="java.lang.String">
+            <column name="m43" />
+        </property>
+        <property name="m44" type="java.lang.String">
+            <column name="m44" />
+        </property>
+        <property name="m45" type="java.lang.String">
+            <column name="m45" />
+        </property>
+        <property name="m46" type="java.lang.String">
+            <column name="m46" />
+        </property>
+        <property name="m47" type="java.lang.String">
+            <column name="m47" />
+        </property>
+        <property name="m5" type="java.lang.Integer">
+            <column name="m5" />
+        </property>
+        <property name="m51" type="java.lang.String">
+            <column name="m51" />
+        </property>
+        <property name="m6" type="java.lang.String">
+            <column name="m6" />
+        </property>
+        <property name="m7" type="java.lang.String">
+            <column name="m7" />
+        </property>
+        <property name="m8" type="java.lang.Integer">
+            <column name="m8" />
+        </property>
+        <property name="m81" type="java.lang.String">
+            <column name="m81" />
+        </property>
+        <property name="m82" type="java.lang.String">
+            <column name="m82" />
+        </property>
+        <property name="m83" type="java.lang.String">
+            <column name="m83" />
+        </property>
+        <property name="m9" type="java.lang.Integer">
+            <column name="m9" />
+        </property>
+        <property name="m91" type="java.lang.String">
+            <column name="m91" />
+        </property>
+        <property name="m92" type="java.lang.String">
+            <column name="m92" />
+        </property>
+        <property name="m10" type="java.lang.String">
+            <column name="m10" />
+        </property>
+    </class>
+</hibernate-mapping>

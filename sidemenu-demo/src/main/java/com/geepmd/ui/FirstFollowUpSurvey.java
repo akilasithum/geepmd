@@ -4,6 +4,7 @@ import com.geepmd.entity.*;
 import com.geepmd.ui.firstFollowupSurvey.FirstFollowUpTab1;
 import com.geepmd.ui.firstFollowupSurvey.FirstFollowUpTab2;
 import com.geepmd.ui.firstFollowupSurvey.FirstFollowUpTab3;
+import com.geepmd.ui.firstFollowupSurvey.FirstFollowUpTab4;
 import com.vaadin.ui.*;
 import org.hibernate.Session;
 
@@ -17,6 +18,7 @@ public class FirstFollowUpSurvey extends CommonSurvey{
     FirstFollowUpTab1 tab1;
     FirstFollowUpTab2 tab2;
     FirstFollowUpTab3 tab3;
+    FirstFollowUpTab4 tab4;
     Window window = new Window("Mother Details");
     public FirstFollowUpSurvey(){
         createLayout();
@@ -30,10 +32,12 @@ public class FirstFollowUpSurvey extends CommonSurvey{
         tab1 = new FirstFollowUpTab1(language,this);
         tab2 = new FirstFollowUpTab2(language,this);
         tab3 = new FirstFollowUpTab3(language,this);
+        tab4 = new FirstFollowUpTab4(language,this);
 
         tabsheet.addTab(tab1,"1. වර්තමාන ගර්භණී තත්ත්වය");
         tabsheet.addTab(tab2,"2. ගර්භණී සමයේ රෝග ලක්ෂණ");
         tabsheet.addTab(tab3,"3. විවාහ ජීවිතය පිළිබඳ");
+        tabsheet.addTab(tab4,"4. PHYSICAL ASSESSMENT");
     }
 
     @Override
@@ -63,9 +67,11 @@ public class FirstFollowUpSurvey extends CommonSurvey{
             FirstFollowupQ2 q2Answer = (FirstFollowupQ2)connection.getPageValue("com.geepmd.entity.FirstFollowupQ2",surveyId,session);
             List<FirstFollowupQ21> q21List = (List<FirstFollowupQ21>) connection.getAllValues("com.geepmd.entity.FirstFollowupQ21",surveyId,session);
             FirstFollowupQ3 q3Answer = (FirstFollowupQ3)connection.getPageValue("com.geepmd.entity.FirstFollowupQ3",surveyId,session);
+            FirstFollowUpQ4 q4Answer = (FirstFollowUpQ4)connection.getPageValue("com.geepmd.entity.FirstFollowUpQ4",surveyId,session);
+            FirstFollowUpQ46 q46Answer = (FirstFollowUpQ46)connection.getPageValue("com.geepmd.entity.FirstFollowUpQ46",surveyId,session);
 
             //LocalDate motherBday = surveyDate.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
-            if(q1List.getSurveyDate() == null)q1List.setSurveyDate(String.valueOf(common.getAddedDate()));
+            if(q1List != null && q1List.getSurveyDate() == null)q1List.setSurveyDate(String.valueOf(common.getAddedDate()));
             if(q1List != null) tab1.setEditData(q1List);
             if(q13List != null) tab1.setEditData13(q13List);
             if(q125List != null) tab1.setEditData125(q125List);
@@ -73,6 +79,8 @@ public class FirstFollowUpSurvey extends CommonSurvey{
             if(q21List != null) tab2.setEditDataQ21(q21List);
             if(q2Answer != null) tab2.setEditData(q2Answer);
             if(q3Answer != null) tab3.setEditData(q3Answer);
+            if(q4Answer != null) tab4.setEditData(q4Answer);
+            if(q46Answer != null) tab4.setEditData(q46Answer);
             connection.closeSession(session);
         }
         else {
@@ -86,6 +94,7 @@ public class FirstFollowUpSurvey extends CommonSurvey{
         tab1.clearFields();
         tab2.clearFields();
         tab3.clearFields();
+        tab4.clearFields();
     }
 
     public void openMotherDetailsPopUp(MotherDetails mother){
@@ -177,6 +186,8 @@ public class FirstFollowUpSurvey extends CommonSurvey{
             connection.deleteBySurveyId("com.geepmd.entity.FirstFollowupQ2",surveyId,session);
             connection.deleteBySurveyId("com.geepmd.entity.FirstFollowupQ21",surveyId,session);
             connection.deleteBySurveyId("com.geepmd.entity.FirstFollowupQ3",surveyId,session);
+            connection.deleteBySurveyId("com.geepmd.entity.FirstFollowUpQ4",surveyId,session);
+            connection.deleteBySurveyId("com.geepmd.entity.FirstFollowUpQ46",surveyId,session);
         }
         else {
             surveyId = connection.saveObjectHBM(common,session);
@@ -227,6 +238,22 @@ public class FirstFollowUpSurvey extends CommonSurvey{
         try{
             FirstFollowupQ3 answer3 = tab3.getAnswers(surveyId);
             connection.saveOrUpdateHBM(answer3,session);
+        }
+        catch (Exception e){
+            e.printStackTrace();
+        }
+
+        try{
+            FirstFollowUpQ4 answer4 = tab4.getAnswers(surveyId);
+            connection.saveOrUpdateHBM(answer4,session);
+        }
+        catch (Exception e){
+            e.printStackTrace();
+        }
+
+        try{
+            FirstFollowUpQ46 answer46 = tab4.getAnswersQ46(surveyId);
+            connection.saveOrUpdateHBM(answer46,session);
         }
         catch (Exception e){
             e.printStackTrace();

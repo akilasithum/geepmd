@@ -52,6 +52,8 @@
         <mapping resource="dbBeans/common/firstFollowupQ21.hbm.xml"></mapping>
         <mapping resource="dbBeans/common/firstFollowupQ2.hbm.xml"></mapping>
         <mapping resource="dbBeans/common/firstFollowupQ3.hbm.xml"></mapping>
+        <mapping resource="dbBeans/common/firstFollowUpQ4.hbm.xml"></mapping>
+        <mapping resource="dbBeans/common/firstFollowUpQ46.hbm.xml"></mapping>
         <mapping resource="dbBeans/common/firstFollowupCommonDetails.hbm.xml"></mapping>
         <mapping resource="dbBeans/common/socialCapitalQ1.hbm.xml"></mapping>
         <mapping resource="dbBeans/common/socialCapitalQ2.hbm.xml"></mapping>

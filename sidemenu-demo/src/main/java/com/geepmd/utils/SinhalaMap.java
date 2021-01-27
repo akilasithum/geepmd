@@ -182,6 +182,18 @@ public class SinhalaMap {
         return map;
     }
 
+    public static Map<Integer,List<String>> getFirstFollowUpTab4LongAAnswerList() {
+        Map<Integer, List<String>> map = new HashMap<>();
+        map.put(1,Arrays.asList("1 Activities not limited – grade 1", "2 Mild limitation of physical activities – grade 2",
+                "3 Moderate limitation of physical activities – grade 3", "Symptoms + at rest – grade 4"));
+        map.put(2,Arrays.asList("1 No SOB at rest –  grade 1","2 No SOB at rest,  but occurs with moderate activities – grade 2 ",
+                "3 SOB with simple daily activities – grade 3","4 SOB at rest – grade 4"));
+        map.put(3,Arrays.asList("1. Dietary control","2. Oral hypoglycemic","3. Insulin","4. both oral and insulin"));
+        map.put(4,Arrays.asList("1. Viral hepatitis/drug induced/dengue/leptospirosis","2. obstetric cholestasis",
+                "3. diagnosed platelet disorders/bleeding disorders","4. other "));
+        return map;
+    }
+
     public static Map<String,List<String>> getSocialCapitalAAnswerList() {
         Map<String, List<String>> map = new HashMap<>();
         map.put("1.1", Arrays.asList("1. දිනපතාම","2. සතියට දෙතුන් වරක්", "3. සතියකට වරක්", "4. මසකට වරක්", "5. මාස කිහිපයකට වරක්","6. ස්වාමියා මා සමග වාසය නොකරයි"));
@@ -290,14 +302,6 @@ public class SinhalaMap {
         return map;
     }
 
-    /*public static Map<String,String> getQ7Map(){
-        Map<String,String> map = new HashMap<>();
-        map.put("7.1","7.1 ඔබ ඔබේ මානසික සුවටතා වර්ධනය කරන කටයුතුවල නියෙලෙනවාද?");
-        map.put("7.2","7.2 ඔබ නිරත වන මානසික සුවටතා වර්ධනය කරන කටයුතුවල විස්තර සදහන් කරන්න.");
-        map.put("7.3","7.3 ඔබගේ ගර්භණීබව නිසා ඔබ කෙදිනක හෝ මොන යම් ආකාරයේ වෙනස්කමකට / විවේචනයකට ලක් වී ඇතිද?");
-        return map;
-    }*/
-
     public static Map<String,String> getQ7Map(){
         Map<String,String> map = new HashMap<>();
         map.put("7.1","7.1 ඔබගේ මව පියා සහෝදර සහෝදරියන් පහත රෝග වලින් පෙලෙන්නේද?");
@@ -391,6 +395,84 @@ public class SinhalaMap {
         map.put(24,"1.24 ඔබ යකඩ අඩංගු ප\u200D්\u200Dරතිකාර ලබාගන්නා විට පහත සඳහන් පීඩාකාරී අතුරු ආබාධ අත්විඳීමට සිදු වුවාද?");
         map.put(25,"1.25 ඔබ පසුගිය දින දෙක තුළ මෙම වේල් සඳහා ලබාගත් ප\u200D්\u200Dරධාන ආහාරය කුමක්ද? (කරුණාකර උදාහරණ බලන්න.)");
         map.put(26,"1.26 ඔබ දැනට කොපමණ වාර ගණනක් පහත ආහාර අනුභව කරන්නේද?");
+        return map;
+    }
+
+    public static Map<String,String> getFirstFollowUpQ4() {
+        Map<String, String> map = new HashMap<>();
+        map.put("4.1.1.1" ,"4.1.1.1. Pulse rate");
+        map.put("4.1.1.2" ,"4.1.1.2. More than 110 bpm");
+        map.put("4.1.1.3" ,"4.1.1.3. Irregular rhythm");
+        map.put("4.1.2.1" ,"4.1.2.1. Right Systolic");
+        map.put("4.1.2.2" ,"4.1.2.2. Right Diastolic");
+        map.put("4.1.2.3" ,"4.1.2.3. Left Systolic");
+        map.put("4.1.2.4" ,"4.1.2.4. Left Diastolic");
+        map.put("4.1.2.5" ,"4.1.2.5. BP >140/90");
+        map.put("4.2.1" ,"4.2.1. Neck vein engorgement");
+        map.put("4.2.2" ,"4.2.2. Apex deviated");
+        map.put("4.2.3" ,"4.2.3. Left para sternal heave");
+        map.put("4.2.4" ,"4.2.4. Thrills");
+        map.put("4.2.5" ,"4.2.5. Carotid bruit");
+        map.put("4.3.1" ,"4.3.1. Murmur");
+        map.put("4.3.2" ,"4.3.2. Loud P2");
+        map.put("4.3.3" ,"4.3.3. Lung bases fine crepts+");
+        map.put("4.4.1" ,"4.4.1. Weight (in Kilograms)");
+        map.put("4.5.1" ,"4.5.1. Chest pain suggestive of sinister cardiac pathology (Ischemia, Pulmonary Embolism, Aortic dissection or valve related pathology) ");
+        map.put("4.5.2" ,"4.5.2. If yes,");
+        map.put("4.5.3" ,"4.5.3. Difficulty in breathing even at rest/mild exertion (non-asthmatic)");
+        map.put("4.5.4" ,"4.5.4. If yes,");
+        map.put("4.5.5" ,"4.5.5. Palpitation");
+        map.put("4.5.6" ,"4.5.6. Syncope/pre-syncope");
+        map.put("4.5.7" ,"4.5.7. Class 1+2 SOB with syncope/pre-syncope and Paroxysmal nocturnal dyspnoea");
+        map.put("4.5.8" ,"4.5.8. Orthopnoea + Paroxysmal nocturnal dyspnoea + dyspnoea");
+        map.put("4.5.9" ,"4.5.9. Complicated Hypertensive disorder (Uncontrolled BP despite of Medical Management, evidence of eclampsia, HF, ACS, AKI)");
+        map.put("4.5.10" ,"4.5.10. Stroke");
+        map.put("4.6.1" ,"4.6.1. Gestational Diabetes (GDM");
+        map.put("4.6.1.1" ,"4.6.1.1. POA at the time of diagnosis");
+        map.put("4.6.1.2" ,"4.6.1.2. FBS value");
+        map.put("4.6.1.3" ,"4.6.1.3. 1 Hour value");
+        map.put("4.6.1.4" ,"4.6.1.4. 2 Hour value");
+        map.put("4.6.1.5" ,"4.6.1.5. Management");
+        map.put("4.6.2" ,"4.6.2. Pregnancy induced hypertension (PIH)");
+        map.put("4.6.2.1" ,"4.6.2.1. POA at the time of diagnosis");
+        map.put("4.6.2.2" ,"4.6.2.2. BP value");
+        map.put("4.6.2.2.1" ,"4.6.2.2.1. On admission");
+        map.put("4.6.2.2.2" ,"4.6.2.2.2. At discharge");
+        map.put("4.6.2.3" ,"4.6.2.3. Management");
+        map.put("4.6.3" ,"4.6.3. Preeclampsia(PE)");
+        map.put("4.6.3.1" ,"4.6.3.1. POA at the time of diagnosis");
+        map.put("4.6.3.2" ,"4.6.3.2. BP value");
+        map.put("4.6.3.2.1" ,"4.6.3.2.1. On admission");
+        map.put("4.6.3.2.2" ,"4.6.3.2.2. At discharge");
+        map.put("4.6.3.3" ,"4.6.3.3. Protein uria value");
+        map.put("4.6.3.3.1" ,"4.6.3.3.1. On admission");
+        map.put("4.6.3.3.2" ,"4.6.3.3.2. At discharge");
+        map.put("4.6.3.4" ,"4.6.3.4. Investigations");
+        map.put("4.6.3.4.1" ,"4.6.3.4.1. Platelet count");
+        map.put("4.6.3.4.2" ,"4.6.3.4.2. AST (SGOT) value");
+        map.put("4.6.3.4.3" ,"4.6.3.4.3. ALT(SGPT) value");
+        map.put("4.6.3.5" ,"4.6.3.5. Management");
+
+        map.put("4.6.4" ,"4.6.4. Liver related disease");
+        map.put("4.6.4.1" ,"4.6.4.1. POA at the time of diagnosis");
+        map.put("4.6.4.2" ,"4.6.4.2. AST value/values( or 1st and last value)");
+        map.put("4.6.4.3" ,"4.6.4.3. Gamma GT value( or 1st and last value)");
+        map.put("4.6.4.4" ,"4.6.4.4. ALT value/values( or 1st and last value");
+        map.put("4.6.4.5" ,"4.6.4.5. Platelet count/s( or 1st and last value");
+        map.put("4.6.4.6" ,"4.6.4.6. USS liver results(if available)");
+        map.put("4.6.4.7" ,"4.6.4.7. Management and follow up plan");
+        map.put("4.6.5" ,"4.6.5. Threatened miscarriage");
+        map.put("4.6.5.1" ,"4.6.5.1. At what POA");
+        map.put("4.6.6" ,"4.6.6. Increased liquor (Scan proven)");
+        map.put("4.6.7" ,"4.6.7. Decreased liquor (Scan proven)");
+        map.put("4.6.8" ,"4.6.8. Anemia");
+        map.put("4.6.8.1" ,"4.6.8.1. Was HPLC done?");
+        map.put("4.6.8.2" ,"4.6.8.2. If yes, what is the result?");
+        map.put("4.6.8.3" ,"4.6.8.3. Was she transfused during this pregnancy?");
+        map.put("4.6.9" ,"4.6.9. Dating US scan done?");
+        map.put("4.6.9.1" ,"4.6.9.1. At what POA");
+        map.put("4.6.9.2" ,"4.6.9.2. When was it done?(Date)");
+        map.put("4.6.10" ,"4.6.10. Blood group of the mother");
         return map;
     }
 

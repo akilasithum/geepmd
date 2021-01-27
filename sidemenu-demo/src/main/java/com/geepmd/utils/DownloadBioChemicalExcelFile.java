@@ -54,7 +54,7 @@ public class DownloadBioChemicalExcelFile extends DownloadFile {
             createObjCells(socialCapitalQ1,"getM",1,14,row);
 
             BioChemicalQ2 socialCapitalQ2= q2Map.get(common.getSurveyId());
-            createObjCells(socialCapitalQ2,"getM",1,3,row);
+            createObjCells(socialCapitalQ2,"getM",1,4,row);
 
             BioChemicalQ3 socialCapitalQ3 = q3Map.get(common.getSurveyId());
             createObjCells(socialCapitalQ3,"getM",1,1,row);
@@ -94,7 +94,7 @@ public class DownloadBioChemicalExcelFile extends DownloadFile {
         cell2.setCellStyle(headerCellStyle);
         columnCount = 2;
         createCells("A",1,14);
-        createCells("B",1,3);
+        createCells("B",1,4);
         createCells("C1");
     }
 }

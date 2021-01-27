@@ -1,5 +1,6 @@
 package com.geepmd.utils;
 
+import com.vaadin.shared.ui.MarginInfo;
 import com.vaadin.ui.*;
 
 import java.beans.PropertyDescriptor;
@@ -257,5 +258,98 @@ public class SurveyUtils {
             }
         }
         return selectedAnswers;
+    }
+
+    public static HorizontalLayout getYesNoAnswerLayout(String question, MarginInfo marginInfo){
+        HorizontalLayout layout = new HorizontalLayout();
+        layout.setSizeFull();
+        Label label = new Label(question);
+        label.setSizeFull();
+        ComboBox comboBox = new ComboBox();
+        comboBox.setSizeFull();
+        comboBox.setTextInputAllowed(false);
+        comboBox.setItems(getYesNoAnswer("SN"));
+        layout.addComponents(label,comboBox);
+        layout.setExpandRatio(label,8);
+        layout.setExpandRatio(comboBox,2);
+        layout.setMargin(marginInfo);
+        return layout;
+    }
+
+    public static HorizontalLayout getYesNoAnswerLayout(String question, MarginInfo marginInfo,String language){
+        HorizontalLayout layout = new HorizontalLayout();
+        layout.setSizeFull();
+        Label label = new Label(question);
+        label.setSizeFull();
+        ComboBox comboBox = new ComboBox();
+        comboBox.setSizeFull();
+        comboBox.setTextInputAllowed(false);
+        comboBox.setItems(getYesNoAnswer(language));
+        layout.addComponents(label,comboBox);
+        layout.setExpandRatio(label,8);
+        layout.setExpandRatio(comboBox,2);
+        layout.setMargin(marginInfo);
+        return layout;
+    }
+
+    public static HorizontalLayout getTextBoxAnswerLayout(String question,MarginInfo marginInfo){
+        HorizontalLayout layout = new HorizontalLayout();
+        layout.setSizeFull();
+        Label label = new Label(question);
+        label.setSizeFull();
+        TextField textField = new TextField();
+        textField.setSizeFull();
+        layout.addComponents(label,textField);
+        layout.setExpandRatio(label,8);
+        layout.setExpandRatio(textField,2);
+        layout.setMargin(marginInfo);
+        return layout;
+    }
+
+    public static ComboBox getComboBoxForDependentLayout(List<String> answerList,String question,VerticalLayout mainLayout){
+        HorizontalLayout layout = new HorizontalLayout();
+        layout.setSizeFull();
+        Label label = new Label(question);
+        label.setSizeFull();
+        ComboBox comboBox = new ComboBox();
+        comboBox.setSizeFull();
+        comboBox.setTextInputAllowed(false);
+        if(answerList != null){
+            comboBox.setItems(getAnwerObj(answerList));
+            comboBox.setDescription(getAnswerDesc(answerList));
+        }
+        else{
+            comboBox.setItems(getYesNoAnswer("SN"));
+        }
+
+        layout.addComponents(label,comboBox);
+        layout.setExpandRatio(label,8);
+        layout.setExpandRatio(comboBox,2);
+        mainLayout.addComponent(layout);
+        return comboBox;
+    }
+
+    public static void setDependentLayout(ComboBox comboBox,Component layout,int val){
+        comboBox.addValueChangeListener(event -> {
+            Answer answer = (Answer) event.getValue();
+            if(answer != null && (answer.getId() == val)){
+                layout.setVisible(true);
+            }
+            else{
+                layout.setVisible(false);
+            }
+        });
+    }
+
+    public static void setDependentLayout(ComboBox comboBox,Component layout){
+        comboBox.addValueChangeListener(event -> {
+            Answer answer = (Answer) event.getValue();
+            if(answer != null){
+                layout.setVisible(true);
+            }
+            else{
+                layout.setVisible(false);
+            }
+        });
     }
 }
